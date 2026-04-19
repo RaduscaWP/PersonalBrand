@@ -1,0 +1,39 @@
+@mixin container {
+  max-width: var(--max-width);
+  margin: 0 auto;
+  padding-left: var(--content-padding);
+  padding-right: var(--content-padding);
+}
+
+@mixin card {
+  background: var(--bg-surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  transition: border-color 0.3s ease, box-shadow 0.3s ease, transform 0.3s ease;
+
+  &:hover {
+    border-color: var(--border-accent);
+    box-shadow: 0 0 24px var(--accent-glow);
+  }
+}
+
+@mixin section {
+  padding-top: var(--section-gap);
+  padding-bottom: var(--section-gap);
+}
+
+@mixin mono-label {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: var(--fs-mono);
+  color: var(--text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+@mixin breakpoint-mobile {
+  @media (max-width: 768px) { @content; }
+}
+
+@mixin breakpoint-tablet {
+  @media (max-width: 1024px) { @content; }
+}

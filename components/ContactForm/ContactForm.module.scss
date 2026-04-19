@@ -1,0 +1,106 @@
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+  padding: var(--card-padding);
+  background: var(--bg-surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+
+  @media (max-width: 640px) {
+    grid-template-columns: 1fr;
+  }
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+
+  input,
+  select,
+  textarea {
+    width: 100%;
+    padding: 0.75rem 0.9rem;
+    background: var(--bg-elevated);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    color: var(--text-primary);
+    font-size: var(--fs-small);
+    transition: border-color 0.2s ease, background 0.2s ease;
+    font-family: inherit;
+
+    &::placeholder { color: var(--text-muted); }
+
+    &:focus {
+      border-color: var(--border-accent);
+      outline: none;
+      background: var(--bg-surface);
+    }
+  }
+
+  select {
+    appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%23888' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 0.9rem center;
+    padding-right: 2.25rem;
+  }
+
+  textarea {
+    resize: vertical;
+    min-height: 140px;
+    line-height: 1.55;
+  }
+}
+
+.label {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: var(--fs-xs);
+  color: var(--text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+.actions {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  flex-wrap: wrap;
+  padding-top: 0.25rem;
+}
+
+.note {
+  font-size: var(--fs-xs);
+  color: var(--text-muted);
+
+  a { color: var(--text-secondary); text-decoration: underline; text-underline-offset: 3px; }
+  a:hover { color: var(--accent-light); }
+}
+
+.feedback {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 0.85rem 1rem;
+  border-radius: var(--radius-sm);
+  font-size: var(--fs-small);
+
+  &.ok {
+    background: var(--status-green-bg);
+    color: var(--status-green);
+    border: 1px solid color-mix(in srgb, var(--status-green) 30%, transparent);
+  }
+
+  &.err {
+    background: var(--status-red-bg);
+    color: var(--status-red);
+    border: 1px solid color-mix(in srgb, var(--status-red) 30%, transparent);
+  }
+}

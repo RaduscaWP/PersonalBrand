@@ -1,0 +1,65 @@
+.dot {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 8px;
+  height: 8px;
+  background: var(--accent);
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 9999;
+  will-change: transform;
+
+  @media (pointer: coarse) {
+    display: none;
+  }
+}
+
+.ring {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 32px;
+  height: 32px;
+  border: 1.5px solid var(--accent);
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 9998;
+  opacity: 0.6;
+  will-change: transform;
+  transition: width 0.2s, height 0.2s, opacity 0.2s, background 0.2s, margin 0.2s;
+
+  @media (pointer: coarse) {
+    display: none;
+  }
+
+  &.hovered {
+    width: 48px;
+    height: 48px;
+    margin: -8px 0 0 -8px;
+    background: var(--accent-dim);
+    opacity: 1;
+  }
+
+  &.viewing {
+    width: 64px;
+    height: 64px;
+    margin: -16px 0 0 -16px;
+    background: var(--accent-dim);
+    opacity: 1;
+
+    &::after {
+      content: 'VIEW';
+      position: absolute;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.6rem;
+      font-weight: 600;
+      color: var(--accent-light);
+      letter-spacing: 0.1em;
+    }
+  }
+}

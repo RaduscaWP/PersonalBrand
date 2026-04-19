@@ -1,0 +1,117 @@
+.card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+  padding: var(--card-padding);
+  background: var(--bg-surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  transition: border-color 0.3s ease, box-shadow 0.3s ease, transform 0.3s ease;
+  height: 100%;
+
+  &:hover {
+    border-color: var(--border-accent);
+    transform: translateY(-3px);
+    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.5);
+  }
+
+  &.highlight {
+    border-color: var(--border-accent);
+    background:
+      linear-gradient(180deg, rgba(124, 58, 237, 0.05), transparent 50%),
+      var(--bg-surface);
+
+    &:hover {
+      box-shadow: var(--shadow-accent);
+    }
+  }
+}
+
+.ribbon {
+  position: absolute;
+  top: -0.75rem;
+  right: 1.25rem;
+  padding: 0.25rem 0.8rem;
+  background: var(--accent);
+  color: #fff;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: var(--fs-xs);
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  border-radius: var(--radius-pill);
+}
+
+.head {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.title {
+  font-size: 1.5rem;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+}
+
+.desc {
+  font-size: var(--fs-small);
+  color: var(--text-secondary);
+  line-height: 1.55;
+}
+
+.priceRow {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 1rem 0;
+  border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+}
+
+.price {
+  font-family: var(--font-syne), sans-serif;
+  font-size: 2rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  letter-spacing: -0.02em;
+}
+
+.turnaround {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: var(--fs-xs);
+  color: var(--text-muted);
+}
+
+.features {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+  flex: 1;
+
+  li {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.5rem;
+    font-size: var(--fs-small);
+    color: var(--text-secondary);
+    line-height: 1.5;
+  }
+}
+
+.check {
+  flex-shrink: 0;
+  margin-top: 2px;
+  color: var(--accent-light);
+}
+
+.cta {
+  display: flex;
+  justify-content: flex-start;
+  padding-top: 0.5rem;
+}

@@ -1,0 +1,197 @@
+@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&display=swap');
+
+:root {
+  --bg-primary:   #080808;
+  --bg-surface:   #111111;
+  --bg-elevated:  #1A1A1A;
+  --bg-overlay:   rgba(8, 8, 8, 0.92);
+
+  --text-primary:   #F0F0F0;
+  --text-secondary: #888888;
+  --text-muted:     #444444;
+  --text-on-accent: #FFFFFF;
+
+  --accent:       #7C3AED;
+  --accent-hover: #6D28D9;
+  --accent-light: #A78BFA;
+  --accent-dim:   rgba(124, 58, 237, 0.15);
+  --accent-glow:  rgba(124, 58, 237, 0.25);
+
+  --border:        rgba(255, 255, 255, 0.07);
+  --border-hover:  rgba(255, 255, 255, 0.15);
+  --border-accent: rgba(124, 58, 237, 0.4);
+
+  --status-green:      #10B981;
+  --status-green-bg:   rgba(16, 185, 129, 0.12);
+  --status-yellow:     #F59E0B;
+  --status-yellow-bg:  rgba(245, 158, 11, 0.12);
+  --status-orange:     #F97316;
+  --status-orange-bg:  rgba(249, 115, 22, 0.12);
+  --status-red:        #EF4444;
+  --status-red-bg:     rgba(239, 68, 68, 0.12);
+
+  --shadow-sm:     0 1px 3px rgba(0, 0, 0, 0.4);
+  --shadow-md:     0 4px 16px rgba(0, 0, 0, 0.5);
+  --shadow-lg:     0 8px 32px rgba(0, 0, 0, 0.6);
+  --shadow-accent: 0 0 32px rgba(124, 58, 237, 0.2);
+
+  --fs-hero:  clamp(3.5rem, 8vw, 7rem);
+  --fs-h1:    clamp(2.5rem, 5vw, 4.5rem);
+  --fs-h2:    clamp(1.8rem, 3vw, 2.8rem);
+  --fs-h3:    clamp(1.2rem, 2vw, 1.6rem);
+  --fs-body:  1rem;
+  --fs-small: 0.875rem;
+  --fs-xs:    0.75rem;
+  --fs-mono:  0.8rem;
+
+  --space-1:  0.25rem;
+  --space-2:  0.5rem;
+  --space-4:  1rem;
+  --space-6:  1.5rem;
+  --space-8:  2rem;
+  --space-12: 3rem;
+  --space-16: 4rem;
+  --space-20: 5rem;
+  --space-24: 6rem;
+
+  --max-width:       1200px;
+  --content-padding: clamp(1.5rem, 5vw, 3rem);
+  --section-gap:     clamp(4rem, 10vh, 8rem);
+  --card-padding:    clamp(1.25rem, 3vw, 2rem);
+
+  --radius-sm:   8px;
+  --radius-md:   12px;
+  --radius-lg:   16px;
+  --radius-xl:   24px;
+  --radius-pill: 100px;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+  -webkit-text-size-adjust: 100%;
+}
+
+html,
+body {
+  background: var(--bg-primary);
+  color: var(--text-primary);
+  font-family: var(--font-dm-sans), -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: var(--fs-body);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+body {
+  position: relative;
+
+  &::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 1;
+    opacity: 0.03;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 0.6 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+    mix-blend-mode: overlay;
+  }
+}
+
+main {
+  position: relative;
+  z-index: 2;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-syne), sans-serif;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  line-height: 1.1;
+  color: var(--text-primary);
+}
+
+p, span, li, label, input, textarea, button {
+  font-family: var(--font-dm-sans), sans-serif;
+}
+
+code, .mono, .label-mono {
+  font-family: 'JetBrains Mono', ui-monospace, monospace;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+button {
+  font: inherit;
+  color: inherit;
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+img, svg, video {
+  display: block;
+  max-width: 100%;
+}
+
+ul, ol {
+  list-style: none;
+}
+
+input, textarea {
+  font: inherit;
+  color: inherit;
+  background: none;
+  border: none;
+  outline: none;
+}
+
+::selection {
+  background: var(--accent-dim);
+  color: var(--text-primary);
+}
+
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+
+@media (pointer: fine) {
+  html,
+  html body {
+    cursor: none;
+  }
+
+  a,
+  button,
+  input,
+  textarea,
+  [role='button'],
+  [data-cursor] {
+    cursor: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}

@@ -1,0 +1,18 @@
+export const techStack = [
+  { name: 'HTML5',      icon: 'html5' },
+  { name: 'CSS3',       icon: 'css3' },
+  { name: 'SCSS',       icon: 'sass' },
+  { name: 'JavaScript', icon: 'javascript' },
+  { name: 'React',      icon: 'react' },
+  { name: 'Next.js',    icon: 'nextjs' },
+  { name: 'Node.js',    icon: 'nodejs' },
+  { name: 'Python',     icon: 'python' },
+  { name: 'Git',        icon: 'git' },
+  { name: 'GitHub',     icon: 'github' },
+  { name: 'Figma',      icon: 'figma' },
+  { name: 'Vercel',     icon: 'vercel' },
+  { name: 'Three.js',   icon: 'threejs' },
+  { name: 'SQL',        icon: 'mysql' },
+  { name: 'VS Code',    icon: 'vscode' },
+  { name: 'Postman',    icon: 'postman' },
+];

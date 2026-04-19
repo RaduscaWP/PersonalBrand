@@ -1,0 +1,89 @@
+.card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  padding: var(--card-padding);
+  background: var(--bg-surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  transition: border-color 0.3s ease, box-shadow 0.3s ease, transform 0.3s ease;
+  min-height: 240px;
+
+  &:hover {
+    border-color: var(--border-accent);
+    box-shadow: 0 0 24px var(--accent-glow);
+  }
+
+  &.soon {
+    .iconWrap { color: var(--text-muted); }
+    .title { color: var(--text-secondary); }
+  }
+}
+
+.iconWrap {
+  width: 44px;
+  height: 44px;
+  border-radius: var(--radius-sm);
+  background: var(--accent-dim);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--accent-light);
+  transition: background 0.3s ease, color 0.3s ease;
+}
+
+.body {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  flex: 1;
+}
+
+.title {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  letter-spacing: -0.01em;
+}
+
+.desc {
+  font-size: var(--fs-small);
+  color: var(--text-secondary);
+  line-height: 1.6;
+}
+
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  padding: 0.3rem 0.7rem;
+  align-self: flex-start;
+  border-radius: var(--radius-pill);
+  font-family: 'JetBrains Mono', monospace;
+  font-size: var(--fs-xs);
+  font-weight: 500;
+}
+
+.dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+}
+
+.card[data-status='green'] .badge { background: var(--status-green-bg);  color: var(--status-green); }
+.card[data-status='green'] .dot   { background: var(--status-green); animation: pulse 2.2s ease-in-out infinite; }
+
+.card[data-status='yellow'] .badge { background: var(--status-yellow-bg); color: var(--status-yellow); }
+.card[data-status='yellow'] .dot   { background: var(--status-yellow); }
+
+.card[data-status='orange'] .badge { background: var(--status-orange-bg); color: var(--status-orange); }
+.card[data-status='orange'] .dot   { background: var(--status-orange); }
+
+.card[data-status='red'] .badge { background: var(--status-red-bg);    color: var(--status-red); }
+.card[data-status='red'] .dot   { background: var(--status-red); }
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50%      { opacity: 0.45; }
+}
