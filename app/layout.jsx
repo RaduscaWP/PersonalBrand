@@ -1,4 +1,6 @@
 import { Syne, DM_Sans } from 'next/font/google';
+import { Analytics } from '@vercel/analytics/next';
+import { SpeedInsights } from '@vercel/speed-insights/next';
 import Navbar from '@/components/Navbar/Navbar';
 import Footer from '@/components/Footer/Footer';
 import CustomCursor from '@/components/CustomCursor/CustomCursor';
@@ -80,6 +82,8 @@ export default function RootLayout({ children }) {
           <PageTransition>{children}</PageTransition>
         </main>
         <Footer />
+        <Analytics />
+        <SpeedInsights />
       </body>
     </html>
   );
