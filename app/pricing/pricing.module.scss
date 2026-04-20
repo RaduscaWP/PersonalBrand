@@ -118,6 +118,61 @@
   letter-spacing: -0.02em;
 }
 
+.sectionLede {
+  font-size: 1rem;
+  color: var(--text-secondary);
+  line-height: 1.65;
+  max-width: 560px;
+}
+
+.addOns {
+  display: flex;
+  flex-direction: column;
+}
+
+.addOnGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 1rem;
+}
+
+.addOnCard {
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
+  padding: 1.1rem;
+  background: var(--bg-surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+}
+
+.addOnHead {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.addOnTitle {
+  font-size: 1.05rem;
+  letter-spacing: -0.02em;
+}
+
+.addOnPrice {
+  flex-shrink: 0;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: var(--fs-xs);
+  color: var(--accent-light);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.addOnBody {
+  color: var(--text-secondary);
+  font-size: var(--fs-small);
+  line-height: 1.65;
+}
+
 .faqList {
   display: flex;
   flex-direction: column;

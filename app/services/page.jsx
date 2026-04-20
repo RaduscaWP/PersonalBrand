@@ -9,12 +9,12 @@ import styles from './services.module.scss';
 export const metadata = {
   title: 'Services',
   description:
-    'Services available from Radu-Stefan: landing pages, Figma-to-code, UI/UX, full websites, web apps, SEO. Plus a roadmap of what\'s coming.',
+    "Services available from Radu-Stefan: landing pages, Figma-to-code, UI/UX, full websites, web apps, SEO. Plus a roadmap of what's coming.",
 };
 
 export default function ServicesPage() {
-  const available = services.filter((s) => s.availability === 'now');
-  const upcoming = services.filter((s) => s.availability !== 'now');
+  const available = services.filter((service) => service.availability === 'now');
+  const upcoming = services.filter((service) => service.availability !== 'now');
 
   return (
     <div className={styles.page}>
@@ -24,8 +24,9 @@ export default function ServicesPage() {
           What I build, <span className={styles.accent}>today and next.</span>
         </h1>
         <p className={styles.lede}>
-          Six services live now, four shipping on a public roadmap through 2027. You always know
-          what you can hire me for, and when the next capability comes online.
+          Six services are ready now, with four more on a public roadmap through 2027. If you are
+          hiring today, this page shows exactly what is live, what is not, and where I can help
+          right away.
         </p>
       </header>
 
@@ -39,8 +40,8 @@ export default function ServicesPage() {
             <span className={styles.rowCount}>{available.length} services</span>
           </div>
           <div className={styles.grid}>
-            {available.map((s) => (
-              <ServiceCard key={s.id} service={s} />
+            {available.map((service) => (
+              <ServiceCard key={service.id} service={service} />
             ))}
           </div>
         </section>
@@ -56,8 +57,8 @@ export default function ServicesPage() {
             <span className={styles.rowCount}>{upcoming.length} coming</span>
           </div>
           <div className={styles.grid}>
-            {upcoming.map((s) => (
-              <ServiceCard key={s.id} service={s} />
+            {upcoming.map((service) => (
+              <ServiceCard key={service.id} service={service} />
             ))}
           </div>
         </section>
@@ -65,10 +66,10 @@ export default function ServicesPage() {
 
       <SectionReveal>
         <section className={styles.cta}>
-          <h2 className={styles.ctaTitle}>Not sure which service you need?</h2>
+          <h2 className={styles.ctaTitle}>Not sure which service fits your project?</h2>
           <p className={styles.ctaLede}>
-            Send me what you want to build. I&rsquo;ll tell you the right package — honestly,
-            even if it&rsquo;s not the most expensive one.
+            Send me what you want to build. I&apos;ll point you toward the right package honestly,
+            even if that means starting smaller.
           </p>
           <div className={styles.ctaRow}>
             <MagneticButton href="/contact" variant="primary">

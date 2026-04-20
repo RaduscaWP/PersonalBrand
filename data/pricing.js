@@ -2,15 +2,15 @@ export const pricing = [
   {
     id: 'landing-page',
     service: 'Landing Page',
-    priceRange: '$300 - $550',
+    priceRange: '$250-$400',
     billingLabel: 'Starter range',
     highlight: true,
-    description: 'Single-page sites for launches, personal brands, and focused campaigns.',
+    description: 'Single-page websites for launches, personal brands, and focused offers.',
     includes: [
       'Custom 1-page responsive build',
       'SEO setup (title, description, OG tags)',
       'Contact form with email delivery',
-      'Basic motion and hover polish',
+      'Light motion and hover polish',
       '2 revision rounds',
       'Vercel deployment support',
     ],
@@ -19,10 +19,10 @@ export const pricing = [
   {
     id: 'figma-to-code',
     service: 'Figma to Code',
-    priceRange: '$220 - $450',
+    priceRange: '$180-$320',
     billingLabel: 'Build-only range',
     highlight: false,
-    description: 'You bring the design. I turn it into responsive production-ready code.',
+    description: 'You bring the design, I turn it into responsive production-ready code.',
     includes: [
       'Pixel-accurate React or Next.js build',
       'Responsive adaptation for mobile and desktop',
@@ -36,10 +36,10 @@ export const pricing = [
   {
     id: 'uiux-design',
     service: 'UI/UX Design',
-    priceRange: '$250 - $500',
+    priceRange: '$200-$350',
     billingLabel: 'Design package',
     highlight: false,
-    description: 'Figma design packages for web pages and product screens ready for development.',
+    description: 'Figma design packages for web pages and product screens ready for build.',
     includes: [
       'Desktop and mobile page designs',
       'Reusable sections and simple design tokens',
@@ -53,10 +53,10 @@ export const pricing = [
   {
     id: 'full-website',
     service: 'Full Website',
-    priceRange: '$800 - $1,500',
+    priceRange: '$650-$1,000',
     billingLabel: 'Project range',
     highlight: false,
-    description: 'Multi-page marketing sites built to look sharp, load fast, and launch cleanly.',
+    description: 'Multi-page marketing sites for founders, small teams, and service brands.',
     includes: [
       'Up to 5 pages',
       'Responsive navigation and footer',
@@ -70,10 +70,10 @@ export const pricing = [
   {
     id: 'web-app',
     service: 'Web Application',
-    priceRange: '$1,200 - $3,000',
+    priceRange: '$900-$1,800',
     billingLabel: 'Custom build',
     highlight: false,
-    description: 'Interactive React and Next.js builds for dashboards, portals, and MVPs.',
+    description: 'Interactive React and Next.js builds for dashboards, tools, and MVPs.',
     includes: [
       'Core frontend flows and reusable components',
       'API integration or CMS wiring',
@@ -87,10 +87,10 @@ export const pricing = [
   {
     id: 'seo',
     service: 'SEO Package',
-    priceRange: '$180 / month',
+    priceRange: '$120-$200 / month',
     billingLabel: 'Monthly retainer',
     highlight: false,
-    description: 'Ongoing SEO and technical cleanup for existing websites.',
+    description: 'Ongoing SEO and technical cleanup for existing small business websites.',
     includes: [
       'Technical SEO audit',
       'Metadata and schema updates',
@@ -100,5 +100,38 @@ export const pricing = [
       'Performance summary',
     ],
     turnaround: 'Ongoing',
+  },
+];
+
+export const pricingAddOns = [
+  {
+    id: 'extra-page',
+    label: 'Extra page',
+    priceRange: '+$80-$140',
+    description: 'Useful when a landing build grows into a fuller site.',
+  },
+  {
+    id: 'cms-blog',
+    label: 'CMS or blog setup',
+    priceRange: '+$150-$300',
+    description: 'Content collections, post structure, and manageable publishing flow.',
+  },
+  {
+    id: 'advanced-animation',
+    label: 'Advanced animation',
+    priceRange: '+$120-$250',
+    description: 'For more custom motion than the default package polish includes.',
+  },
+  {
+    id: 'rush-delivery',
+    label: 'Rush delivery',
+    priceRange: '+25%',
+    description: 'Priority scheduling when the timeline needs to move faster.',
+  },
+  {
+    id: 'maintenance',
+    label: 'Maintenance',
+    priceRange: '+$90-$180 / month',
+    description: 'Small updates, monitoring, and ongoing support after launch.',
   },
 ];

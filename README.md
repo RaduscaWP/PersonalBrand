@@ -23,12 +23,13 @@ The website is not just a simple personal page. It is built as a complete profes
 - Multi-page structure using Next.js App Router
 - Smooth UI animations
 - Custom reusable components
-- Project showcase section
+- Hybrid project case studies
 - Freelance services section
 - Pricing page with starter ranges
+- Public pricing add-ons
 - Blog page structure
-- Contact page
-- Public proof through projects and certifications
+- Contact page with project brief form
+- Public proof through projects, certifications, and trust signals
 - SEO-ready structure
 - Vercel deployment
 
@@ -52,6 +53,7 @@ The homepage is structured as a professional landing page:
 - Stats section
 - About preview
 - Services preview
+- How I work section
 - Featured projects
 - Tech stack marquee
 - Testimonials / trust section

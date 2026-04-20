@@ -1,4 +1,3 @@
-import Link from 'next/link';
 import { ArrowUpRight } from 'lucide-react';
 import SectionReveal from '@/components/SectionReveal/SectionReveal';
 import BentoGrid from '@/components/BentoGrid/BentoGrid';
@@ -9,7 +8,7 @@ import styles from './projects.module.scss';
 export const metadata = {
   title: 'Projects',
   description:
-    'Selected projects by Radu-Stefan: COSMOS (Three.js educational), Arca AI, CryptoTrack, Grozav Bank.',
+    'Selected projects by Radu-Stefan: COSMOS, Arca AI, CryptoTrack, and Grozav Bank, now with deeper case-study context.',
 };
 
 export default function ProjectsPage() {
@@ -18,12 +17,12 @@ export default function ProjectsPage() {
       <header className={styles.header}>
         <span className={styles.eyebrow}>/ Projects</span>
         <h1 className={styles.title}>
-          What I&rsquo;ve <span className={styles.accent}>built.</span>
+          Work that already <span className={styles.accent}>proves the point.</span>
         </h1>
         <p className={styles.lede}>
-          Four shipped projects — live and deployed. Each one pushed something: 3D rendering,
-          API integration, financial dashboards, or a polished product concept. Hover a card and
-          click through to the live site.
+          Four shipped projects, each showing a different strength: storytelling, product
+          positioning, live data, or polished fintech presentation. The grid gives the snapshot.
+          The case studies show the thinking behind it.
         </p>
       </header>
 
@@ -34,38 +33,71 @@ export default function ProjectsPage() {
       </SectionReveal>
 
       <SectionReveal>
-        <section className={styles.caseGrid}>
-          {projects.map((p) => (
-            <article key={p.id} className={styles.caseCard}>
-              <div className={styles.caseHead}>
-                <span className={styles.caseMeta}>{p.category}</span>
-                <h2 className={styles.caseTitle}>{p.title}</h2>
+        <section className={styles.studyList}>
+          {projects.map((project) => (
+            <article key={project.id} className={styles.studyCard}>
+              <div className={styles.studyIntro}>
+                <div className={styles.studyHead}>
+                  <span className={styles.studyMeta}>{project.category}</span>
+                  <h2 className={styles.studyTitle}>{project.title}</h2>
+                </div>
+
+                <p className={styles.studySummary}>{project.shortDescription}</p>
+
+                <div className={styles.studyTags}>
+                  {project.tags.map((tag) => (
+                    <span key={tag} className={styles.tag}>
+                      {tag}
+                    </span>
+                  ))}
+                </div>
+
+                <div className={styles.studyLinks}>
+                  <a
+                    href={project.liveUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className={styles.caseLink}
+                  >
+                    Live site <ArrowUpRight size={14} />
+                  </a>
+                  <a
+                    href={project.githubUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className={styles.caseLinkMuted}
+                  >
+                    GitHub <ArrowUpRight size={12} />
+                  </a>
+                </div>
               </div>
-              <p className={styles.caseDesc}>{p.shortDescription}</p>
-              <div className={styles.caseTags}>
-                {p.tags.map((t) => (
-                  <span key={t} className={styles.tag}>
-                    {t}
-                  </span>
-                ))}
-              </div>
-              <div className={styles.caseLinks}>
-                <a
-                  href={p.liveUrl}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className={styles.caseLink}
-                >
-                  Live site <ArrowUpRight size={14} />
-                </a>
-                <a
-                  href={p.githubUrl}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className={styles.caseLinkMuted}
-                >
-                  GitHub <ArrowUpRight size={12} />
-                </a>
+
+              <div className={styles.studyBody}>
+                <div className={styles.studyGrid}>
+                  <div className={styles.studyBlock}>
+                    <span className={styles.blockLabel}>Problem</span>
+                    <p>{project.problem}</p>
+                  </div>
+
+                  <div className={styles.studyBlock}>
+                    <span className={styles.blockLabel}>Solution</span>
+                    <p>{project.solution}</p>
+                  </div>
+
+                  <div className={`${styles.studyBlock} ${styles.studyBlockWide}`}>
+                    <span className={styles.blockLabel}>Outcome</span>
+                    <p>{project.outcome}</p>
+                  </div>
+                </div>
+
+                <div className={styles.highlightBlock}>
+                  <span className={styles.blockLabel}>Result highlights</span>
+                  <ul className={styles.highlightList}>
+                    {project.resultHighlights.map((highlight) => (
+                      <li key={highlight}>{highlight}</li>
+                    ))}
+                  </ul>
+                </div>
               </div>
             </article>
           ))}
@@ -74,7 +106,11 @@ export default function ProjectsPage() {
 
       <SectionReveal>
         <section className={styles.cta}>
-          <h2 className={styles.ctaTitle}>Want your project next?</h2>
+          <h2 className={styles.ctaTitle}>Want your project to be the next case study?</h2>
+          <p className={styles.ctaLede}>
+            If you already know what you need, send the brief. If you do not, I can help shape the
+            right scope first.
+          </p>
           <MagneticButton href="/contact" variant="primary">
             Start a project
           </MagneticButton>

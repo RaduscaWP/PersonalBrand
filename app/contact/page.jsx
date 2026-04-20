@@ -16,11 +16,12 @@ export default function ContactPage() {
       <header className={styles.header}>
         <span className={styles.eyebrow}>/ Contact</span>
         <h1 className={styles.title}>
-          Let&rsquo;s build <span className={styles.accent}>something good.</span>
+          Let&apos;s build <span className={styles.accent}>something good.</span>
         </h1>
         <p className={styles.lede}>
-          Tell me about your project. I usually reply within 24 hours. No automated replies, no
-          sales funnels — just me.
+          Send a short project brief with the service, goals, budget, and timeline if you know
+          them. The form opens your email app with everything prefilled. I usually reply within 24
+          hours. No automated replies, no sales funnel, just me.
         </p>
       </header>
 
@@ -74,7 +75,7 @@ export default function ContactPage() {
             </div>
           </aside>
 
-          <Suspense fallback={<div className={styles.formFallback}>Loading form…</div>}>
+          <Suspense fallback={<div className={styles.formFallback}>Loading form...</div>}>
             <ContactForm />
           </Suspense>
         </div>

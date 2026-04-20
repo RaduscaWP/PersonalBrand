@@ -3,7 +3,7 @@ import { Info, ArrowUpRight } from 'lucide-react';
 import SectionReveal from '@/components/SectionReveal/SectionReveal';
 import PricingCard from '@/components/PricingCard/PricingCard';
 import MagneticButton from '@/components/MagneticButton/MagneticButton';
-import { pricing } from '@/data/pricing';
+import { pricing, pricingAddOns } from '@/data/pricing';
 import styles from './pricing.module.scss';
 
 export const metadata = {
@@ -16,7 +16,7 @@ const pricingFacts = [
   { label: 'Currency', value: 'USD or EUR' },
   { label: 'Deposit', value: '50% upfront' },
   { label: 'Response', value: 'Under 24 hours' },
-  { label: 'Quote style', value: 'Fixed before build' },
+  { label: 'Best fit', value: 'Early-stage and small business' },
 ];
 
 const faqs = [
@@ -26,7 +26,7 @@ const faqs = [
   },
   {
     q: 'What if I need revisions?',
-    a: 'Every package includes revision rounds. If the scope grows after approval, I will confirm the extra cost before touching the work.',
+    a: 'Every package includes revision rounds. If the scope grows after approval, I confirm the extra cost before touching the work.',
   },
   {
     q: 'Do you own the code afterwards?',
@@ -44,18 +44,19 @@ export default function PricingPage() {
       <header className={styles.header}>
         <span className={styles.eyebrow}>/ Pricing</span>
         <h1 className={styles.title}>
-          Clear pricing. <span className={styles.accent}>No surprises.</span>
+          Clear pricing. <span className={styles.accent}>Starter-friendly by design.</span>
         </h1>
         <p className={styles.lede}>
-          Starter ranges in USD for the services I ship most often. Once scope is clear, you get
-          a fixed quote before any code is written.
+          These are entry-level public ranges built for founders, personal brands, and small
+          businesses that need strong work without agency-sized pricing. Once the scope is clear,
+          you get a fixed quote before any build starts.
         </p>
 
         <div className={styles.notice}>
           <Info size={16} />
           <span>
-            Extra pages, API depth, CMS setup, auth, or heavy animation can shift the final quote.
-            Nothing changes without approval first.
+            Extra pages, CMS setup, heavier animation, or faster timelines can shift the final
+            quote. Nothing moves without approval first.
           </span>
         </div>
 
@@ -78,6 +79,31 @@ export default function PricingPage() {
       </SectionReveal>
 
       <SectionReveal>
+        <section className={styles.addOns}>
+          <div className={styles.sectionHead}>
+            <span className={styles.eyebrow}>/ Add-ons</span>
+            <h2 className={styles.sectionTitle}>Useful extras when the scope grows.</h2>
+            <p className={styles.sectionLede}>
+              A compact menu of common additions so the quote stays predictable even when the build
+              expands.
+            </p>
+          </div>
+
+          <div className={styles.addOnGrid}>
+            {pricingAddOns.map((item) => (
+              <article key={item.id} className={styles.addOnCard}>
+                <div className={styles.addOnHead}>
+                  <h3 className={styles.addOnTitle}>{item.label}</h3>
+                  <span className={styles.addOnPrice}>{item.priceRange}</span>
+                </div>
+                <p className={styles.addOnBody}>{item.description}</p>
+              </article>
+            ))}
+          </div>
+        </section>
+      </SectionReveal>
+
+      <SectionReveal>
         <section className={styles.faq}>
           <div className={styles.sectionHead}>
             <span className={styles.eyebrow}>/ FAQ</span>
@@ -85,15 +111,15 @@ export default function PricingPage() {
           </div>
 
           <div className={styles.faqList}>
-            {faqs.map((f) => (
-              <details key={f.q} className={styles.faqItem}>
+            {faqs.map((item) => (
+              <details key={item.q} className={styles.faqItem}>
                 <summary>
-                  <span>{f.q}</span>
+                  <span>{item.q}</span>
                   <span className={styles.plus} aria-hidden="true">
                     +
                   </span>
                 </summary>
-                <p>{f.a}</p>
+                <p>{item.a}</p>
               </details>
             ))}
           </div>
@@ -108,7 +134,7 @@ export default function PricingPage() {
               Start a project
             </MagneticButton>
             <Link href="/services" className={styles.textLink}>
-              See what&rsquo;s included <ArrowUpRight size={14} />
+              See what&apos;s included <ArrowUpRight size={14} />
             </Link>
           </div>
         </section>

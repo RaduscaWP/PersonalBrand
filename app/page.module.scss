@@ -118,6 +118,55 @@
   gap: 1rem;
 }
 
+/* ---------- Process ---------- */
+.processSection {
+  max-width: var(--max-width);
+  margin: 0 auto;
+  padding: 0 var(--content-padding) var(--section-gap);
+}
+
+.processGrid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 1rem;
+
+  @media (max-width: 1000px) {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  @media (max-width: 640px) {
+    grid-template-columns: 1fr;
+  }
+}
+
+.processStep {
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
+  padding-top: 1rem;
+  border-top: 1px solid var(--border-accent);
+}
+
+.processNumber {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: var(--fs-xs);
+  color: var(--accent-light);
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+
+.processTitle {
+  font-size: 1.25rem;
+  letter-spacing: -0.02em;
+}
+
+.processBody {
+  color: var(--text-secondary);
+  font-size: var(--fs-small);
+  line-height: 1.7;
+  max-width: 28ch;
+}
+
 /* ---------- Projects preview ---------- */
 .projectsPreview {
   max-width: var(--max-width);
@@ -159,9 +208,30 @@
   padding: 0 var(--content-padding) var(--section-gap);
 }
 
+.trustBadgeRow {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.65rem;
+  margin-bottom: var(--space-8);
+}
+
+.trustBadge {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.5rem 0.85rem;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-pill);
+  background: var(--bg-surface);
+  color: var(--text-secondary);
+  font-family: 'JetBrains Mono', monospace;
+  font-size: var(--fs-xs);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
 .testimonialGrid {
   display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
+  grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 1rem;
 
   @media (max-width: 900px) {
