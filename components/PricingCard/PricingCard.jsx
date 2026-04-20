@@ -13,7 +13,10 @@ export default function PricingCard({ plan }) {
       </header>
 
       <div className={styles.priceRow}>
-        <span className={styles.price}>{plan.priceRange}</span>
+        <div className={styles.priceBlock}>
+          <span className={styles.priceLabel}>{plan.billingLabel}</span>
+          <span className={styles.price}>{plan.priceRange}</span>
+        </div>
         <span className={styles.turnaround}>
           <Clock size={13} /> {plan.turnaround}
         </span>

@@ -71,6 +71,20 @@
   border-bottom: 1px solid var(--border);
 }
 
+.priceBlock {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+}
+
+.priceLabel {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: var(--fs-xs);
+  color: var(--accent-light);
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
 .price {
   font-family: var(--font-syne), sans-serif;
   font-size: 2rem;
@@ -114,4 +128,11 @@
   display: flex;
   justify-content: flex-start;
   padding-top: 0.5rem;
+}
+
+@media (max-width: 720px) {
+  .priceRow {
+    align-items: flex-start;
+    flex-direction: column;
+  }
 }

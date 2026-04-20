@@ -12,6 +12,13 @@ export const metadata = {
     'Transparent pricing by Radu-Stefan. Landing pages, Figma-to-code, UI/UX, full websites, web apps, SEO.',
 };
 
+const pricingFacts = [
+  { label: 'Currency', value: 'USD or EUR' },
+  { label: 'Deposit', value: '50% upfront' },
+  { label: 'Response', value: 'Under 24 hours' },
+  { label: 'Quote style', value: 'Fixed before build' },
+];
+
 const faqs = [
   {
     q: 'How do I pay?',
@@ -19,15 +26,15 @@ const faqs = [
   },
   {
     q: 'What if I need revisions?',
-    a: 'Every package includes revision rounds. Additional rounds are billed by the hour at a clearly-stated rate before any work starts.',
+    a: 'Every package includes revision rounds. If the scope grows after approval, I will confirm the extra cost before touching the work.',
   },
   {
     q: 'Do you own the code afterwards?',
-    a: 'Yes. Once final payment clears, the code is 100% yours — MIT-licensed or proprietary, your call.',
+    a: 'Yes. Once final payment clears, the code is 100% yours - MIT-licensed or proprietary, your call.',
   },
   {
     q: 'Can you work with my existing codebase?',
-    a: 'Yes, provided it\'s in a supported stack (React, Next.js, vanilla HTML/CSS/JS). Initial audit before quoting.',
+    a: "Yes, provided it's in a supported stack (React, Next.js, vanilla HTML/CSS/JS). I review the codebase first, then quote from there.",
   },
 ];
 
@@ -40,16 +47,25 @@ export default function PricingPage() {
           Clear pricing. <span className={styles.accent}>No surprises.</span>
         </h1>
         <p className={styles.lede}>
-          Prices are ranges because every project is different. Fixed quote after our first call
-          — always before any code is written.
+          Starter ranges in USD for the services I ship most often. Once scope is clear, you get
+          a fixed quote before any code is written.
         </p>
 
         <div className={styles.notice}>
           <Info size={16} />
           <span>
-            Pricing ranges shown as <span className={styles.mono}>$X — $Y</span> while I gather
-            the first batch of client feedback. Real numbers land in your quote.
+            Extra pages, API depth, CMS setup, auth, or heavy animation can shift the final quote.
+            Nothing changes without approval first.
           </span>
+        </div>
+
+        <div className={styles.facts}>
+          {pricingFacts.map((fact) => (
+            <article key={fact.label} className={styles.fact}>
+              <span className={styles.factLabel}>{fact.label}</span>
+              <span className={styles.factValue}>{fact.value}</span>
+            </article>
+          ))}
         </div>
       </header>
 
@@ -73,7 +89,9 @@ export default function PricingPage() {
               <details key={f.q} className={styles.faqItem}>
                 <summary>
                   <span>{f.q}</span>
-                  <span className={styles.plus} aria-hidden="true">+</span>
+                  <span className={styles.plus} aria-hidden="true">
+                    +
+                  </span>
                 </summary>
                 <p>{f.a}</p>
               </details>

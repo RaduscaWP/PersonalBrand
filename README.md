@@ -25,7 +25,7 @@ The website is not just a simple personal page. It is built as a complete profes
 - Custom reusable components
 - Project showcase section
 - Freelance services section
-- Pricing page structure
+- Pricing page with starter ranges
 - Blog page structure
 - Contact page
 - Public proof through projects and certifications
@@ -54,7 +54,7 @@ The homepage is structured as a professional landing page:
 - Services preview
 - Featured projects
 - Tech stack marquee
-- Public proof / testimonials placeholder
+- Testimonials / trust section
 - Final call-to-action
 - Footer
 

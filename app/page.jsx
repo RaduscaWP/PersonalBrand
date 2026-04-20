@@ -10,25 +10,8 @@ import Marquee from '@/components/Marquee/Marquee';
 import { services } from '@/data/services';
 import { projects } from '@/data/projects';
 import { techStack } from '@/data/stack';
+import { testimonials } from '@/data/testimonials';
 import styles from './page.module.scss';
-
-const proofPoints = [
-  {
-    value: '4',
-    label: 'Shipped projects',
-    body: 'Live portfolio work you can open right now without waiting for a sales call.',
-  },
-  {
-    value: '3',
-    label: 'Certiport certifications',
-    body: 'Python, Databases, and Networking credentials earned in 2025.',
-  },
-  {
-    value: 'Public',
-    label: 'Code and process',
-    body: 'The GitHub footprint is visible, which matters more than invented praise.',
-  },
-];
 
 export default function HomePage() {
   const previewServices = services.filter((s) => s.availability === 'now').slice(0, 4);
@@ -50,7 +33,7 @@ export default function HomePage() {
 
           <div className={styles.aboutBody}>
             <p>
-              I&rsquo;m Radu-Stefan — <span className={styles.hl}>Radusca</span>, 18, building websites
+              I&rsquo;m Radu-Stefan - <span className={styles.hl}>Radusca</span>, 18, building websites
               from Chisinau. Six years as a national-level water polo goalkeeper taught me
               discipline. I&rsquo;m now applying the same focus to code: Next.js, React, SCSS,
               Python, and the security mindset that keeps modern products alive.
@@ -75,7 +58,7 @@ export default function HomePage() {
             <span className={styles.eyebrow}>/ Services</span>
             <h2 className={styles.sectionTitle}>What I build for clients.</h2>
             <p className={styles.sectionLede}>
-              Six services live today. More shipping through 2026–2027 as my skill set grows.
+              Six services live today. More shipping through 2026-2027 as my skill set grows.
             </p>
           </div>
 
@@ -134,21 +117,25 @@ export default function HomePage() {
           <div className={styles.sectionHead}>
             <span className={styles.eyebrow}>/ Testimonials</span>
             <h2 className={styles.sectionTitle}>
-              No fake reviews. <span className={styles.accent}>Only public proof.</span>
+              No fake praise. <span className={styles.accent}>Real trust signals.</span>
             </h2>
             <p className={styles.sectionLede}>
-              I am not filling this portfolio with invented praise. As client work stacks up, this
-              section will earn real feedback. Until then, the work, the certifications, and the
-              code stay public.
+              I do not publish invented client quotes. Until paid projects close and real
+              testimonials arrive, this section shows the proof and working style behind every
+              collaboration.
             </p>
           </div>
 
-          <div className={styles.proofGrid}>
-            {proofPoints.map((point) => (
-              <article key={point.label} className={styles.proofCard}>
-                <span className={styles.proofValue}>{point.value}</span>
-                <h3 className={styles.proofLabel}>{point.label}</h3>
-                <p className={styles.proofBody}>{point.body}</p>
+          <div className={styles.testimonialGrid}>
+            {testimonials.map((item) => (
+              <article key={item.id} className={styles.testimonialCard}>
+                <span className={styles.testimonialBadge}>{item.badge}</span>
+                <p className={styles.testimonialQuote}>{item.quote}</p>
+
+                <div className={styles.testimonialMeta}>
+                  <span className={styles.testimonialName}>{item.author}</span>
+                  <span className={styles.testimonialRole}>{item.role}</span>
+                </div>
               </article>
             ))}
           </div>
