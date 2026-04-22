@@ -67,10 +67,13 @@ function ChoiceField({
   onClose,
   onSelect,
   invalid = false,
+  errorMessage = '',
 }) {
   const fieldId = useId();
   const rootRef = useRef(null);
   const triggerRef = useRef(null);
+  const menuId = `${fieldId}-menu`;
+  const errorId = `${fieldId}-error`;
 
   useEffect(() => {
     if (!isOpen) return undefined;
@@ -133,7 +136,10 @@ function ChoiceField({
           type="button"
           className={styles.choiceTrigger}
           aria-haspopup="listbox"
+          aria-controls={menuId}
+          aria-describedby={invalid ? errorId : undefined}
           aria-expanded={isOpen}
+          aria-invalid={invalid}
           aria-labelledby={`${fieldId}-label ${fieldId}-value`}
           onClick={onToggle}
           onKeyDown={handleTriggerKeyDown}
@@ -149,7 +155,12 @@ function ChoiceField({
         </button>
 
         {isOpen && (
-          <div className={styles.choiceMenu} role="listbox" aria-labelledby={`${fieldId}-label`}>
+          <div
+            id={menuId}
+            className={styles.choiceMenu}
+            role="listbox"
+            aria-labelledby={`${fieldId}-label`}
+          >
             <button
               type="button"
               role="option"
@@ -190,6 +201,12 @@ function ChoiceField({
           </div>
         )}
       </div>
+
+      {invalid && errorMessage ? (
+        <span id={errorId} className={styles.choiceError}>
+          {errorMessage}
+        </span>
+      ) : null}
     </div>
   );
 }
@@ -204,29 +221,45 @@ export default function ContactForm() {
   const [errorMessage, setErrorMessage] = useState('');
 
   useEffect(() => {
-    if (!prefillService) return;
+    setValues((current) => {
+      const nextValues = buildInitialValues(prefillService);
 
-    const nextValues = buildInitialValues(prefillService);
+      return {
+        ...current,
+        ...nextValues,
+        name: current.name,
+        email: current.email,
+        budget: current.budget,
+        timeline: current.timeline,
+        projectGoals: current.projectGoals,
+        projectDetails: current.projectDetails || nextValues.projectDetails,
+      };
+    });
 
-    setValues((current) => ({
-      ...current,
-      ...nextValues,
-      name: current.name,
-      email: current.email,
-      budget: current.budget,
-      timeline: current.timeline,
-      projectGoals: current.projectGoals,
-      projectDetails: current.projectDetails || nextValues.projectDetails,
-    }));
-
+    setOpenChoice(null);
+    setStatus('idle');
     setErrorMessage('');
   }, [prefillService]);
 
+  useEffect(() => {
+    if (!openChoice) return undefined;
+
+    const closeChoices = () => setOpenChoice(null);
+
+    window.addEventListener('resize', closeChoices);
+
+    return () => {
+      window.removeEventListener('resize', closeChoices);
+    };
+  }, [openChoice]);
+
   const onChange = (e) => {
+    setStatus('idle');
     setValues((current) => ({ ...current, [e.target.name]: e.target.value }));
   };
 
   const onChoiceChange = (name, nextValue) => {
+    setStatus('idle');
     setValues((current) => ({ ...current, [name]: nextValue }));
 
     if (name === 'service' && nextValue) {
@@ -263,6 +296,7 @@ export default function ContactForm() {
             onChange={onChange}
             required
             autoComplete="name"
+            enterKeyHint="next"
             placeholder="Jane Doe"
           />
         </label>
@@ -276,6 +310,8 @@ export default function ContactForm() {
             onChange={onChange}
             required
             autoComplete="email"
+            inputMode="email"
+            enterKeyHint="next"
             placeholder="jane@company.com"
           />
         </label>
@@ -292,6 +328,7 @@ export default function ContactForm() {
           onClose={() => setOpenChoice(null)}
           onSelect={(nextValue) => onChoiceChange('service', nextValue)}
           invalid={Boolean(errorMessage && !values.service)}
+          errorMessage={errorMessage}
         />
 
         <ChoiceField
@@ -326,6 +363,7 @@ export default function ContactForm() {
             value={values.projectGoals}
             onChange={onChange}
             required
+            enterKeyHint="next"
             placeholder="Launch, get leads, improve trust, ship an MVP..."
           />
         </label>
@@ -339,12 +377,13 @@ export default function ContactForm() {
           onChange={onChange}
           required
           rows={7}
+          enterKeyHint="send"
           placeholder="Tell me what you want to build, what already exists, and anything I should know before quoting."
         />
       </label>
 
       <div className={styles.actions}>
-        <MagneticButton type="submit" variant="primary">
+        <MagneticButton type="submit" variant="primary" className={styles.submitButton}>
           <>
             Open email draft <Send size={15} />
           </>
@@ -360,12 +399,6 @@ export default function ContactForm() {
         <div className={`${styles.feedback} ${styles.ok}`}>
           <CheckCircle2 size={18} />
           <span>Your email app should open with the project brief already filled in.</span>
-        </div>
-      )}
-
-      {errorMessage && (
-        <div className={`${styles.feedback} ${styles.err}`}>
-          <span>{errorMessage}</span>
         </div>
       )}
     </form>

@@ -6,6 +6,10 @@
   background: var(--bg-surface);
   border: 1px solid var(--border);
   border-radius: var(--radius-lg);
+
+  @media (max-width: 640px) {
+    gap: 1rem;
+  }
 }
 
 .grid {
@@ -26,6 +30,7 @@
   input,
   textarea {
     width: 100%;
+    min-height: 3rem;
     padding: 0.75rem 0.9rem;
     background: var(--bg-elevated);
     border: 1px solid var(--border);
@@ -57,6 +62,7 @@
 
 .choiceTrigger {
   width: 100%;
+  min-height: 3rem;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -70,6 +76,7 @@
   font-family: inherit;
   text-align: left;
   cursor: pointer;
+  touch-action: manipulation;
   transition:
     border-color 0.2s ease,
     background 0.2s ease,
@@ -129,8 +136,10 @@
   flex-direction: column;
   gap: 0.2rem;
   padding: 0.35rem;
-  max-height: 280px;
+  max-height: min(42svh, 280px);
   overflow-y: auto;
+  overscroll-behavior: contain;
+  -webkit-overflow-scrolling: touch;
   background: color-mix(in srgb, var(--bg-surface) 96%, black);
   border: 1px solid color-mix(in srgb, var(--border-accent) 85%, var(--border));
   border-radius: calc(var(--radius-sm) + 2px);
@@ -148,13 +157,23 @@
     background: color-mix(in srgb, var(--accent) 35%, var(--bg-elevated));
     border-radius: 999px;
   }
+
+  @media (max-width: 640px) {
+    position: static;
+    margin-top: 0.5rem;
+    max-height: none;
+    box-shadow:
+      0 16px 28px rgba(0, 0, 0, 0.36),
+      0 0 0 1px rgba(255, 255, 255, 0.02);
+  }
 }
 
 .choiceOption {
   width: 100%;
+  min-height: 2.85rem;
   border: 0;
   border-radius: calc(var(--radius-sm) - 2px);
-  padding: 0.7rem 0.75rem;
+  padding: 0.8rem 0.75rem;
   background: transparent;
   color: var(--text-primary);
   font: inherit;
@@ -183,6 +202,11 @@
   color: var(--text-secondary);
 }
 
+.choiceError {
+  font-size: var(--fs-xs);
+  color: var(--status-red);
+}
+
 .label {
   font-family: 'JetBrains Mono', monospace;
   font-size: var(--fs-xs);
@@ -197,11 +221,24 @@
   gap: 1rem;
   flex-wrap: wrap;
   padding-top: 0.25rem;
+
+  @media (max-width: 640px) {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0.85rem;
+  }
+}
+
+.submitButton {
+  @media (max-width: 640px) {
+    width: 100%;
+  }
 }
 
 .note {
   font-size: var(--fs-xs);
   color: var(--text-muted);
+  overflow-wrap: anywhere;
 
   a { color: var(--text-secondary); text-decoration: underline; text-underline-offset: 3px; }
   a:hover { color: var(--accent-light); }
@@ -214,6 +251,10 @@
   padding: 0.85rem 1rem;
   border-radius: var(--radius-sm);
   font-size: var(--fs-small);
+
+  @media (max-width: 640px) {
+    align-items: flex-start;
+  }
 
   &.ok {
     background: var(--status-green-bg);

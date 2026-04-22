@@ -12,7 +12,7 @@ export const services = [
     id: 'figma-to-code',
     title: 'Figma to Code',
     description:
-      'You design it in Figma — I build it exactly. HTML/CSS/React, pixel-perfect, responsive on all screens.',
+      'You design it in Figma - I build it exactly. HTML/CSS/React, pixel-perfect, responsive on all screens.',
     icon: 'Figma',
     availability: 'now',
     availableLabel: 'Available Now',
