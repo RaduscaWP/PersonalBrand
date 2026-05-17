@@ -1,405 +1,184 @@
 'use client';
-import { useEffect, useId, useRef, useState } from 'react';
+
+import { useEffect, useState } from 'react';
 import { useSearchParams } from 'next/navigation';
-import { Send, CheckCircle2, ChevronDown } from 'lucide-react';
-import MagneticButton from '../MagneticButton/MagneticButton';
+import { Send } from 'lucide-react';
+import CustomSelect from '@/components/CustomSelect/CustomSelect';
 import { services } from '@/data/services';
 import styles from './ContactForm.module.scss';
 
-const CONTACT_EMAIL = 'grozavradustefan@gmail.com';
 const serviceOptions = services.filter((service) => service.availability === 'now');
 const budgetOptions = [
-  { value: '< $300', label: '< $300' },
-  { value: '$300-$700', label: '$300-$700' },
-  { value: '$700-$1,200', label: '$700-$1,200' },
-  { value: '$1,200-$2,500', label: '$1,200-$2,500' },
-  { value: '$2,500+', label: '$2,500+' },
+  { value: '$300-700', label: '$300-700' },
+  { value: '$700-1200', label: '$700-1200' },
+  { value: '$1200-2500', label: '$1200-2500' },
+  { value: '$2500+', label: '$2500+' },
   { value: 'Not sure yet', label: 'Not sure yet' },
 ];
 const timelineOptions = [
   { value: 'ASAP', label: 'ASAP' },
   { value: '1-2 weeks', label: '1-2 weeks' },
   { value: '2-4 weeks', label: '2-4 weeks' },
-  { value: '1-2 months', label: '1-2 months' },
   { value: 'Flexible', label: 'Flexible' },
 ];
-
-function buildInitialValues(prefillService = '') {
-  const matched = serviceOptions.find((service) => service.id === prefillService);
-
-  return {
-    name: '',
-    email: '',
-    service: matched?.title || '',
-    budget: '',
-    timeline: '',
-    projectGoals: '',
-    projectDetails: matched
-      ? `Hi Radu, I'd like to talk about the ${matched.title} service.\n\n`
-      : '',
-  };
-}
-
-function buildMailtoHref(values) {
-  const subject = `Project brief - ${values.service || 'New inquiry'}`;
-  const body = [
-    `Name: ${values.name}`,
-    `Email: ${values.email}`,
-    `Service: ${values.service || 'Not specified'}`,
-    `Budget: ${values.budget || 'Not specified'}`,
-    `Timeline: ${values.timeline || 'Not specified'}`,
-    `Project goals: ${values.projectGoals || 'Not specified'}`,
-    '',
-    'Project details:',
-    values.projectDetails || 'Not provided',
-  ].join('\n');
-
-  return `mailto:${CONTACT_EMAIL}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
-}
-
-function ChoiceField({
-  label,
-  value,
-  placeholder,
-  options,
-  isOpen,
-  onToggle,
-  onClose,
-  onSelect,
-  invalid = false,
-  errorMessage = '',
-}) {
-  const fieldId = useId();
-  const rootRef = useRef(null);
-  const triggerRef = useRef(null);
-  const menuId = `${fieldId}-menu`;
-  const errorId = `${fieldId}-error`;
-
-  useEffect(() => {
-    if (!isOpen) return undefined;
-
-    const handlePointerDown = (event) => {
-      if (!rootRef.current?.contains(event.target)) {
-        onClose();
-      }
-    };
-
-    const handleKeyDown = (event) => {
-      if (event.key === 'Escape') {
-        onClose();
-        triggerRef.current?.focus();
-      }
-    };
-
-    document.addEventListener('pointerdown', handlePointerDown);
-    document.addEventListener('keydown', handleKeyDown);
-
-    return () => {
-      document.removeEventListener('pointerdown', handlePointerDown);
-      document.removeEventListener('keydown', handleKeyDown);
-    };
-  }, [isOpen, onClose]);
-
-  const handleTriggerKeyDown = (event) => {
-    if (event.key === 'ArrowDown' || event.key === 'Enter' || event.key === ' ') {
-      event.preventDefault();
-      if (!isOpen) {
-        onToggle();
-      }
-    }
-  };
-
-  const handleOptionSelect = (nextValue) => {
-    onSelect(nextValue);
-    onClose();
-    triggerRef.current?.focus();
-  };
-
-  return (
-    <div className={styles.field}>
-      <span className={styles.label} id={`${fieldId}-label`}>
-        {label}
-      </span>
-
-      <div
-        ref={rootRef}
-        className={[
-          styles.choice,
-          isOpen ? styles.choiceOpen : '',
-          invalid ? styles.choiceInvalid : '',
-        ]
-          .filter(Boolean)
-          .join(' ')}
-      >
-        <button
-          ref={triggerRef}
-          type="button"
-          className={styles.choiceTrigger}
-          aria-haspopup="listbox"
-          aria-controls={menuId}
-          aria-describedby={invalid ? errorId : undefined}
-          aria-expanded={isOpen}
-          aria-invalid={invalid}
-          aria-labelledby={`${fieldId}-label ${fieldId}-value`}
-          onClick={onToggle}
-          onKeyDown={handleTriggerKeyDown}
-        >
-          <span
-            id={`${fieldId}-value`}
-            className={value ? styles.choiceValue : styles.choicePlaceholder}
-          >
-            {value || placeholder}
-          </span>
-
-          <ChevronDown size={16} className={styles.choiceChevron} />
-        </button>
-
-        {isOpen && (
-          <div
-            id={menuId}
-            className={styles.choiceMenu}
-            role="listbox"
-            aria-labelledby={`${fieldId}-label`}
-          >
-            <button
-              type="button"
-              role="option"
-              aria-selected={!value}
-              className={[
-                styles.choiceOption,
-                styles.choicePlaceholderOption,
-                !value ? styles.choiceOptionSelected : '',
-              ]
-                .filter(Boolean)
-                .join(' ')}
-              onClick={() => handleOptionSelect('')}
-            >
-              {placeholder}
-            </button>
-
-            {options.map((option) => {
-              const isSelected = option.value === value;
-
-              return (
-                <button
-                  key={option.value}
-                  type="button"
-                  role="option"
-                  aria-selected={isSelected}
-                  className={[
-                    styles.choiceOption,
-                    isSelected ? styles.choiceOptionSelected : '',
-                  ]
-                    .filter(Boolean)
-                    .join(' ')}
-                  onClick={() => handleOptionSelect(option.value)}
-                >
-                  {option.label}
-                </button>
-              );
-            })}
-          </div>
-        )}
-      </div>
-
-      {invalid && errorMessage ? (
-        <span id={errorId} className={styles.choiceError}>
-          {errorMessage}
-        </span>
-      ) : null}
-    </div>
-  );
-}
 
 export default function ContactForm() {
   const params = useSearchParams();
   const prefillService = params?.get('service') || '';
-
-  const [values, setValues] = useState(() => buildInitialValues(prefillService));
-  const [openChoice, setOpenChoice] = useState(null);
+  const matched = serviceOptions.find((service) => service.id === prefillService);
+  const [form, setForm] = useState({
+    name: '',
+    email: '',
+    projectType: matched?.title || '',
+    budget: '',
+    timeline: '',
+    description: matched ? `I am interested in ${matched.title}.` : '',
+  });
   const [status, setStatus] = useState('idle');
   const [errorMessage, setErrorMessage] = useState('');
 
   useEffect(() => {
-    setValues((current) => {
-      const nextValues = buildInitialValues(prefillService);
-
-      return {
-        ...current,
-        ...nextValues,
-        name: current.name,
-        email: current.email,
-        budget: current.budget,
-        timeline: current.timeline,
-        projectGoals: current.projectGoals,
-        projectDetails: current.projectDetails || nextValues.projectDetails,
-      };
-    });
-
-    setOpenChoice(null);
-    setStatus('idle');
-    setErrorMessage('');
+    const next = serviceOptions.find((service) => service.id === prefillService);
+    if (!next) return;
+    setForm((current) => ({
+      ...current,
+      projectType: next.title,
+      description: current.description || `I am interested in ${next.title}.`,
+    }));
   }, [prefillService]);
 
-  useEffect(() => {
-    if (!openChoice) return undefined;
-
-    const closeChoices = () => setOpenChoice(null);
-
-    window.addEventListener('resize', closeChoices);
-
-    return () => {
-      window.removeEventListener('resize', closeChoices);
-    };
-  }, [openChoice]);
-
-  const onChange = (e) => {
+  const update = (event) => {
     setStatus('idle');
-    setValues((current) => ({ ...current, [e.target.name]: e.target.value }));
+    setErrorMessage('');
+    setForm((current) => ({ ...current, [event.target.name]: event.target.value }));
   };
 
-  const onChoiceChange = (name, nextValue) => {
-    setStatus('idle');
-    setValues((current) => ({ ...current, [name]: nextValue }));
-
-    if (name === 'service' && nextValue) {
-      setErrorMessage('');
-    }
-  };
-
-  const onSubmit = (e) => {
-    e.preventDefault();
-    setOpenChoice(null);
-
-    if (!e.currentTarget.reportValidity()) return;
-
-    if (!values.service) {
-      setStatus('idle');
-      setErrorMessage('Choose a service before opening the email draft.');
+  const submit = async (event) => {
+    event.preventDefault();
+    if (!form.projectType) {
+      setStatus('validation');
       return;
     }
 
+    setStatus('sending');
     setErrorMessage('');
-    setStatus('opened');
-    window.location.href = buildMailtoHref(values);
+
+    try {
+      const res = await fetch('/api/contact', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          projectType: form.projectType || 'General Inquiry',
+          budget: form.budget,
+          timeline: form.timeline,
+          email: form.email,
+          description: `Name: ${form.name}\n\n${form.description}`,
+        }),
+      });
+
+      const payload = await res.json().catch(() => null);
+
+      if (!res.ok) {
+        setErrorMessage(payload?.error || 'Something went wrong. Email me directly if this keeps happening.');
+        setStatus('error');
+        return;
+      }
+
+      setStatus('sent');
+    } catch {
+      setErrorMessage('Network error. Please try again or email me directly.');
+      setStatus('error');
+    }
   };
 
   return (
-    <form className={styles.form} onSubmit={onSubmit}>
+    <form className={styles.form} onSubmit={submit}>
       <div className={styles.grid}>
         <label className={styles.field}>
           <span className={styles.label}>Your name</span>
-          <input
-            type="text"
-            name="name"
-            value={values.name}
-            onChange={onChange}
-            required
-            autoComplete="name"
-            enterKeyHint="next"
-            placeholder="Jane Doe"
-          />
+          <input name="name" value={form.name} onChange={update} required placeholder="Jane Doe" />
         </label>
 
         <label className={styles.field}>
           <span className={styles.label}>Email</span>
           <input
-            type="email"
             name="email"
-            value={values.email}
-            onChange={onChange}
+            type="email"
+            value={form.email}
+            onChange={update}
             required
-            autoComplete="email"
-            inputMode="email"
-            enterKeyHint="next"
             placeholder="jane@company.com"
           />
         </label>
       </div>
 
       <div className={styles.grid}>
-        <ChoiceField
-          label="Service"
-          value={values.service}
-          placeholder="Select a service..."
-          options={serviceOptions.map((service) => ({ value: service.title, label: service.title }))}
-          isOpen={openChoice === 'service'}
-          onToggle={() => setOpenChoice((current) => (current === 'service' ? null : 'service'))}
-          onClose={() => setOpenChoice(null)}
-          onSelect={(nextValue) => onChoiceChange('service', nextValue)}
-          invalid={Boolean(errorMessage && !values.service)}
-          errorMessage={errorMessage}
-        />
+        <div className={styles.field}>
+          <span className={styles.label}>Service</span>
+          <CustomSelect
+            id="contact-service"
+            value={form.projectType}
+            onChange={(value) => update({ target: { name: 'projectType', value } })}
+            placeholder="Select a service"
+            label="Service"
+            theme="light"
+            options={serviceOptions.map((service) => ({ value: service.title, label: service.title }))}
+          />
+        </div>
 
-        <ChoiceField
-          label="Budget"
-          value={values.budget}
-          placeholder="Select a range..."
-          options={budgetOptions}
-          isOpen={openChoice === 'budget'}
-          onToggle={() => setOpenChoice((current) => (current === 'budget' ? null : 'budget'))}
-          onClose={() => setOpenChoice(null)}
-          onSelect={(nextValue) => onChoiceChange('budget', nextValue)}
-        />
+        <div className={styles.field}>
+          <span className={styles.label}>Budget</span>
+          <CustomSelect
+            id="contact-budget"
+            value={form.budget}
+            onChange={(value) => update({ target: { name: 'budget', value } })}
+            placeholder="Select a range"
+            label="Budget"
+            theme="light"
+            options={budgetOptions}
+          />
+        </div>
       </div>
 
-      <div className={styles.grid}>
-        <ChoiceField
+      <div className={styles.field}>
+        <span className={styles.label}>Timeline</span>
+        <CustomSelect
+          id="contact-timeline"
+          value={form.timeline}
+          onChange={(value) => update({ target: { name: 'timeline', value } })}
+          placeholder="Select a timeline"
           label="Timeline"
-          value={values.timeline}
-          placeholder="Select a timeline..."
+          theme="light"
           options={timelineOptions}
-          isOpen={openChoice === 'timeline'}
-          onToggle={() => setOpenChoice((current) => (current === 'timeline' ? null : 'timeline'))}
-          onClose={() => setOpenChoice(null)}
-          onSelect={(nextValue) => onChoiceChange('timeline', nextValue)}
         />
-
-        <label className={styles.field}>
-          <span className={styles.label}>Project goals</span>
-          <input
-            type="text"
-            name="projectGoals"
-            value={values.projectGoals}
-            onChange={onChange}
-            required
-            enterKeyHint="next"
-            placeholder="Launch, get leads, improve trust, ship an MVP..."
-          />
-        </label>
       </div>
 
       <label className={styles.field}>
         <span className={styles.label}>Project details</span>
         <textarea
-          name="projectDetails"
-          value={values.projectDetails}
-          onChange={onChange}
+          name="description"
+          value={form.description}
+          onChange={update}
           required
           rows={7}
-          enterKeyHint="send"
           placeholder="Tell me what you want to build, what already exists, and anything I should know before quoting."
         />
       </label>
 
-      <div className={styles.actions}>
-        <MagneticButton type="submit" variant="primary" className={styles.submitButton}>
-          <>
-            Open email draft <Send size={15} />
-          </>
-        </MagneticButton>
+      <button className={styles.submit} type="submit" disabled={status === 'sending'}>
+        {status === 'sending' ? 'Sending...' : <>Send request <Send size={15} /></>}
+      </button>
 
-        <span className={styles.note}>
-          This opens your email app with the full brief prefilled, or email{' '}
-          <a href={`mailto:${CONTACT_EMAIL}`}>{CONTACT_EMAIL}</a>
-        </span>
-      </div>
-
-      {status === 'opened' && (
-        <div className={`${styles.feedback} ${styles.ok}`}>
-          <CheckCircle2 size={18} />
-          <span>Your email app should open with the project brief already filled in.</span>
-        </div>
+      {status === 'sent' && (
+        <p className={styles.success}>Got it - I will reply within 24 hours.</p>
+      )}
+      {status === 'validation' && (
+        <p className={styles.error}>Choose a service before sending the request.</p>
+      )}
+      {status === 'error' && (
+        <p className={styles.error}>
+          {errorMessage || 'Something went wrong. Email me directly if this keeps happening.'}
+        </p>
       )}
     </form>
   );

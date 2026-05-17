@@ -1,79 +1,91 @@
 'use client';
+
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { useState, useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { Menu, X } from 'lucide-react';
 import MagneticButton from '../MagneticButton/MagneticButton';
 import styles from './Navbar.module.scss';
 
 const links = [
-  { href: '/',         label: 'Home' },
-  { href: '/about',    label: 'About' },
-  { href: '/projects', label: 'Projects' },
+  { href: '/', label: 'Home' },
   { href: '/services', label: 'Services' },
-  { href: '/pricing',  label: 'Pricing' },
-  { href: '/blog',     label: 'Blog' },
+  { href: '/projects', label: 'Projects' },
+  { href: '/about', label: 'About' },
+  { href: '/pricing', label: 'Pricing' },
+  { href: '/blog', label: 'Blog' },
 ];
 
 export default function Navbar() {
   const pathname = usePathname();
+  const isHome = pathname === '/';
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
 
   useEffect(() => {
-    const fn = () => setScrolled(window.scrollY > 40);
-    fn();
-    window.addEventListener('scroll', fn, { passive: true });
-    return () => window.removeEventListener('scroll', fn);
+    const onScroll = () => setScrolled(window.scrollY > 56);
+    onScroll();
+    window.addEventListener('scroll', onScroll, { passive: true });
+    return () => window.removeEventListener('scroll', onScroll);
   }, []);
 
   useEffect(() => {
-    document.body.style.overflow = open ? 'hidden' : '';
-    return () => { document.body.style.overflow = ''; };
+    document.body.dataset.menuOpen = open ? 'true' : 'false';
+    return () => {
+      document.body.dataset.menuOpen = 'false';
+    };
   }, [open]);
 
+  useEffect(() => {
+    setOpen(false);
+  }, [pathname]);
+
+  const solid = !isHome || scrolled || open;
+
   return (
-    <nav className={`${styles.nav} ${scrolled ? styles.scrolled : ''}`}>
+    <nav className={`${styles.nav} ${solid ? styles.solid : ''}`}>
       <div className={styles.inner}>
-        <Link href="/" className={styles.logo} aria-label="Radu — home">
-          <span className={styles.logoMark}>R</span>
-          <span className={styles.logoDot}>.</span>
+        <Link href="/" className={styles.logo} aria-label="Radu-Stefan home">
+          <span>Radu</span>
+          <span>Stefan</span>
         </Link>
 
-        <ul className={`${styles.links} ${open ? styles.open : ''}`}>
-          {links.map(({ href, label }) => {
-            const active = href === '/' ? pathname === '/' : pathname.startsWith(href);
-            return (
-              <li key={href}>
-                <Link
-                  href={href}
-                  className={`${styles.link} ${active ? styles.active : ''}`}
-                  onClick={() => setOpen(false)}
-                >
-                  {label}
-                </Link>
-              </li>
-            );
-          })}
+        <ul id="primary-nav" className={`${styles.links} ${open ? styles.open : ''}`}>
+          {links.map(({ href, label }) => (
+            <li key={href}>
+              <Link
+                href={href}
+                className={`${styles.link} ${pathname === href ? styles.active : ''}`}
+              >
+                {label}
+              </Link>
+            </li>
+          ))}
+
+          <li className={styles.mobileStatus}>
+            <span className={styles.statusDot} />
+            Available for freelance work
+          </li>
           <li className={styles.mobileCta}>
             <MagneticButton href="/contact" variant="primary">
-              Hire Me
+              Start project
             </MagneticButton>
           </li>
         </ul>
 
         <div className={styles.desktopCta}>
           <MagneticButton href="/contact" variant="primary">
-            Hire Me
+            Start project
           </MagneticButton>
         </div>
 
         <button
           type="button"
           className={styles.burger}
-          onClick={() => setOpen((o) => !o)}
-          aria-label={open ? 'Close menu' : 'Open menu'}
+          onClick={() => setOpen((value) => !value)}
+          aria-label={open ? 'Close navigation' : 'Open navigation'}
           aria-expanded={open}
+          aria-controls="primary-nav"
         >
           {open ? <X size={22} /> : <Menu size={22} />}
         </button>

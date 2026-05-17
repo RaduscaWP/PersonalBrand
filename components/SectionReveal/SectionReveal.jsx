@@ -1,32 +1,33 @@
 'use client';
-import { useEffect, useRef } from 'react';
-import styles from './SectionReveal.module.scss';
 
-export default function SectionReveal({ children, delay = 0, className = '', as: Tag = 'div' }) {
+import { useEffect, useRef } from 'react';
+import { gsap } from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
+
+export default function SectionReveal({ children, y = 50, delay = 0, className = '' }) {
   const ref = useRef(null);
 
   useEffect(() => {
-    const el = ref.current;
-    if (!el) return;
+    if (!ref.current) return undefined;
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return undefined;
 
-    const obs = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          const t = setTimeout(() => el.classList.add(styles.visible), delay);
-          obs.disconnect();
-          return () => clearTimeout(t);
-        }
-      },
-      { threshold: 0.12, rootMargin: '0px 0px -50px 0px' }
-    );
-
-    obs.observe(el);
-    return () => obs.disconnect();
-  }, [delay]);
+    gsap.registerPlugin(ScrollTrigger);
+    const ctx = gsap.context(() => {
+      gsap.from(ref.current, {
+        scrollTrigger: { trigger: ref.current, start: 'top 82%', once: true },
+        y,
+        opacity: 0,
+        duration: 0.75,
+        delay,
+        ease: 'power3.out',
+      });
+    }, ref);
+    return () => ctx.revert();
+  }, [y, delay]);
 
   return (
-    <Tag ref={ref} className={`${styles.reveal} ${className}`}>
+    <div ref={ref} className={className}>
       {children}
-    </Tag>
+    </div>
   );
 }

@@ -1,114 +1,107 @@
-import Link from 'next/link';
 import Image from 'next/image';
-import { Github, Instagram, Mail, ArrowUpRight } from 'lucide-react';
+import Link from 'next/link';
+import { ArrowUpRight, Github, Instagram, Mail, MapPin } from 'lucide-react';
 import styles from './Footer.module.scss';
 
-const navLinks = [
-  { href: '/',         label: 'Home' },
-  { href: '/about',    label: 'About' },
-  { href: '/projects', label: 'Projects' },
-  { href: '/services', label: 'Services' },
-  { href: '/pricing',  label: 'Pricing' },
-  { href: '/blog',     label: 'Blog' },
-  { href: '/contact',  label: 'Contact' },
+const nav = [
+  { label: 'Home', href: '/' },
+  { label: 'About', href: '/about' },
+  { label: 'Projects', href: '/projects' },
+  { label: 'Services', href: '/services' },
+  { label: 'Pricing', href: '/pricing' },
+  { label: 'Blog', href: '/blog' },
+  { label: 'Contact', href: '/contact' },
 ];
 
 export default function Footer() {
-  const year = new Date().getFullYear();
-
   return (
     <footer className={styles.footer}>
-      <div className={styles.grid}>
+      <div className={styles.inner}>
         <div className={styles.brand}>
-          <Link href="/" className={styles.brandRow}>
-            <span className={styles.avatar}>
-              <Image
-                src="/images/profile.jpg"
-                alt="Radu"
-                width={32}
-                height={32}
-                style={{ objectFit: 'cover' }}
-              />
-            </span>
+          <div className={styles.identity}>
+            <Image
+              src="/images/profile.jpg"
+              alt="Radu-Stefan"
+              width={40}
+              height={40}
+              className={styles.avatar}
+            />
             <div>
-              <span className={styles.brandName}>Radu-Stefan</span>
-              <span className={styles.brandRole}>Full-Stack Developer</span>
+              <strong>Radu-Stefan</strong>
+              <span>Developer portfolio</span>
             </div>
-          </Link>
-          <p className={styles.blurb}>
-            Building fast, modern web experiences from Chisinau, Moldova. Available for freelance
-            work worldwide.
-          </p>
-        </div>
-
-        <div className={styles.col}>
-          <span className={styles.colTitle}>Navigate</span>
-          <ul>
-            {navLinks.map((l) => (
-              <li key={l.href}>
-                <Link href={l.href}>{l.label}</Link>
-              </li>
-            ))}
-          </ul>
-        </div>
-
-        <div className={styles.col}>
-          <span className={styles.colTitle}>Elsewhere</span>
-          <ul>
-            <li>
-              <a href="https://github.com/RaduscaWP" target="_blank" rel="noopener noreferrer">
-                GitHub <ArrowUpRight size={12} />
-              </a>
-            </li>
-            <li>
-              <a
-                href="https://www.instagram.com/radusca_?igsh=MXNkc3lreTQ5cXd5cA=="
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                Instagram <ArrowUpRight size={12} />
-              </a>
-            </li>
-            <li>
-              <a href="mailto:grozavradustefan@gmail.com">
-                Email <ArrowUpRight size={12} />
-              </a>
-            </li>
-          </ul>
-        </div>
-
-        <div className={styles.col}>
-          <span className={styles.colTitle}>Status</span>
-          <div className={styles.status}>
-            <span className={styles.dot} />
-            <span>Open for freelance projects</span>
           </div>
-          <p className={styles.location}>📍 Chisinau, Moldova</p>
+
+          <p>
+            Fast, modern web experiences from Chisinau, Moldova. Built for founders, personal
+            brands, and teams that want clean execution without agency noise.
+          </p>
+
+          <div className={styles.brandLinks}>
+            <a
+              href="https://github.com/RaduscaWP"
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="GitHub"
+            >
+              <Github size={16} />
+            </a>
+            <a
+              href="https://www.instagram.com/radusca_/"
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="Instagram"
+            >
+              <Instagram size={16} />
+            </a>
+            <a href="mailto:grozavradustefan@gmail.com" aria-label="Email">
+              <Mail size={16} />
+            </a>
+          </div>
+        </div>
+
+        <div className={styles.column}>
+          <h2>Navigate</h2>
+          {nav.map((item) => (
+            <Link key={item.href} href={item.href}>
+              {item.label}
+            </Link>
+          ))}
+        </div>
+
+        <div className={styles.column}>
+          <h2>Elsewhere</h2>
+          <a href="https://github.com/RaduscaWP" target="_blank" rel="noopener noreferrer">
+            GitHub <ArrowUpRight size={13} />
+          </a>
+          <a href="https://www.instagram.com/radusca_/" target="_blank" rel="noopener noreferrer">
+            Instagram <ArrowUpRight size={13} />
+          </a>
+          <a href="mailto:grozavradustefan@gmail.com">
+            Email <ArrowUpRight size={13} />
+          </a>
+        </div>
+
+        <div className={styles.status}>
+          <h2>Status</h2>
+          <p className={styles.statusRow}>
+            <span className={styles.dot} />
+            Open for freelance projects
+          </p>
+          <p className={styles.location}>
+            <MapPin size={14} />
+            Chisinau, Moldova
+          </p>
+          <span className={styles.note}>Typical reply target: under 24 hours.</span>
         </div>
       </div>
 
       <div className={styles.bottom}>
-        <span className={styles.copy}>© {year} Radu-Stefan. All rights reserved.</span>
-        <div className={styles.socials}>
-          <a
-            href="https://github.com/RaduscaWP"
-            target="_blank"
-            rel="noopener noreferrer"
-            aria-label="GitHub"
-          >
-            <Github size={18} />
-          </a>
-          <a
-            href="https://www.instagram.com/radusca_?igsh=MXNkc3lreTQ5cXd5cA=="
-            target="_blank"
-            rel="noopener noreferrer"
-            aria-label="Instagram"
-          >
-            <Instagram size={18} />
-          </a>
-          <a href="mailto:grozavradustefan@gmail.com" aria-label="Email">
-            <Mail size={18} />
-          </a>
+        <span>&copy; 2026 Radu-Stefan. All rights reserved.</span>
+        <div className={styles.bottomLinks}>
+          <Link href="/projects">Live work</Link>
+          <Link href="/services">Services</Link>
+          <Link href="/contact">Start a project</Link>
         </div>
       </div>
     </footer>

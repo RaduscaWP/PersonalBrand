@@ -1,6 +1,6 @@
 export default function robots() {
   return {
     rules: [{ userAgent: '*', allow: '/' }],
-    sitemap: 'https://radu-stefan.vercel.app/sitemap.xml',
+    sitemap: 'https://radu-stefan.dev/sitemap.xml',
   };
 }

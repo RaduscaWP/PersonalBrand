@@ -1,6 +1,6 @@
 import Image from 'next/image';
 import Link from 'next/link';
-import { ArrowUpRight, MapPin, GraduationCap, Calendar, Mail } from 'lucide-react';
+import { ArrowUpRight, Calendar, GraduationCap, MapPin } from 'lucide-react';
 import SectionReveal from '@/components/SectionReveal/SectionReveal';
 import CertCard from '@/components/CertCard/CertCard';
 import MagneticButton from '@/components/MagneticButton/MagneticButton';
@@ -10,175 +10,197 @@ import styles from './about.module.scss';
 export const metadata = {
   title: 'About',
   description:
-    'Radu-Stefan — 18-year-old full-stack developer from Chisinau, Moldova. Six years of water polo, three Certiport certifications, shipped projects.',
+    'Radu-Stefan, 18-year-old full-stack developer from Chisinau, Moldova. Three Certiport certifications and shipped projects.',
 };
 
 const timeline = [
   {
     year: '2017',
     title: 'Started water polo',
-    body: 'Joined a serious team. Goalkeeper. Started learning what discipline actually costs.',
+    body: 'Discipline, repetition, and pressure tolerance started there long before I wrote production code.',
   },
   {
     year: '2020',
-    title: 'First lines of code',
-    body: 'HTML, CSS, JavaScript. The internet stopped being magic and started being buildable.',
+    title: 'Started learning front-end',
+    body: 'HTML, CSS, and JavaScript turned the web from something I used into something I could shape.',
   },
   {
     year: '2023',
-    title: 'Team disbanded',
-    body:
-      'Six years of water polo ended abruptly. I redirected every bit of that training energy into development.',
+    title: 'Shifted the focus fully',
+    body: 'The same training mindset moved into development: show up consistently, improve the details, ship finished work.',
   },
   {
     year: '2025',
-    title: 'Certiport × 3',
-    body:
-      'Passed IT Specialist certifications in Python (720), Databases (743), and Networking (920/1000).',
+    title: 'Certiport x3',
+    body: 'Python, Databases, and Networking certifications added formal proof to the self-directed work.',
   },
   {
     year: '2026',
-    title: 'Freelance, seriously',
-    body:
-      'Four shipped projects, moving to Next.js and React full-time, opening for freelance clients.',
+    title: 'Freelance-ready portfolio',
+    body: 'The site becomes a client-facing system: live work, clearer offers, and a process designed to convert trust into projects.',
   },
 ];
 
 export default function AboutPage() {
   return (
-    <div className={styles.page}>
-      <section className={styles.hero}>
-        <div className={styles.heroInner}>
-          <div className={styles.portrait}>
+    <div className={`page-wrap ${styles.page}`}>
+      <section className={`page-hero ${styles.hero}`}>
+        <div className={`page-hero--split ${styles.heroInner}`}>
+          <div className={styles.portraitColumn}>
             <div className={styles.portraitFrame}>
               <Image
                 src="/images/profile.jpg"
-                alt="Radu-Stefan"
-                width={480}
-                height={480}
+                alt="Radu - Full-Stack Developer"
+                width={400}
+                height={400}
                 priority
                 className={styles.portraitImg}
               />
             </div>
-            <div className={styles.portraitMeta}>
-              <span className={styles.monoRow}>
-                <MapPin size={13} /> Chisinau, Moldova
+
+            <div className={styles.metaCard}>
+              <span className={styles.metaRow}>
+                <MapPin size={14} /> Chisinau, Moldova
               </span>
-              <span className={styles.monoRow}>
-                <GraduationCap size={13} /> Step IT Academy
+              <span className={styles.metaRow}>
+                <GraduationCap size={14} /> Step IT Academy
               </span>
-              <span className={styles.monoRow}>
-                <Calendar size={13} /> 18 y/o · Since 2020
+              <span className={styles.metaRow}>
+                <Calendar size={14} /> 18 y/o - building seriously since 2020
               </span>
             </div>
           </div>
 
-          <div className={styles.intro}>
-            <span className={styles.eyebrow}>/ About</span>
-            <h1 className={styles.title}>
-              Goalkeeper turned <span className={styles.accent}>developer.</span>
+          <div className={styles.copy}>
+            <span className="page-kicker">About</span>
+            <h1 className={`page-title ${styles.title}`}>
+              Goalkeeper turned <strong>developer.</strong>
             </h1>
+            <p className="page-lede">
+              I build websites and interfaces with the part clients care about most already wired
+              in: discipline, clarity, responsiveness, and the instinct to finish the details
+              properly before calling something done.
+            </p>
 
             <div className={styles.bio}>
               <p>
-                I&rsquo;m <strong>Radu-Stefan</strong> — online, just Radusca. 18, based in Chisinau,
-                Moldova. I build web experiences with Next.js, React, and a strong bias for clean
-                CSS.
+                I am Radu-Stefan, based in Chisinau, Moldova, building with Next.js, React, SCSS,
+                and a steadily developing cybersecurity mindset.
               </p>
               <p>
-                For six years I played water polo at national level as a goalkeeper. When my team
-                disbanded in 2023, the athletic discipline didn&rsquo;t go anywhere — it shifted
-                into code. Show up every day, respect the reps, hold your position under pressure.
-              </p>
-              <p>
-                I&rsquo;m now studying full-stack development at Step IT Academy while shipping
-                freelance projects. I&rsquo;m learning cybersecurity alongside web work because a
-                developer who understands attack surface ships safer products.
+                Three certifications and shipped public work matter, but the real differentiator is
+                how I approach the work itself: direct communication, calm process, and client trust
+                earned through the result.
               </p>
             </div>
 
-            <div className={styles.introActions}>
+            <div className={styles.actions}>
               <MagneticButton href="/contact" variant="primary">
-                Get in touch <Mail size={14} />
+                Start a project
               </MagneticButton>
-              <MagneticButton
-                href="https://github.com/RaduscaWP"
-                variant="secondary"
-                external
-              >
-                GitHub <ArrowUpRight size={14} />
-              </MagneticButton>
+              <Link href="/projects" className="text-link">
+                See live work <ArrowUpRight size={14} />
+              </Link>
             </div>
           </div>
         </div>
       </section>
 
-      <SectionReveal>
-        <section className={styles.section}>
-          <div className={styles.sectionHead}>
-            <span className={styles.eyebrow}>/ Education & Certifications</span>
-            <h2 className={styles.sectionTitle}>Three Certiport certifications.</h2>
-            <p className={styles.sectionLede}>
-              IT Specialist credentials, earned in 2025. View the original PDFs.
-            </p>
-          </div>
-          <CertCard />
-        </section>
-      </SectionReveal>
-
-      <SectionReveal>
-        <section className={styles.section}>
-          <div className={styles.sectionHead}>
-            <span className={styles.eyebrow}>/ Timeline</span>
-            <h2 className={styles.sectionTitle}>How I got here.</h2>
-          </div>
-
-          <ol className={styles.timeline}>
-            {timeline.map((item) => (
-              <li key={item.year} className={styles.timelineItem}>
-                <span className={styles.timelineYear}>{item.year}</span>
-                <div className={styles.timelineBody}>
-                  <h3>{item.title}</h3>
-                  <p>{item.body}</p>
-                </div>
-              </li>
-            ))}
-          </ol>
-        </section>
-      </SectionReveal>
-
-      <SectionReveal>
-        <section className={styles.section}>
-          <div className={styles.sectionHead}>
-            <span className={styles.eyebrow}>/ Tech Stack</span>
-            <h2 className={styles.sectionTitle}>What I work with.</h2>
-            <p className={styles.sectionLede}>
-              Tools I use in production. The list grows as I ship.
-            </p>
-          </div>
-          <div className={styles.stackGrid}>
-            {techStack.map((t) => (
-              <div key={t.name} className={styles.stackItem}>
-                <span className={styles.stackName}>{t.name}</span>
+      <section className="section-shell section-shell--light">
+        <SectionReveal>
+          <div className="section-inner">
+            <div className="section-head">
+              <div>
+                <span className="section-kicker">Certifications</span>
+                <h2 className={`section-title ${styles.lightTitle}`}>
+                  Real documents, <strong>not borrowed credibility.</strong>
+                </h2>
               </div>
-            ))}
+              <p className={`${styles.lightCopy} section-lede`}>
+                The certifications stay in their lane: they support the work, they do not replace
+                it. Each PDF opens directly from the portfolio.
+              </p>
+            </div>
+            <CertCard />
           </div>
-        </section>
-      </SectionReveal>
+        </SectionReveal>
+      </section>
 
-      <SectionReveal>
-        <section className={styles.finalCta}>
-          <h2 className={styles.ctaTitle}>Want the short version? Hire me.</h2>
-          <div className={styles.ctaRow}>
+      <section className="section-shell section-shell--dark">
+        <SectionReveal>
+          <div className="section-inner">
+            <div className="section-head">
+              <div>
+                <span className="section-kicker">Timeline</span>
+                <h2 className="section-title">
+                  The path was short. <strong>The focus was not.</strong>
+                </h2>
+              </div>
+              <p className="section-lede">
+                The portfolio is young, but the working habits behind it are not impulsive. This is
+                the progression that shaped how the work gets done.
+              </p>
+            </div>
+
+            <ol className={styles.timeline}>
+              {timeline.map((item) => (
+                <li key={item.year} className={styles.timelineItem}>
+                  <span className={styles.timelineYear}>{item.year}</span>
+                  <div className={styles.timelineBody}>
+                    <h3>{item.title}</h3>
+                    <p>{item.body}</p>
+                  </div>
+                </li>
+              ))}
+            </ol>
+          </div>
+        </SectionReveal>
+      </section>
+
+      <section className="section-shell section-shell--light">
+        <SectionReveal>
+          <div className="section-inner">
+            <div className="section-head">
+              <div>
+                <span className="section-kicker">Stack</span>
+                <h2 className={`section-title ${styles.lightTitle}`}>
+                  The tools behind the <strong>delivery standard.</strong>
+                </h2>
+              </div>
+              <p className={`${styles.lightCopy} section-lede`}>
+                The stack stays intentionally focused. The point is not collecting tools. The point
+                is shipping better work with a tighter system.
+              </p>
+            </div>
+
+            <div className={styles.stackGrid}>
+              {techStack.map((item) => (
+                <div key={item.name} className={styles.stackItem}>
+                  <span>{item.name}</span>
+                </div>
+              ))}
+            </div>
+          </div>
+        </SectionReveal>
+      </section>
+
+      <section className="section-shell section-shell--dark">
+        <div className="page-cta-band page-cta-band--photo">
+          <h2>Need the short version? Hire the person who respects the details.</h2>
+          <p>
+            If the work needs to look clean, communicate clearly, and get deployed without drama,
+            the next step is a brief.
+          </p>
+          <div className="page-cta-actions">
             <MagneticButton href="/contact" variant="primary">
               Start a project
             </MagneticButton>
-            <Link href="/projects" className={styles.textLink}>
-              See my work <ArrowUpRight size={14} />
-            </Link>
+            <MagneticButton href="/services" variant="secondary">
+              See services
+            </MagneticButton>
           </div>
-        </section>
-      </SectionReveal>
+        </div>
+      </section>
     </div>
   );
 }

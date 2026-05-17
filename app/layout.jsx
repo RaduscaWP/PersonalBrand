@@ -1,20 +1,21 @@
 import { Syne, DM_Sans } from 'next/font/google';
 import { Analytics } from '@vercel/analytics/next';
 import { SpeedInsights } from '@vercel/speed-insights/next';
+import AnnouncementBar from '@/components/AnnouncementBar/AnnouncementBar';
 import Navbar from '@/components/Navbar/Navbar';
 import Footer from '@/components/Footer/Footer';
 import CustomCursor from '@/components/CustomCursor/CustomCursor';
 import PageTransition from '@/components/PageTransition/PageTransition';
 import './globals.scss';
 
-const syne = Syne({
+export const syne = Syne({
   subsets: ['latin'],
   weight: ['400', '600', '700', '800'],
   variable: '--font-syne',
   display: 'swap',
 });
 
-const dmSans = DM_Sans({
+export const dmSans = DM_Sans({
   subsets: ['latin'],
   weight: ['300', '400', '500', '600'],
   variable: '--font-dm-sans',
@@ -22,13 +23,10 @@ const dmSans = DM_Sans({
 });
 
 export const metadata = {
-  metadataBase: new URL('https://radu-stefan.vercel.app'),
-  title: {
-    default: 'Radu-Stefan — Full-Stack Developer',
-    template: '%s — Radu-Stefan',
-  },
+  metadataBase: new URL('https://radu-stefan.dev'),
+  title: 'Radu-Stefan - Full-Stack Developer',
   description:
-    '18-year-old full-stack developer based in Chisinau, Moldova. Building fast, modern web experiences — landing pages, full websites, web apps, and UI/UX.',
+    '18-year-old full-stack developer based in Chisinau, Moldova. Building fast, modern web experiences - landing pages, full websites, web apps, and UI/UX.',
   keywords: [
     'Radu-Stefan',
     'Radusca',
@@ -39,31 +37,14 @@ export const metadata = {
     'Freelance Developer',
     'Figma to Code',
   ],
-  authors: [{ name: 'Radu-Stefan' }],
-  creator: 'Radu-Stefan',
   openGraph: {
-    type: 'website',
-    locale: 'en_US',
-    url: '/',
-    siteName: 'Radu-Stefan',
-    title: 'Radu-Stefan — Full-Stack Developer',
-    description:
-      'Fast, modern web experiences from Chisinau, Moldova. Landing pages, full websites, web apps, UI/UX.',
-    images: [{ url: '/images/profile.jpg', width: 1200, height: 630, alt: 'Radu-Stefan' }],
-  },
-  twitter: {
-    card: 'summary_large_image',
-    title: 'Radu-Stefan — Full-Stack Developer',
+    title: 'Radu-Stefan - Full-Stack Developer',
     description: 'Fast, modern web experiences from Chisinau, Moldova.',
-    images: ['/images/profile.jpg'],
+    url: 'https://radu-stefan.dev',
+    images: [{ url: '/og-image.jpg', width: 1200, height: 630, alt: 'Radu-Stefan' }],
   },
-  icons: {
-    icon: '/icon.svg',
-  },
-  robots: {
-    index: true,
-    follow: true,
-  },
+  twitter: { card: 'summary_large_image' },
+  robots: { index: true, follow: true },
 };
 
 export const viewport = {
@@ -77,8 +58,9 @@ export default function RootLayout({ children }) {
     <html lang="en" className={`${syne.variable} ${dmSans.variable}`}>
       <body>
         <CustomCursor />
+        <AnnouncementBar />
         <Navbar />
-        <main>
+        <main className="site-main">
           <PageTransition>{children}</PageTransition>
         </main>
         <Footer />

@@ -25,7 +25,7 @@ function formatDate(iso) {
 }
 
 export default function BlogCard({ post }) {
-  const isDraft = isDraftPost(post.content);
+  const isDraft = post.draft || isDraftPost(post.content);
 
   return (
     <Link
@@ -44,7 +44,7 @@ export default function BlogCard({ post }) {
       <p className={styles.excerpt}>{post.excerpt}</p>
 
       <span className={styles.cta}>
-        {isDraft ? 'Read draft' : 'Read article'} <ArrowUpRight size={14} />
+        {isDraft ? 'Preview outline' : 'Read article'} <ArrowUpRight size={14} />
       </span>
     </Link>
   );

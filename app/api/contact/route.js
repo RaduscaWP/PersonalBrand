@@ -1,124 +1,78 @@
-import { NextResponse } from 'next/server';
+import { Resend } from 'resend';
 
-export const runtime = 'nodejs';
-export const dynamic = 'force-dynamic';
+const CONTACT_TO_EMAIL = process.env.CONTACT_TO_EMAIL || 'grozavradustefan@gmail.com';
+const CONTACT_FROM_EMAIL = process.env.CONTACT_FROM_EMAIL || 'onboarding@resend.dev';
+const CONTACT_FROM_NAME = process.env.CONTACT_FROM_NAME || 'Radu Portfolio';
+const CONTACT_FROM = `${CONTACT_FROM_NAME} <${CONTACT_FROM_EMAIL}>`;
 
-const WINDOW_MS = 60_000;
-const MAX_REQUESTS = 3;
-const hits = new Map();
-
-function rateLimit(ip) {
-  const now = Date.now();
-  const record = hits.get(ip) ?? { count: 0, reset: now + WINDOW_MS };
-  if (now > record.reset) {
-    record.count = 0;
-    record.reset = now + WINDOW_MS;
-  }
-  record.count += 1;
-  hits.set(ip, record);
-  return record.count <= MAX_REQUESTS;
-}
-
-function getIp(req) {
-  const xff = req.headers.get('x-forwarded-for');
-  if (xff) return xff.split(',')[0].trim();
-  return req.headers.get('x-real-ip') ?? 'unknown';
-}
-
-function isEmail(value) {
-  return typeof value === 'string' && /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value) && value.length <= 254;
-}
-
-function sanitize(value, max) {
-  if (typeof value !== 'string') return '';
-  return value.trim().slice(0, max);
+function escapeHtml(value = '') {
+  return String(value)
+    .replaceAll('&', '&amp;')
+    .replaceAll('<', '&lt;')
+    .replaceAll('>', '&gt;')
+    .replaceAll('"', '&quot;')
+    .replaceAll("'", '&#39;');
 }
 
 export async function POST(req) {
-  let body;
   try {
-    body = await req.json();
-  } catch {
-    return NextResponse.json({ error: 'Invalid payload' }, { status: 400 });
-  }
+    const { projectType, budget, timeline, email, description } = await req.json();
 
-  if (body?.company) {
-    return NextResponse.json({ ok: true }, { status: 200 });
-  }
-
-  const name = sanitize(body?.name, 120);
-  const email = sanitize(body?.email, 254);
-  const budget = sanitize(body?.budget, 40);
-  const message = sanitize(body?.message, 4000);
-
-  if (!name || name.length < 2) {
-    return NextResponse.json({ error: 'Please include your name.' }, { status: 400 });
-  }
-  if (!isEmail(email)) {
-    return NextResponse.json({ error: 'Please use a valid email address.' }, { status: 400 });
-  }
-  if (!message || message.length < 10) {
-    return NextResponse.json({ error: 'Tell me a little more about the project.' }, { status: 400 });
-  }
-
-  const ip = getIp(req);
-  if (!rateLimit(ip)) {
-    return NextResponse.json(
-      { error: 'Too many requests. Try again in a minute.' },
-      { status: 429 }
-    );
-  }
-
-  const serviceId = process.env.EMAILJS_SERVICE_ID;
-  const templateId = process.env.EMAILJS_TEMPLATE_ID;
-  const publicKey = process.env.EMAILJS_PUBLIC_KEY;
-  const privateKey = process.env.EMAILJS_PRIVATE_KEY;
-
-  if (!serviceId || !templateId || !publicKey) {
-    console.info('[contact] EmailJS not configured — received:', { name, email, budget });
-    return NextResponse.json(
-      {
-        ok: true,
-        delivered: false,
-        note: 'Received, but email delivery is not configured yet.',
-      },
-      { status: 202 }
-    );
-  }
-
-  try {
-    const response = await fetch('https://api.emailjs.com/api/v1.0/email/send', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        service_id: serviceId,
-        template_id: templateId,
-        user_id: publicKey,
-        accessToken: privateKey,
-        template_params: {
-          from_name: name,
-          from_email: email,
-          budget: budget || 'not specified',
-          message,
-        },
-      }),
-    });
-
-    if (!response.ok) {
-      const text = await response.text();
-      console.error('[contact] EmailJS error:', response.status, text);
-      return NextResponse.json(
-        { error: 'Email service rejected the request. Try again or email me directly.' },
-        { status: 502 }
+    if (!email) return Response.json({ error: 'Email required' }, { status: 400 });
+    if (!process.env.RESEND_API_KEY) {
+      return Response.json(
+        { error: 'Email delivery is not configured yet. Add a Resend API key first.' },
+        { status: 503 }
       );
     }
 
-    return NextResponse.json({ ok: true, delivered: true }, { status: 200 });
+    const resend = new Resend(process.env.RESEND_API_KEY);
+
+    const ownerNotification = await resend.emails.send({
+      from: CONTACT_FROM,
+      to: CONTACT_TO_EMAIL,
+      replyTo: email,
+      subject: `New Request: ${projectType} - ${budget || 'Budget TBD'}`,
+      html: `
+        <h2 style="font-family:sans-serif">New Portfolio Request</h2>
+        <table style="font-family:sans-serif; border-collapse:collapse">
+          <tr><td style="padding:6px 12px;color:#888">Service</td><td style="padding:6px 12px"><strong>${escapeHtml(projectType)}</strong></td></tr>
+          <tr><td style="padding:6px 12px;color:#888">Budget</td><td style="padding:6px 12px">${escapeHtml(budget || 'Not specified')}</td></tr>
+          <tr><td style="padding:6px 12px;color:#888">Timeline</td><td style="padding:6px 12px">${escapeHtml(timeline || 'Not specified')}</td></tr>
+          <tr><td style="padding:6px 12px;color:#888">Client Email</td><td style="padding:6px 12px"><a href="mailto:${escapeHtml(email)}">${escapeHtml(email)}</a></td></tr>
+        </table>
+        ${description ? `<p style="font-family:sans-serif;margin-top:16px"><strong>Description:</strong><br>${escapeHtml(description).replaceAll('\n', '<br>')}</p>` : ''}
+      `,
+    });
+
+    if (ownerNotification.error) {
+      throw new Error(ownerNotification.error.message || 'Failed to send owner notification');
+    }
+
+    const clientConfirmation = await resend.emails.send({
+      from: CONTACT_FROM,
+      to: email,
+      subject: "Got your request - I'll reply within 24h",
+      html: `
+        <div style="font-family:sans-serif; max-width:500px">
+          <h2>Hey! Got your request.</h2>
+          <p>Thanks for reaching out about your <strong>${escapeHtml(projectType)}</strong> project.</p>
+          <p>I review every request personally and will get back to you within 24 hours.</p>
+          <p style="color:#888; font-size:13px">Budget: ${escapeHtml(budget || 'TBD')} - Timeline: ${escapeHtml(timeline || 'TBD')}</p>
+          <br>
+          <p>- Radu</p>
+          <p style="font-size:12px; color:#999">Reply directly to this email to reach me.</p>
+        </div>
+      `,
+    });
+
+    if (clientConfirmation.error) {
+      throw new Error(clientConfirmation.error.message || 'Failed to send confirmation email');
+    }
+
+    return Response.json({ success: true });
   } catch (err) {
-    console.error('[contact] Network error:', err);
-    return NextResponse.json(
-      { error: 'Network error while sending. Try again in a moment.' },
-      { status: 502 }
-    );
+    console.error('Resend error:', err);
+    return Response.json({ error: 'Failed to send' }, { status: 500 });
   }
 }

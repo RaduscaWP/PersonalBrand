@@ -1,9 +1,9 @@
 import Link from 'next/link';
-import { Info, ArrowUpRight } from 'lucide-react';
+import { ArrowUpRight, Info } from 'lucide-react';
 import SectionReveal from '@/components/SectionReveal/SectionReveal';
 import PricingCard from '@/components/PricingCard/PricingCard';
 import MagneticButton from '@/components/MagneticButton/MagneticButton';
-import { pricing, pricingAddOns } from '@/data/pricing';
+import { pricing } from '@/data/pricing';
 import styles from './pricing.module.scss';
 
 export const metadata = {
@@ -16,7 +16,7 @@ const pricingFacts = [
   { label: 'Currency', value: 'USD or EUR' },
   { label: 'Deposit', value: '50% upfront' },
   { label: 'Response', value: 'Under 24 hours' },
-  { label: 'Best fit', value: 'Early-stage and small business' },
+  { label: 'Best fit', value: 'Founders and small teams' },
 ];
 
 const faqs = [
@@ -30,33 +30,32 @@ const faqs = [
   },
   {
     q: 'Do you own the code afterwards?',
-    a: 'Yes. Once final payment clears, the code is 100% yours - MIT-licensed or proprietary, your call.',
+    a: 'Yes. Once final payment clears, the code is yours. The handoff is part of the job, not a hidden extra.',
   },
   {
     q: 'Can you work with my existing codebase?',
-    a: "Yes, provided it's in a supported stack (React, Next.js, vanilla HTML/CSS/JS). I review the codebase first, then quote from there.",
+    a: 'Yes, if the codebase is in a supported stack and the condition of the project makes a clean improvement path realistic.',
   },
 ];
 
 export default function PricingPage() {
   return (
-    <div className={styles.page}>
-      <header className={styles.header}>
-        <span className={styles.eyebrow}>/ Pricing</span>
-        <h1 className={styles.title}>
-          Clear pricing. <span className={styles.accent}>Starter-friendly by design.</span>
+    <div className={`page-wrap ${styles.page}`}>
+      <header className={`page-hero page-hero--photo ${styles.hero}`}>
+        <span className="page-kicker">Pricing</span>
+        <h1 className="page-title">
+          Clear enough to trust, <strong>honest enough to keep flexible.</strong>
         </h1>
-        <p className={styles.lede}>
-          These are entry-level public ranges built for founders, personal brands, and small
-          businesses that need strong work without agency-sized pricing. Once the scope is clear,
-          you get a fixed quote before any build starts.
+        <p className="page-lede">
+          Public pricing here is directional where exact numbers are not locked yet. That is
+          deliberate. The site should never fake certainty just to look finished.
         </p>
 
         <div className={styles.notice}>
           <Info size={16} />
           <span>
-            Extra pages, CMS setup, heavier animation, or faster timelines can shift the final
-            quote. Nothing moves without approval first.
+            Placeholder ranges are hidden from visitors. Until final public prices are locked, the
+            cards show a professional scope-based quote model instead.
           </span>
         </div>
 
@@ -70,75 +69,81 @@ export default function PricingPage() {
         </div>
       </header>
 
-      <SectionReveal>
-        <section className={styles.grid}>
-          {pricing.map((plan) => (
-            <PricingCard key={plan.id} plan={plan} />
-          ))}
-        </section>
-      </SectionReveal>
+      <section className="section-shell section-shell--light">
+        <SectionReveal>
+          <div className="section-inner">
+            <div className="section-head">
+              <div>
+                <span className="section-kicker">Packages</span>
+                <h2 className={`section-title ${styles.lightTitle}`}>
+                  Enough structure to compare. <strong>Enough honesty to trust.</strong>
+                </h2>
+              </div>
+              <p className={`${styles.lightCopy} section-lede`}>
+                These cards are meant to set client expectations, not trap the project inside a fake
+                one-size-fits-all number.
+              </p>
+            </div>
 
-      <SectionReveal>
-        <section className={styles.addOns}>
-          <div className={styles.sectionHead}>
-            <span className={styles.eyebrow}>/ Add-ons</span>
-            <h2 className={styles.sectionTitle}>Useful extras when the scope grows.</h2>
-            <p className={styles.sectionLede}>
-              A compact menu of common additions so the quote stays predictable even when the build
-              expands.
-            </p>
+            <div className={styles.grid}>
+              {pricing.map((plan) => (
+                <PricingCard key={plan.id} plan={plan} />
+              ))}
+            </div>
           </div>
+        </SectionReveal>
+      </section>
 
-          <div className={styles.addOnGrid}>
-            {pricingAddOns.map((item) => (
-              <article key={item.id} className={styles.addOnCard}>
-                <div className={styles.addOnHead}>
-                  <h3 className={styles.addOnTitle}>{item.label}</h3>
-                  <span className={styles.addOnPrice}>{item.priceRange}</span>
-                </div>
-                <p className={styles.addOnBody}>{item.description}</p>
-              </article>
-            ))}
+      <section className="section-shell section-shell--dark">
+        <SectionReveal>
+          <div className="section-inner">
+            <div className="section-head">
+              <div>
+                <span className="section-kicker">FAQ</span>
+                <h2 className="section-title">
+                  The questions clients usually ask <strong>before saying yes.</strong>
+                </h2>
+              </div>
+              <p className="section-lede">
+                This section is there to reduce hesitation: payment, revisions, ownership, and
+                compatibility with an existing project.
+              </p>
+            </div>
+
+            <div className={styles.faqList}>
+              {faqs.map((item) => (
+                <details key={item.q} className={styles.faqItem}>
+                  <summary>
+                    <span>{item.q}</span>
+                    <span className={styles.plus} aria-hidden="true">
+                      +
+                    </span>
+                  </summary>
+                  <p>{item.a}</p>
+                </details>
+              ))}
+            </div>
           </div>
-        </section>
-      </SectionReveal>
+        </SectionReveal>
+      </section>
 
-      <SectionReveal>
-        <section className={styles.faq}>
-          <div className={styles.sectionHead}>
-            <span className={styles.eyebrow}>/ FAQ</span>
-            <h2 className={styles.sectionTitle}>Things clients usually ask.</h2>
-          </div>
-
-          <div className={styles.faqList}>
-            {faqs.map((item) => (
-              <details key={item.q} className={styles.faqItem}>
-                <summary>
-                  <span>{item.q}</span>
-                  <span className={styles.plus} aria-hidden="true">
-                    +
-                  </span>
-                </summary>
-                <p>{item.a}</p>
-              </details>
-            ))}
-          </div>
-        </section>
-      </SectionReveal>
-
-      <SectionReveal>
-        <section className={styles.cta}>
-          <h2 className={styles.ctaTitle}>Ready for a real quote?</h2>
-          <div className={styles.ctaRow}>
+      <section className="section-shell section-shell--dark">
+        <div className="page-cta-band page-cta-band--photo">
+          <h2>Need a real quote instead of a public estimate?</h2>
+          <p>
+            Send the brief and I will turn it into a clear scope, timing expectation, and pricing
+            path before any build work starts.
+          </p>
+          <div className="page-cta-actions">
             <MagneticButton href="/contact" variant="primary">
               Start a project
             </MagneticButton>
-            <Link href="/services" className={styles.textLink}>
-              See what&apos;s included <ArrowUpRight size={14} />
+            <Link href="/services" className="text-link">
+              See services <ArrowUpRight size={14} />
             </Link>
           </div>
-        </section>
-      </SectionReveal>
+        </div>
+      </section>
     </div>
   );
 }

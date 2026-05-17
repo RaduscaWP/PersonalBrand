@@ -1,6 +1,6 @@
 import { blogPosts } from '@/data/blog';
 
-const BASE = 'https://radu-stefan.vercel.app';
+const BASE = process.env.NEXT_PUBLIC_SITE_URL || 'https://radu-stefan.dev';
 
 export default function sitemap() {
   const staticRoutes = ['', '/about', '/projects', '/services', '/pricing', '/blog', '/contact'];

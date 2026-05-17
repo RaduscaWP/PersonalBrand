@@ -2,91 +2,106 @@ export const services = [
   {
     id: 'landing-page',
     title: 'Landing Page',
-    description:
-      'Fast, conversion-focused single pages. Pixel-perfect, mobile-first, SEO-ready, deployed to Vercel.',
     icon: 'Layout',
+    badge: 'PIXEL-PERFECT',
     availability: 'now',
-    availableLabel: 'Available Now',
+    label: 'Available Now',
+    featured: false,
+    previewOrder: 1,
+    description:
+      'Conversion-focused single pages built fast, deployed to Vercel, mobile-first from line one.',
   },
   {
     id: 'figma-to-code',
     title: 'Figma to Code',
-    description:
-      'You design it in Figma - I build it exactly. HTML/CSS/React, pixel-perfect, responsive on all screens.',
     icon: 'Figma',
+    badge: 'EXACT BUILD',
     availability: 'now',
-    availableLabel: 'Available Now',
+    label: 'Available Now',
+    featured: false,
+    previewOrder: 2,
+    description:
+      'You design it - I build it exactly. HTML/CSS/React, every pixel, every hover state.',
   },
   {
     id: 'uiux-design',
     title: 'UI/UX Design',
-    description:
-      'Clean, modern interfaces designed in Figma before a single line of code is written. Component systems and mobile variants included.',
     icon: 'Palette',
+    badge: 'BEFORE CODE',
     availability: 'now',
-    availableLabel: 'Available Now',
+    label: 'Available Now',
+    featured: false,
+    previewOrder: 3,
+    description:
+      'Clean Figma systems designed before a single line of code is written. Components included.',
   },
   {
     id: 'full-website',
     title: 'Full Website',
-    description:
-      'Multi-page websites with navigation, SEO metadata, contact forms, and professional Vercel deployment.',
     icon: 'Globe',
+    badge: 'EXAMPLE',
     availability: 'now',
-    availableLabel: 'Available Now',
+    label: 'Available Now',
+    featured: true,
+    previewOrder: 4,
+    description:
+      'Multi-page with navigation, SEO, contact form, Vercel deployment. The complete package.',
   },
   {
     id: 'web-app',
     title: 'Web Application',
-    description:
-      'Interactive applications built with React and Next.js. SPAs, dashboards, admin panels, and data-driven tools.',
     icon: 'Code2',
     availability: 'now',
-    availableLabel: 'Available Now',
+    label: 'Available Now',
+    featured: false,
+    description:
+      'Interactive client dashboards, admin panels, and product surfaces with clean React structure.',
   },
   {
     id: 'seo',
     title: 'SEO Optimization',
-    description:
-      'Technical SEO: metadata, Open Graph tags, sitemap, robots.txt, performance optimization, Core Web Vitals fixes.',
     icon: 'Search',
     availability: 'now',
-    availableLabel: 'Available Now',
+    label: 'Available Now',
+    featured: false,
+    description:
+      'Technical SEO setup for sites that need metadata, crawl hygiene, and stronger first-page delivery.',
   },
   {
     id: 'backend',
-    title: 'Backend Development',
-    description:
-      'REST APIs, database design, authentication, and server-side logic using Node.js and Express.',
+    title: 'Backend Dev',
     icon: 'Server',
     availability: 'summer-2026',
-    availableLabel: 'Available Summer 2026',
+    label: 'Summer 2026',
+    featured: false,
+    description: 'REST APIs, database design, authentication, Node.js and Express.',
   },
   {
-    id: 'cybersecurity-audit',
-    title: 'Cybersecurity Audit',
-    description:
-      'Web application security audit: vulnerability scanning, penetration testing basics, security report with remediation steps.',
+    id: 'cybersec-audit',
+    title: 'Security Audit',
     icon: 'Shield',
     availability: 'fall-2026',
-    availableLabel: 'Available Fall 2026',
+    label: 'Fall 2026',
+    featured: false,
+    description:
+      'Web application security audit: vulnerability scanning, penetration testing basics, remediation report.',
   },
   {
-    id: 'desktop-mobile',
-    title: 'Desktop & Mobile Apps',
-    description:
-      'Native desktop applications (C#, .NET) and cross-platform mobile apps (React Native).',
+    id: 'mobile',
+    title: 'Mobile Apps',
     icon: 'Smartphone',
     availability: 'summer-2027',
-    availableLabel: 'Available Summer 2027',
+    label: 'Summer 2027',
+    featured: false,
+    description: 'Cross-platform mobile applications (React Native).',
   },
   {
     id: 'systems',
-    title: 'Low-Level Systems',
-    description:
-      'Performance-critical software written in C++ and C. Systems programming, tooling, and embedded-adjacent work.',
+    title: 'Systems / C++',
     icon: 'Cpu',
     availability: 'summer-2027',
-    availableLabel: 'Available Summer 2027',
+    label: 'Summer 2027',
+    featured: false,
+    description: 'Performance-critical software in C++ and C. Systems programming and tooling.',
   },
 ];

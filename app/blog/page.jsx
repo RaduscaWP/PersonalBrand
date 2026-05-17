@@ -11,29 +11,46 @@ export const metadata = {
 
 export default function BlogPage() {
   const posts = blogPosts
-    .filter((p) => p.published)
-    .sort((a, b) => new Date(b.date) - new Date(a.date));
+    .filter((post) => post.published)
+    .sort((left, right) => new Date(right.date) - new Date(left.date));
 
   return (
-    <div className={styles.page}>
-      <header className={styles.header}>
-        <span className={styles.eyebrow}>/ Blog</span>
-        <h1 className={styles.title}>
-          Notes & <span className={styles.accent}>essays.</span>
+    <div className={`page-wrap ${styles.page}`}>
+      <header className={`page-hero page-hero--center page-hero--photo ${styles.hero}`}>
+        <span className="page-kicker">Blog</span>
+        <h1 className="page-title">
+          Notes, breakdowns, and article <strong>outlines in progress.</strong>
         </h1>
-        <p className={styles.lede}>
-          Occasional writing on the projects I build, the path I&rsquo;m on, and the security
-          mindset I think every developer should have.
+        <p className="page-lede">
+          Draft articles stay clearly marked until they are fully written. That keeps the section
+          honest while still showing the topics the portfolio is growing into.
         </p>
       </header>
 
-      <SectionReveal>
-        <section className={styles.grid}>
-          {posts.map((post) => (
-            <BlogCard key={post.id} post={post} />
-          ))}
-        </section>
-      </SectionReveal>
+      <section className="section-shell section-shell--light">
+        <SectionReveal>
+          <div className="section-inner">
+            <div className="section-head">
+              <div>
+                <span className="section-kicker">Current Posts</span>
+                <h2 className={`section-title ${styles.lightTitle}`}>
+                  Writing that supports the portfolio <strong>without pretending to be finished.</strong>
+                </h2>
+              </div>
+              <p className={`${styles.lightCopy} section-lede`}>
+                Some pieces are published as outlines for now. The point is to signal direction
+                without passing placeholder content off as polished work.
+              </p>
+            </div>
+
+            <div className={styles.grid}>
+              {posts.map((post) => (
+                <BlogCard key={post.id} post={post} />
+              ))}
+            </div>
+          </div>
+        </SectionReveal>
+      </section>
     </div>
   );
 }

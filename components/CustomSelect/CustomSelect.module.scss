@@ -1,0 +1,150 @@
+.root {
+  position: relative;
+  min-width: 0;
+}
+
+.open {
+  z-index: 30;
+}
+
+.trigger {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.9rem;
+  text-align: left;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+}
+
+.value {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.chevron {
+  flex-shrink: 0;
+  transition: transform 0.2s ease;
+}
+
+.open .chevron {
+  transform: rotate(180deg);
+}
+
+.menu {
+  position: absolute;
+  top: calc(100% + 0.55rem);
+  left: 0;
+  right: 0;
+  padding: 0.35rem;
+  border-radius: 18px;
+  max-height: 18rem;
+  overflow-y: auto;
+  z-index: 40;
+}
+
+.option {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.8rem;
+  min-height: 3rem;
+  padding: 0.8rem 0.9rem;
+  border-radius: 14px;
+  text-align: left;
+  transition: background 0.18s ease, color 0.18s ease;
+}
+
+.check {
+  flex-shrink: 0;
+}
+
+.placeholder {}
+
+.optionActive {}
+
+.light {
+  .trigger {
+    min-height: 4.25rem;
+    padding: 0.95rem 1rem;
+    border-radius: 18px;
+    border: 1px solid var(--paper-border);
+    background: #ffffff;
+    color: var(--text-dark);
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.72);
+  }
+
+  .trigger:hover,
+  &.open .trigger {
+    border-color: rgba(124, 58, 237, 0.22);
+    box-shadow: 0 0 0 4px rgba(124, 58, 237, 0.08);
+  }
+
+  .placeholder .value,
+  .chevron {
+    color: var(--text-faint-dark);
+  }
+
+  .menu {
+    border: 1px solid rgba(16, 24, 40, 0.08);
+    background: var(--paper-elevated);
+    box-shadow: 0 18px 48px rgba(16, 24, 40, 0.12);
+  }
+
+  .option {
+    color: var(--text-soft-dark);
+  }
+
+  .option:hover,
+  .optionActive {
+    background: rgba(124, 58, 237, 0.08);
+    color: var(--text-dark);
+  }
+
+  .check {
+    color: var(--accent);
+  }
+}
+
+.darkInline {
+  .trigger {
+    min-height: auto;
+    padding: 0;
+    border: 0;
+    border-radius: 0;
+    background: transparent;
+    color: var(--text-primary);
+    box-shadow: none;
+  }
+
+  .placeholder .value,
+  .chevron {
+    color: var(--text-secondary);
+  }
+
+  .menu {
+    left: -1rem;
+    right: -1rem;
+    top: calc(100% + 0.9rem);
+    border: 1px solid var(--border-hover);
+    background: rgba(10, 10, 10, 0.98);
+    box-shadow: var(--shadow-lg);
+  }
+
+  .option {
+    color: var(--text-secondary);
+  }
+
+  .option:hover,
+  .optionActive {
+    background: rgba(124, 58, 237, 0.12);
+    color: var(--text-primary);
+  }
+
+  .check {
+    color: var(--accent-light);
+  }
+}

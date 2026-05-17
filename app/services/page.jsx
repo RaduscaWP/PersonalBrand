@@ -13,74 +13,122 @@ export const metadata = {
 };
 
 export default function ServicesPage() {
-  const available = services.filter((service) => service.availability === 'now');
-  const upcoming = services.filter((service) => service.availability !== 'now');
+  const signature = services
+    .filter((service) => service.availability === 'now' && service.previewOrder)
+    .sort((left, right) => left.previewOrder - right.previewOrder);
+  const supporting = services.filter(
+    (service) => service.availability === 'now' && !service.previewOrder,
+  );
+  const roadmap = services.filter((service) => service.availability !== 'now');
 
   return (
-    <div className={styles.page}>
-      <header className={styles.header}>
-        <span className={styles.eyebrow}>/ Services</span>
-        <h1 className={styles.title}>
-          What I build, <span className={styles.accent}>today and next.</span>
+    <div className={`page-wrap ${styles.page}`}>
+      <header className={`page-hero page-hero--center page-hero--photo ${styles.hero}`}>
+        <span className="page-kicker">Services</span>
+        <h1 className="page-title">
+          Clear offers, clear outcomes, <strong>no vague freelancing language.</strong>
         </h1>
-        <p className={styles.lede}>
-          Six services are ready now, with four more on a public roadmap through 2027. If you are
-          hiring today, this page shows exactly what is live, what is not, and where I can help
-          right away.
+        <p className="page-lede">
+          The service list is designed to help a client self-identify the right offer quickly. What
+          is available now is separated from what is still on the roadmap.
         </p>
       </header>
 
-      <SectionReveal>
-        <section>
-          <div className={styles.rowHead}>
-            <span className={styles.rowTag}>
-              <span className={`${styles.dot} ${styles.dotGreen}`} />
-              Available now
-            </span>
-            <span className={styles.rowCount}>{available.length} services</span>
-          </div>
-          <div className={styles.grid}>
-            {available.map((service) => (
-              <ServiceCard key={service.id} service={service} />
-            ))}
-          </div>
-        </section>
-      </SectionReveal>
+      <section className="section-shell section-shell--light">
+        <SectionReveal>
+          <div className="section-inner">
+            <div className="section-head">
+              <div>
+                <span className="section-kicker">Available Now</span>
+                <h2 className={`section-title ${styles.lightTitle}`}>
+                  The four flagship offers <strong>ready to sell today.</strong>
+                </h2>
+              </div>
+              <p className={`${styles.lightCopy} section-lede`}>
+                These are the offers that should carry the portfolio. They are concrete, visual, and
+                easy for a client to understand without extra explanation.
+              </p>
+            </div>
 
-      <SectionReveal>
-        <section>
-          <div className={styles.rowHead}>
-            <span className={styles.rowTag}>
-              <span className={`${styles.dot} ${styles.dotYellow}`} />
-              Roadmap
-            </span>
-            <span className={styles.rowCount}>{upcoming.length} coming</span>
+            <div className={styles.signatureGrid}>
+              {signature.map((service) => (
+                <ServiceCard
+                  key={service.id}
+                  service={service}
+                  active={service.featured}
+                />
+              ))}
+            </div>
           </div>
-          <div className={styles.grid}>
-            {upcoming.map((service) => (
-              <ServiceCard key={service.id} service={service} />
-            ))}
-          </div>
-        </section>
-      </SectionReveal>
+        </SectionReveal>
+      </section>
 
-      <SectionReveal>
-        <section className={styles.cta}>
-          <h2 className={styles.ctaTitle}>Not sure which service fits your project?</h2>
-          <p className={styles.ctaLede}>
-            Send me what you want to build. I&apos;ll point you toward the right package honestly,
-            even if that means starting smaller.
-          </p>
-          <div className={styles.ctaRow}>
-            <MagneticButton href="/contact" variant="primary">
-              Get a recommendation
-            </MagneticButton>
-            <Link href="/pricing" className={styles.textLink}>
-              See pricing <ArrowUpRight size={14} />
-            </Link>
+      <section className="section-shell section-shell--dark">
+        <SectionReveal>
+          <div className="section-inner">
+            <div className="section-head">
+              <div>
+                <span className="section-kicker">Supporting Work</span>
+                <h2 className="section-title">
+                  Extra capability without <strong>muddying the offer.</strong>
+                </h2>
+              </div>
+              <p className="section-lede">
+                These are still available for the right project, but they should not compete with
+                the main conversion-focused homepage offers.
+              </p>
+            </div>
+
+            <div className={styles.capabilityGrid}>
+              {supporting.map((service) => (
+                <article key={service.id} className={styles.capabilityCard}>
+                  <span className={styles.capabilityLabel}>{service.label}</span>
+                  <h3>{service.title}</h3>
+                  <p>{service.description}</p>
+                </article>
+              ))}
+            </div>
           </div>
-        </section>
-      </SectionReveal>
+        </SectionReveal>
+      </section>
+
+      <section className="section-shell section-shell--light">
+        <SectionReveal>
+          <div className="section-inner">
+            <div className="section-head">
+              <div>
+                <span className="section-kicker">Roadmap</span>
+                <h2 className={`section-title ${styles.lightTitle}`}>
+                  Publicly honest about <strong>what is not for sale yet.</strong>
+                </h2>
+              </div>
+              <p className={`${styles.lightCopy} section-lede`}>
+                The roadmap signals ambition without pretending the skill is already commercially
+                mature. That honesty improves trust rather than reducing it.
+              </p>
+            </div>
+
+            <div className={styles.roadmapGrid}>
+              {roadmap.map((service) => (
+                <article key={service.id} className={styles.roadmapCard}>
+                  <span className={styles.roadmapMeta}>{service.label}</span>
+                  <h3>{service.title}</h3>
+                  <p>{service.description}</p>
+                </article>
+              ))}
+            </div>
+
+            <div className={styles.actions}>
+              <MagneticButton href="/contact" variant="primary">
+                Get a recommendation
+              </MagneticButton>
+              <Link href="/pricing" className={`text-link ${styles.lightLink}`}>
+                See pricing <ArrowUpRight size={14} />
+              </Link>
+            </div>
+          </div>
+        </SectionReveal>
+      </section>
     </div>
   );
 }

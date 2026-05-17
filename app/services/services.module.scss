@@ -1,133 +1,116 @@
 .page {
-  max-width: var(--max-width);
-  margin: 0 auto;
-  padding: calc(var(--space-24) + 2rem) var(--content-padding) var(--space-20);
   display: flex;
   flex-direction: column;
-  gap: var(--section-gap);
 }
 
-.header {
-  display: flex;
-  flex-direction: column;
-  gap: 0.75rem;
-  max-width: 780px;
-}
-
-.eyebrow {
-  font-family: 'JetBrains Mono', monospace;
-  font-size: var(--fs-xs);
-  color: var(--accent-light);
-  text-transform: uppercase;
-  letter-spacing: 0.15em;
-}
-
-.title {
-  font-size: var(--fs-h1);
-  line-height: 1;
-  font-weight: 800;
-  letter-spacing: -0.03em;
-}
-
-.accent {
-  color: var(--accent-light);
-  font-style: italic;
-}
-
-.lede {
-  font-size: 1.1rem;
-  color: var(--text-secondary);
-  line-height: 1.65;
-  max-width: 640px;
-}
-
-.rowHead {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  gap: 1rem;
-  margin-bottom: var(--space-8);
-  padding-bottom: var(--space-4);
-  border-bottom: 1px solid var(--border);
-  flex-wrap: wrap;
-}
-
-.rowTag {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.5rem;
-  font-family: 'JetBrains Mono', monospace;
-  font-size: var(--fs-small);
-  color: var(--text-primary);
-  text-transform: uppercase;
-  letter-spacing: 0.1em;
-}
-
-.dot {
-  width: 8px;
-  height: 8px;
-  border-radius: 50%;
-}
-
-.dotGreen  { background: var(--status-green);  box-shadow: 0 0 8px var(--status-green); }
-.dotYellow { background: var(--status-yellow); box-shadow: 0 0 6px var(--status-yellow); }
-
-.rowCount {
-  font-family: 'JetBrains Mono', monospace;
-  font-size: var(--fs-xs);
-  color: var(--text-muted);
-}
-
-.grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-  gap: 1rem;
-}
-
-.cta {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 1rem;
-  padding: var(--space-16) var(--card-padding);
-  background: var(--bg-surface);
-  border: 1px solid var(--border);
-  border-radius: var(--radius-xl);
+.hero {
   text-align: center;
 }
 
-.ctaTitle {
-  font-size: var(--fs-h2);
-  letter-spacing: -0.02em;
-  line-height: 1.15;
+.lightTitle,
+.lightTitle :global(strong) {
+  color: var(--text-dark);
 }
 
-.ctaLede {
-  font-size: 1rem;
-  color: var(--text-secondary);
-  line-height: 1.6;
-  max-width: 480px;
+.lightCopy {
+  color: var(--text-soft-dark);
 }
 
-.ctaRow {
-  display: flex;
-  align-items: center;
-  gap: 1rem;
-  flex-wrap: wrap;
-  justify-content: center;
-  margin-top: 0.5rem;
+.lightLink {
+  color: var(--text-dark);
+
+  &:hover {
+    color: var(--accent);
+  }
 }
 
-.textLink {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.35rem;
-  font-family: 'JetBrains Mono', monospace;
+.signatureGrid,
+.capabilityGrid,
+.roadmapGrid {
+  display: grid;
+  gap: var(--space-4);
+}
+
+.signatureGrid {
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+}
+
+.capabilityGrid,
+.roadmapGrid {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.capabilityCard,
+.roadmapCard {
+  padding: var(--card-padding);
+  border-radius: 24px;
+}
+
+.capabilityCard {
+  border: 1px solid var(--border);
+  background: var(--bg-surface);
+}
+
+.roadmapCard {
+  border: 1px solid var(--paper-border);
+  background: var(--paper-elevated);
+  box-shadow: var(--paper-shadow);
+}
+
+.capabilityLabel,
+.roadmapMeta {
+  display: inline-block;
+  margin-bottom: var(--space-4);
+  font-family: 'JetBrains Mono', ui-monospace, monospace;
   font-size: var(--fs-xs);
-  color: var(--text-secondary);
+  font-weight: 700;
+  letter-spacing: 0.16em;
   text-transform: uppercase;
-  letter-spacing: 0.1em;
-  transition: color 0.2s ease;
+}
 
-  &:hover { color: var(--accent-light); }
+.capabilityLabel {
+  color: var(--accent-light);
+}
+
+.roadmapMeta {
+  color: var(--accent);
+}
+
+.capabilityCard h3,
+.roadmapCard h3 {
+  font-size: 1.3rem;
+}
+
+.capabilityCard p {
+  margin-top: var(--space-3);
+  color: var(--text-secondary);
+  line-height: 1.72;
+}
+
+.roadmapCard p {
+  margin-top: var(--space-3);
+  color: var(--text-soft-dark);
+  line-height: 1.72;
+}
+
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-4);
+  margin-top: var(--space-8);
+}
+
+@media (max-width: 1024px) {
+  .signatureGrid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 768px) {
+  .signatureGrid,
+  .capabilityGrid,
+  .roadmapGrid {
+    grid-template-columns: 1fr;
+  }
 }
