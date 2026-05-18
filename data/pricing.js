@@ -2,9 +2,9 @@ export const pricing = [
   {
     id: 'landing-page',
     service: 'Landing Page',
-    priceRange: '$X - $Y',
+    priceRange: '$350 - $1,200+',
     highlight: true,
-    pricingModel: 'Scope-based quote',
+    priceNote: 'Final quote depends on sections, copy, motion, and integrations.',
     description: 'Perfect for startups, products, events, or personal brands.',
     includes: [
       '1-page fully responsive',
@@ -19,9 +19,9 @@ export const pricing = [
   {
     id: 'figma-to-code',
     service: 'Figma to Code',
-    priceRange: '$X - $Y',
+    priceRange: '$250 - $1,200+',
     highlight: false,
-    pricingModel: 'Scope-based quote',
+    priceNote: 'Based on screen count, responsive variants, and interaction states.',
     description: 'You provide the Figma file - I build it pixel-perfectly.',
     includes: [
       'Pixel-perfect HTML/CSS/React',
@@ -36,9 +36,9 @@ export const pricing = [
   {
     id: 'uiux-design',
     service: 'UI/UX Design',
-    priceRange: '$X - $Y',
+    priceRange: '$350 - $1,500+',
     highlight: false,
-    pricingModel: 'Scope-based quote',
+    priceNote: 'Based on pages, component depth, and prototype fidelity.',
     description: 'Professional Figma files, yours to keep forever.',
     includes: [
       'Figma file - yours forever',
@@ -53,9 +53,9 @@ export const pricing = [
   {
     id: 'full-website',
     service: 'Full Website',
-    priceRange: '$X - $Y',
+    priceRange: '$900 - $2,500+',
     highlight: false,
-    pricingModel: 'Scope-based quote',
+    priceNote: 'Based on page count, content readiness, SEO, and forms.',
     description: 'Multi-page sites with everything you need to go live.',
     includes: [
       'Up to 6 pages',
@@ -71,9 +71,9 @@ export const pricing = [
   {
     id: 'web-app',
     service: 'Web Application',
-    priceRange: '$X - $Y',
+    priceRange: 'From $1,200',
     highlight: false,
-    pricingModel: 'Scope-based quote',
+    priceNote: 'Scoped after reviewing features, auth, APIs, and data needs.',
     description: 'React/Next.js apps with real interactivity.',
     includes: [
       'React or Next.js codebase',
@@ -88,9 +88,9 @@ export const pricing = [
   {
     id: 'seo',
     service: 'SEO Package',
-    priceRange: '$X / month',
+    priceRange: '$250 - $600 / month',
     highlight: false,
-    pricingModel: 'Monthly scope-based quote',
+    priceNote: 'Monthly scope depends on site size and reporting depth.',
     description: 'Monthly SEO management for existing websites.',
     includes: [
       'Technical SEO audit',

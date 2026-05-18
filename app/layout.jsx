@@ -53,6 +53,8 @@ export const viewport = {
   initialScale: 1,
 };
 
+const isVercelRuntime = process.env.VERCEL === '1';
+
 export default function RootLayout({ children }) {
   return (
     <html lang="en" className={`${syne.variable} ${dmSans.variable}`}>
@@ -64,8 +66,12 @@ export default function RootLayout({ children }) {
           <PageTransition>{children}</PageTransition>
         </main>
         <Footer />
-        <Analytics />
-        <SpeedInsights />
+        {isVercelRuntime ? (
+          <>
+            <Analytics />
+            <SpeedInsights />
+          </>
+        ) : null}
       </body>
     </html>
   );

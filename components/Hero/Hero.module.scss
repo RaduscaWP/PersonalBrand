@@ -292,7 +292,7 @@
 .formCluster {
   display: flex;
   flex-direction: column;
-  gap: 0.75rem;
+  gap: 1rem;
 }
 
 .formControls,
@@ -350,10 +350,12 @@
 .fieldEmail {
   grid-area: email;
   border-radius: 23px 0 0 23px;
+  overflow: hidden;
 }
 
 .inlineSelect,
 .input {
+  display: block;
   width: 100%;
   min-width: 0;
   border: 0;
@@ -363,6 +365,12 @@
   line-height: 1.35;
   letter-spacing: -0.01em;
   outline: none;
+}
+
+.input {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .input::placeholder,
@@ -394,7 +402,6 @@
 
   &:hover {
     background: var(--accent-hover);
-    transform: scale(1.04);
   }
 
   &:disabled {
@@ -412,6 +419,14 @@
   color: var(--text-primary);
   resize: vertical;
   outline: none;
+}
+
+.honeypot {
+  position: absolute;
+  left: -9999px;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
 }
 
 .microTrust {
@@ -497,9 +512,12 @@
     border-radius: 19px 19px 0 0;
   }
 
-  .fieldTimeline,
+  .fieldTimeline {
+    border-radius: 0 0 19px 19px;
+  }
+
   .fieldEmail {
-    border-radius: 0;
+    border-radius: 19px 19px 0 0;
   }
 
   .submitBtn {

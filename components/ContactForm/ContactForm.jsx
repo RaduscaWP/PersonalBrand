@@ -22,6 +22,13 @@ const timelineOptions = [
   { value: 'Flexible', label: 'Flexible' },
 ];
 
+function getFriendlyError(status, payload) {
+  if (status === 400) return payload?.error || 'Check the form details and try again.';
+  if (status === 429) return 'Too many requests. Please wait a bit before trying again.';
+  if (status === 503) return 'Email delivery is being configured. Email me directly if this is urgent.';
+  return 'Something went wrong. Email me directly if this keeps happening.';
+}
+
 export default function ContactForm() {
   const params = useSearchParams();
   const prefillService = params?.get('service') || '';
@@ -33,9 +40,11 @@ export default function ContactForm() {
     budget: '',
     timeline: '',
     description: matched ? `I am interested in ${matched.title}.` : '',
+    website: '',
   });
   const [status, setStatus] = useState('idle');
   const [errorMessage, setErrorMessage] = useState('');
+  const [reference, setReference] = useState('');
 
   useEffect(() => {
     const next = serviceOptions.find((service) => service.id === prefillService);
@@ -50,6 +59,7 @@ export default function ContactForm() {
   const update = (event) => {
     setStatus('idle');
     setErrorMessage('');
+    setReference('');
     setForm((current) => ({ ...current, [event.target.name]: event.target.value }));
   };
 
@@ -68,22 +78,26 @@ export default function ContactForm() {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
+          name: form.name,
           projectType: form.projectType || 'General Inquiry',
           budget: form.budget,
           timeline: form.timeline,
           email: form.email,
-          description: `Name: ${form.name}\n\n${form.description}`,
+          description: form.description,
+          website: form.website,
+          source: 'contact',
         }),
       });
 
       const payload = await res.json().catch(() => null);
 
       if (!res.ok) {
-        setErrorMessage(payload?.error || 'Something went wrong. Email me directly if this keeps happening.');
+        setErrorMessage(getFriendlyError(res.status, payload));
         setStatus('error');
         return;
       }
 
+      setReference(payload?.reference || '');
       setStatus('sent');
     } catch {
       setErrorMessage('Network error. Please try again or email me directly.');
@@ -165,12 +179,26 @@ export default function ContactForm() {
         />
       </label>
 
+      <label className={styles.honeypot} aria-hidden="true">
+        Website
+        <input
+          name="website"
+          value={form.website}
+          onChange={update}
+          tabIndex={-1}
+          autoComplete="off"
+        />
+      </label>
+
       <button className={styles.submit} type="submit" disabled={status === 'sending'}>
         {status === 'sending' ? 'Sending...' : <>Send request <Send size={15} /></>}
       </button>
 
       {status === 'sent' && (
-        <p className={styles.success}>Got it - I will reply within 24 hours.</p>
+        <p className={styles.success}>
+          Got it - I will reply within 24 hours.
+          {reference ? <> Reference: <strong>{reference}</strong>.</> : null}
+        </p>
       )}
       {status === 'validation' && (
         <p className={styles.error}>Choose a service before sending the request.</p>

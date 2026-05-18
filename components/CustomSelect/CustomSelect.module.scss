@@ -45,6 +45,17 @@
   z-index: 40;
 }
 
+.inline {
+  .menu {
+    position: static;
+    top: auto;
+    left: auto;
+    right: auto;
+    margin-top: 0.7rem;
+    width: 100%;
+  }
+}
+
 .option {
   width: 100%;
   display: flex;
@@ -132,6 +143,12 @@
     border: 1px solid var(--border-hover);
     background: rgba(10, 10, 10, 0.98);
     box-shadow: var(--shadow-lg);
+  }
+
+  &.inline .menu {
+    left: auto;
+    right: auto;
+    top: auto;
   }
 
   .option {

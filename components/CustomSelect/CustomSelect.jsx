@@ -20,6 +20,7 @@ export default function CustomSelect({
   onChange,
   label,
   theme = 'light',
+  menuPlacement = 'overlay',
   className = '',
 }) {
   const [open, setOpen] = useState(false);
@@ -52,7 +53,7 @@ export default function CustomSelect({
   return (
     <div
       ref={rootRef}
-      className={`${styles.root} ${styles[theme]} ${open ? styles.open : ''} ${className}`}
+      className={`${styles.root} ${styles[theme]} ${styles[menuPlacement]} ${open ? styles.open : ''} ${className}`}
     >
       <button
         id={id}

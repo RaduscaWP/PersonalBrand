@@ -4,26 +4,28 @@
   flex-direction: column;
   gap: 1.25rem;
   padding: var(--card-padding);
-  background: var(--bg-surface);
-  border: 1px solid var(--border);
+  background: var(--paper-elevated);
+  border: 1px solid var(--paper-border);
   border-radius: var(--radius-lg);
+  box-shadow: var(--paper-shadow);
+  color: var(--text-dark);
   transition: border-color 0.3s ease, box-shadow 0.3s ease, transform 0.3s ease;
   height: 100%;
 
   &:hover {
-    border-color: var(--border-accent);
+    border-color: rgba(124, 58, 237, 0.3);
     transform: translateY(-3px);
-    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.5);
+    box-shadow: 0 24px 70px rgba(17, 17, 17, 0.13);
   }
 
   &.highlight {
-    border-color: var(--border-accent);
+    border-color: rgba(124, 58, 237, 0.36);
     background:
-      linear-gradient(180deg, rgba(124, 58, 237, 0.05), transparent 50%),
-      var(--bg-surface);
+      linear-gradient(180deg, rgba(124, 58, 237, 0.08), transparent 48%),
+      var(--paper-elevated);
 
     &:hover {
-      box-shadow: var(--shadow-accent);
+      box-shadow: 0 26px 80px rgba(124, 58, 237, 0.15);
     }
   }
 }
@@ -53,11 +55,12 @@
   font-size: 1.5rem;
   font-weight: 700;
   letter-spacing: -0.02em;
+  color: var(--text-dark);
 }
 
 .desc {
   font-size: var(--fs-small);
-  color: var(--text-secondary);
+  color: var(--text-soft-dark);
   line-height: 1.55;
 }
 
@@ -67,31 +70,39 @@
   justify-content: space-between;
   gap: 1rem;
   padding: 1rem 0;
-  border-top: 1px solid var(--border);
-  border-bottom: 1px solid var(--border);
+  border-top: 1px solid var(--paper-border);
+  border-bottom: 1px solid var(--paper-border);
 }
 
 .priceBlock {
   display: flex;
   flex-direction: column;
   gap: 0.3rem;
+  min-width: 0;
 }
 
 .priceLabel {
   font-family: 'JetBrains Mono', monospace;
   font-size: var(--fs-xs);
-  color: var(--accent-light);
+  color: var(--accent);
   letter-spacing: 0.14em;
   text-transform: uppercase;
 }
 
 .price {
   font-family: var(--font-syne), sans-serif;
-  font-size: 1.8rem;
+  font-size: clamp(1.45rem, 2.4vw, 1.8rem);
   font-weight: 700;
-  color: var(--text-primary);
+  color: var(--text-dark);
   letter-spacing: -0.02em;
   line-height: 1.1;
+}
+
+.priceNote {
+  max-width: 24rem;
+  color: var(--text-faint-dark);
+  font-size: var(--fs-xs);
+  line-height: 1.45;
 }
 
 .turnaround {
@@ -100,7 +111,7 @@
   gap: 0.3rem;
   font-family: 'JetBrains Mono', monospace;
   font-size: var(--fs-xs);
-  color: var(--text-muted);
+  color: var(--text-faint-dark);
 }
 
 .features {
@@ -114,7 +125,7 @@
     align-items: flex-start;
     gap: 0.5rem;
     font-size: var(--fs-small);
-    color: var(--text-secondary);
+    color: var(--text-soft-dark);
     line-height: 1.5;
   }
 }
@@ -122,7 +133,7 @@
 .check {
   flex-shrink: 0;
   margin-top: 2px;
-  color: var(--accent-light);
+  color: var(--accent);
 }
 
 .cta {

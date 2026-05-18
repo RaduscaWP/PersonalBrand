@@ -47,15 +47,15 @@ export default function PricingPage() {
           Clear enough to trust, <strong>honest enough to keep flexible.</strong>
         </h1>
         <p className="page-lede">
-          Public pricing here is directional where exact numbers are not locked yet. That is
-          deliberate. The site should never fake certainty just to look finished.
+          Public ranges give you a realistic starting point. Final quotes stay flexible because
+          scope, content readiness, and integration depth change the work.
         </p>
 
         <div className={styles.notice}>
           <Info size={16} />
           <span>
-            Placeholder ranges are hidden from visitors. Until final public prices are locked, the
-            cards show a professional scope-based quote model instead.
+            Starting ranges are shown in USD. Every project still gets a clear scope, timeline, and
+            final quote before build work starts.
           </span>
         </div>
 
@@ -80,8 +80,8 @@ export default function PricingPage() {
                 </h2>
               </div>
               <p className={`${styles.lightCopy} section-lede`}>
-                These cards are meant to set client expectations, not trap the project inside a fake
-                one-size-fits-all number.
+                These ranges are built for market-entry freelance work: serious enough to signal
+                quality, flexible enough for small teams and founders.
               </p>
             </div>
 

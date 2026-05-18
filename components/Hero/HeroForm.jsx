@@ -5,10 +5,18 @@ import { Send } from 'lucide-react';
 import CustomSelect from '@/components/CustomSelect/CustomSelect';
 import styles from './Hero.module.scss';
 
+function getFriendlyError(status, payload) {
+  if (status === 400) return payload?.error || 'Check the form details and try again.';
+  if (status === 429) return 'Too many requests. Please wait a bit before trying again.';
+  if (status === 503) return 'Email delivery is being configured. Email me directly if this is urgent.';
+  return 'Something went wrong. Email me directly if this keeps failing.';
+}
+
 export default function HeroForm({ selected }) {
-  const [form, setForm] = useState({ budget: '', timeline: '', email: '', description: '' });
+  const [form, setForm] = useState({ budget: '', timeline: '', email: '', description: '', website: '' });
   const [status, setStatus] = useState('idle');
   const [errorMessage, setErrorMessage] = useState('');
+  const [reference, setReference] = useState('');
 
   const budgets = selected?.budgets ?? ['$300-500', '$500-1000', '$1000-2000', '$2000+'];
   const timelines = selected?.timelines ?? ['1 week', '2 weeks', '3 weeks', 'Flexible'];
@@ -19,6 +27,7 @@ export default function HeroForm({ selected }) {
   useEffect(() => {
     setStatus('idle');
     setErrorMessage('');
+    setReference('');
     setForm((current) => ({
       ...current,
       budget: '',
@@ -30,6 +39,7 @@ export default function HeroForm({ selected }) {
   const updateField = (key, value) => {
     setStatus('idle');
     setErrorMessage('');
+    setReference('');
     setForm((current) => ({ ...current, [key]: value }));
   };
 
@@ -44,6 +54,7 @@ export default function HeroForm({ selected }) {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           projectType: selected?.label ?? 'General Inquiry',
+          source: 'hero',
           ...form,
         }),
       });
@@ -51,11 +62,12 @@ export default function HeroForm({ selected }) {
       const payload = await response.json().catch(() => null);
 
       if (!response.ok) {
-        setErrorMessage(payload?.error || 'Something went wrong. Email me directly if this keeps failing.');
+        setErrorMessage(getFriendlyError(response.status, payload));
         setStatus('error');
         return;
       }
 
+      setReference(payload?.reference || '');
       setStatus('sent');
     } catch {
       setErrorMessage('Network error. Please try again or email me directly.');
@@ -64,7 +76,12 @@ export default function HeroForm({ selected }) {
   };
 
   if (status === 'sent') {
-    return <div className={styles.formSuccess}>Request received. I will reply within 24 hours.</div>;
+    return (
+      <div className={styles.formSuccess}>
+        Request received. I will reply within 24 hours.
+        {reference ? <> Reference: <strong>{reference}</strong>.</> : null}
+      </div>
+    );
   }
 
   return (
@@ -80,6 +97,7 @@ export default function HeroForm({ selected }) {
               className={styles.inlineSelect}
               label="Budget"
               theme="darkInline"
+              menuPlacement="inline"
               placeholder="Select budget"
               options={budgets}
             />
@@ -94,6 +112,7 @@ export default function HeroForm({ selected }) {
               className={styles.inlineSelect}
               label="Timeline"
               theme="darkInline"
+              menuPlacement="inline"
               placeholder="Select timeline"
               options={timelines}
             />
@@ -126,7 +145,18 @@ export default function HeroForm({ selected }) {
         onChange={(event) => updateField('description', event.target.value)}
         placeholder={placeholder}
         className={styles.textarea}
-      />
+        />
+
+      <label className={styles.honeypot} aria-hidden="true">
+        Website
+        <input
+          type="text"
+          tabIndex={-1}
+          autoComplete="off"
+          value={form.website}
+          onChange={(event) => updateField('website', event.target.value)}
+        />
+      </label>
 
       {status === 'error' ? (
         <p className={styles.formError}>{errorMessage || 'Something went wrong. Email me directly if this keeps failing.'}</p>

@@ -2,23 +2,7 @@ import { Check, Clock } from 'lucide-react';
 import MagneticButton from '../MagneticButton/MagneticButton';
 import styles from './PricingCard.module.scss';
 
-function getPricingDisplay(plan) {
-  if (/\$X\b/.test(plan.priceRange)) {
-    return {
-      label: 'Pricing model',
-      value: plan.pricingModel || 'Scope-based quote',
-    };
-  }
-
-  return {
-    label: 'Starting range',
-    value: plan.priceRange,
-  };
-}
-
 export default function PricingCard({ plan }) {
-  const price = getPricingDisplay(plan);
-
   return (
     <article className={`${styles.card} ${plan.highlight ? styles.highlight : ''}`}>
       {plan.highlight && <span className={styles.ribbon}>Most Popular</span>}
@@ -30,8 +14,9 @@ export default function PricingCard({ plan }) {
 
       <div className={styles.priceRow}>
         <div className={styles.priceBlock}>
-          <span className={styles.priceLabel}>{price.label}</span>
-          <span className={styles.price}>{price.value}</span>
+          <span className={styles.priceLabel}>Starting range</span>
+          <span className={styles.price}>{plan.priceRange}</span>
+          {plan.priceNote ? <span className={styles.priceNote}>{plan.priceNote}</span> : null}
         </div>
         <span className={styles.turnaround}>
           <Clock size={13} /> {plan.turnaround}
