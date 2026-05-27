@@ -2,7 +2,11 @@
   "permissions": {
     "allow": [
       "Bash(npm install *)",
-      "Bash(npm run *)"
+      "Bash(npm run *)",
+      "Bash(Get-ChildItem -Path \"c:\\\\Users\\\\GZv0x00\\\\OneDrive\\\\Документы\\\\Personal Brand\" -Force -ErrorAction SilentlyContinue)",
+      "Bash(Select-Object Name)",
+      "Bash(git log *)",
+      "Bash(Test-Path \"app\\\\privacy\\\\page.jsx\" -PathType Leaf)"
     ]
   }
 }
