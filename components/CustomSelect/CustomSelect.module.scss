@@ -14,7 +14,11 @@
   justify-content: space-between;
   gap: 0.9rem;
   text-align: left;
-  transition: border-color 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+  transition:
+    border-color 0.2s cubic-bezier(0.22, 1, 0.36, 1),
+    box-shadow 0.2s cubic-bezier(0.22, 1, 0.36, 1),
+    background 0.2s cubic-bezier(0.22, 1, 0.36, 1),
+    color 0.2s cubic-bezier(0.22, 1, 0.36, 1);
 }
 
 .value {
@@ -26,7 +30,7 @@
 
 .chevron {
   flex-shrink: 0;
-  transition: transform 0.2s ease;
+  transition: transform 0.2s cubic-bezier(0.22, 1, 0.36, 1);
 }
 
 .open .chevron {
@@ -43,6 +47,25 @@
   max-height: 18rem;
   overflow-y: auto;
   z-index: 40;
+  opacity: 0;
+  transform: translateY(-4px);
+  transform-origin: top center;
+  pointer-events: none;
+  will-change: opacity, transform;
+}
+
+.menuOpen {
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: auto;
+  animation: selectMenuIn 0.18s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+.menuClosing {
+  opacity: 0;
+  transform: translateY(-4px);
+  pointer-events: none;
+  animation: selectMenuOut 0.16s cubic-bezier(0.22, 1, 0.36, 1) both;
 }
 
 .inline {
@@ -56,6 +79,17 @@
   }
 }
 
+.fieldOverlay {
+  position: static;
+
+  .menu {
+    top: calc(100% + 0.55rem);
+    left: 0;
+    right: 0;
+    width: auto;
+  }
+}
+
 .option {
   width: 100%;
   display: flex;
@@ -66,7 +100,9 @@
   padding: 0.8rem 0.9rem;
   border-radius: 14px;
   text-align: left;
-  transition: background 0.18s ease, color 0.18s ease;
+  transition:
+    background 0.18s cubic-bezier(0.22, 1, 0.36, 1),
+    color 0.18s cubic-bezier(0.22, 1, 0.36, 1);
 }
 
 .check {
@@ -140,8 +176,9 @@
     left: -1rem;
     right: -1rem;
     top: calc(100% + 0.9rem);
-    border: 1px solid var(--border-hover);
-    background: rgba(10, 10, 10, 0.98);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    background: rgba(12, 12, 12, 0.96);
     box-shadow: var(--shadow-lg);
   }
 
@@ -151,8 +188,20 @@
     top: auto;
   }
 
+  &.fieldOverlay .menu {
+    left: 0;
+    right: 0;
+    top: calc(100% + 0.55rem);
+    padding: 0.4rem;
+  }
+
   .option {
+    min-height: 3.4rem;
+    padding: 0.75rem 0.95rem;
+    border-radius: 16px;
     color: var(--text-secondary);
+    font-size: 1rem;
+    font-weight: 700;
   }
 
   .option:hover,
@@ -163,5 +212,42 @@
 
   .check {
     color: var(--accent-light);
+  }
+}
+
+@keyframes selectMenuIn {
+  from {
+    opacity: 0;
+    transform: translateY(-4px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes selectMenuOut {
+  from {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  to {
+    opacity: 0;
+    transform: translateY(-4px);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .trigger,
+  .chevron,
+  .option {
+    transition: none;
+  }
+
+  .menuOpen,
+  .menuClosing {
+    animation-duration: 0.01ms;
   }
 }

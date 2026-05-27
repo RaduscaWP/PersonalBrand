@@ -17,6 +17,7 @@ export default function HeroForm({ selected }) {
   const [status, setStatus] = useState('idle');
   const [errorMessage, setErrorMessage] = useState('');
   const [reference, setReference] = useState('');
+  const [activeSelect, setActiveSelect] = useState(null);
 
   const budgets = selected?.budgets ?? ['$300-500', '$500-1000', '$1000-2000', '$2000+'];
   const timelines = selected?.timelines ?? ['1 week', '2 weeks', '3 weeks', 'Flexible'];
@@ -28,6 +29,7 @@ export default function HeroForm({ selected }) {
     setStatus('idle');
     setErrorMessage('');
     setReference('');
+    setActiveSelect(null);
     setForm((current) => ({
       ...current,
       budget: '',
@@ -97,7 +99,9 @@ export default function HeroForm({ selected }) {
               className={styles.inlineSelect}
               label="Budget"
               theme="darkInline"
-              menuPlacement="inline"
+              menuPlacement="fieldOverlay"
+              open={activeSelect === 'budget'}
+              onOpenChange={(open) => setActiveSelect(open ? 'budget' : null)}
               placeholder="Select budget"
               options={budgets}
             />
@@ -112,7 +116,9 @@ export default function HeroForm({ selected }) {
               className={styles.inlineSelect}
               label="Timeline"
               theme="darkInline"
-              menuPlacement="inline"
+              menuPlacement="fieldOverlay"
+              open={activeSelect === 'timeline'}
+              onOpenChange={(open) => setActiveSelect(open ? 'timeline' : null)}
               placeholder="Select timeline"
               options={timelines}
             />
