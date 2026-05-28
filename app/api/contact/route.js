@@ -1,4 +1,4 @@
-import { randomBytes } from 'crypto';
+import { createHash, randomBytes } from 'crypto';
 import { Resend } from 'resend';
 import {
   buildClientConfirmationEmail,
@@ -17,6 +17,9 @@ const SITE_URL = process.env.SITE_URL || process.env.NEXT_PUBLIC_SITE_URL || 'ht
 const RATE_LIMIT_MAX = Math.max(1, Number(process.env.CONTACT_RATE_LIMIT_MAX) || 5);
 const RATE_LIMIT_WINDOW_SECONDS = Math.max(30, Number(process.env.CONTACT_RATE_LIMIT_WINDOW_SECONDS) || 3600);
 const MAX_BODY_LENGTH = 8000;
+const UPSTASH_REDIS_REST_URL = process.env.UPSTASH_REDIS_REST_URL || '';
+const UPSTASH_REDIS_REST_TOKEN = process.env.UPSTASH_REDIS_REST_TOKEN || '';
+const RATE_LIMIT_KEY_PREFIX = 'portfolio:contact';
 
 const EMAIL_PATTERN = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i;
 const SOURCE_VALUES = new Set(['hero', 'contact']);
@@ -110,12 +113,16 @@ function getAllowedOrigins() {
     .map((origin) => normalizeOrigin(origin.trim()))
     .filter(Boolean);
 
-  return new Set([
-    normalizeOrigin(SITE_URL),
+  const devOrigins = process.env.NODE_ENV === 'production' ? [] : [
     'http://localhost:3000',
     'http://localhost:3055',
     'http://127.0.0.1:3000',
     'http://127.0.0.1:3055',
+  ];
+
+  return new Set([
+    normalizeOrigin(SITE_URL),
+    ...devOrigins,
     ...configured,
   ].filter(Boolean));
 }
@@ -131,7 +138,15 @@ function getClientIp(req) {
   return forwarded.split(',')[0].trim() || req.headers.get('x-real-ip') || 'unknown';
 }
 
-function checkRateLimit(key) {
+function hasDurableRateLimit() {
+  return Boolean(UPSTASH_REDIS_REST_URL && UPSTASH_REDIS_REST_TOKEN);
+}
+
+function hashRateLimitKey(key) {
+  return createHash('sha256').update(key).digest('hex');
+}
+
+function checkMemoryRateLimit(key) {
   const now = Date.now();
   const windowMs = RATE_LIMIT_WINDOW_SECONDS * 1000;
   const existing = store.get(key);
@@ -151,6 +166,54 @@ function checkRateLimit(key) {
   }
 
   return { limited: false };
+}
+
+async function checkDurableRateLimit(key) {
+  const redisKey = `${RATE_LIMIT_KEY_PREFIX}:${hashRateLimitKey(key)}`;
+  const script = [
+    'local current = redis.call("INCR", KEYS[1])',
+    'if current == 1 then redis.call("EXPIRE", KEYS[1], ARGV[1]) end',
+    'local ttl = redis.call("TTL", KEYS[1])',
+    'return { current, ttl }',
+  ].join('\n');
+
+  const response = await fetch(UPSTASH_REDIS_REST_URL, {
+    method: 'POST',
+    headers: {
+      Authorization: `Bearer ${UPSTASH_REDIS_REST_TOKEN}`,
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(['EVAL', script, 1, redisKey, String(RATE_LIMIT_WINDOW_SECONDS)]),
+  });
+
+  if (!response.ok) {
+    throw new Error(`Rate limiter unavailable: ${response.status}`);
+  }
+
+  const payload = await response.json();
+  const [count, ttl] = Array.isArray(payload?.result) ? payload.result : [];
+  const resolvedCount = Number(count);
+
+  if (!Number.isFinite(resolvedCount)) {
+    throw new Error('Rate limiter returned an invalid response');
+  }
+
+  return {
+    limited: resolvedCount > RATE_LIMIT_MAX,
+    retryAfter: Math.max(1, Number(ttl) || RATE_LIMIT_WINDOW_SECONDS),
+  };
+}
+
+async function checkRateLimit(key) {
+  if (hasDurableRateLimit()) {
+    try {
+      return await checkDurableRateLimit(key);
+    } catch (error) {
+      logServerError('Contact rate limiter fallback', error);
+    }
+  }
+
+  return checkMemoryRateLimit(key);
 }
 
 function pruneRateStore() {
@@ -173,6 +236,18 @@ function isSandboxRecipientError(error) {
   return message.includes('resend.dev') || message.includes('verify a domain') || message.includes('testing emails');
 }
 
+function isBodyTooLarge(req) {
+  const contentLength = Number(req.headers.get('content-length') || 0);
+  return Number.isFinite(contentLength) && contentLength > MAX_BODY_LENGTH;
+}
+
+function logServerError(label, error) {
+  console.error(label, {
+    name: String(error?.name || 'Error').slice(0, 80),
+    message: String(error?.message || 'Unknown server error').slice(0, 180),
+  });
+}
+
 export async function POST(req) {
   try {
     let body;
@@ -184,6 +259,10 @@ export async function POST(req) {
     const contentType = req.headers.get('content-type') || '';
     if (!contentType.toLowerCase().includes('application/json')) {
       return Response.json({ error: 'Content-Type must be application/json.' }, { status: 415 });
+    }
+
+    if (isBodyTooLarge(req)) {
+      return Response.json({ error: 'Request body is too large.' }, { status: 413 });
     }
 
     try {
@@ -224,8 +303,8 @@ export async function POST(req) {
     }
 
     pruneRateStore();
-    const ipLimit = checkRateLimit(`ip:${getClientIp(req)}`);
-    const emailLimit = checkRateLimit(`email:${normalized.value.email}`);
+    const ipLimit = await checkRateLimit(`ip:${getClientIp(req)}`);
+    const emailLimit = await checkRateLimit(`email:${normalized.value.email}`);
     if (ipLimit.limited || emailLimit.limited) {
       return Response.json(
         { error: 'Too many requests. Please try again later.' },
@@ -240,7 +319,7 @@ export async function POST(req) {
 
     if (!process.env.RESEND_API_KEY) {
       return Response.json(
-        { error: 'Email delivery is not configured yet. Add a Resend API key first.' },
+        { error: 'Email delivery is temporarily unavailable.' },
         { status: 503 }
       );
     }
@@ -323,7 +402,7 @@ export async function POST(req) {
       ...(warning ? { warning } : {}),
     });
   } catch (err) {
-    console.error('Resend error:', err);
+    logServerError('Contact email delivery failed', err);
     return Response.json({ error: 'Failed to send' }, { status: 500 });
   }
 }

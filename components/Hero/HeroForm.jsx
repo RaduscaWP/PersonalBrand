@@ -134,6 +134,7 @@ export default function HeroForm({ selected }) {
               required
               value={form.email}
               onChange={(event) => updateField('email', event.target.value)}
+              maxLength={254}
               placeholder="you@company.com"
               className={styles.input}
             />
@@ -149,6 +150,7 @@ export default function HeroForm({ selected }) {
         rows={4}
         value={form.description}
         onChange={(event) => updateField('description', event.target.value)}
+        maxLength={2400}
         placeholder={placeholder}
         className={styles.textarea}
         />
@@ -159,6 +161,7 @@ export default function HeroForm({ selected }) {
           type="text"
           tabIndex={-1}
           autoComplete="off"
+          maxLength={200}
           value={form.website}
           onChange={(event) => updateField('website', event.target.value)}
         />

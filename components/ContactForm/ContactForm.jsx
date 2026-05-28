@@ -110,7 +110,14 @@ export default function ContactForm() {
       <div className={styles.grid}>
         <label className={styles.field}>
           <span className={styles.label}>Your name</span>
-          <input name="name" value={form.name} onChange={update} required placeholder="Jane Doe" />
+          <input
+            name="name"
+            value={form.name}
+            onChange={update}
+            required
+            maxLength={90}
+            placeholder="Jane Doe"
+          />
         </label>
 
         <label className={styles.field}>
@@ -121,6 +128,7 @@ export default function ContactForm() {
             value={form.email}
             onChange={update}
             required
+            maxLength={254}
             placeholder="jane@company.com"
           />
         </label>
@@ -174,6 +182,7 @@ export default function ContactForm() {
           value={form.description}
           onChange={update}
           required
+          maxLength={2400}
           rows={7}
           placeholder="Tell me what you want to build, what already exists, and anything I should know before quoting."
         />
@@ -185,6 +194,7 @@ export default function ContactForm() {
           name="website"
           value={form.website}
           onChange={update}
+          maxLength={200}
           tabIndex={-1}
           autoComplete="off"
         />
