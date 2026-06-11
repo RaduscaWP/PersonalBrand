@@ -157,10 +157,30 @@ function getAllowedOrigins() {
   ].filter(Boolean));
 }
 
+function getRequestHost(req) {
+  return (req.headers.get('x-forwarded-host') || req.headers.get('host') || '').trim().toLowerCase();
+}
+
+function isSameOriginRequest(req, origin) {
+  const host = getRequestHost(req);
+  if (!host) return false;
+  try {
+    return new URL(origin).host.toLowerCase() === host;
+  } catch {
+    return false;
+  }
+}
+
 function isOriginAllowed(req) {
   const origin = req.headers.get('origin');
   if (!origin) return true;
-  return getAllowedOrigins().has(normalizeOrigin(origin));
+  if (getAllowedOrigins().has(normalizeOrigin(origin))) return true;
+  // Always allow genuine same-origin requests (Origin host === the host the
+  // request actually arrived on). This lets the form work on any custom or
+  // preview domain attached to the deployment (e.g. radusca.dev, www.*, and
+  // *.vercel.app previews) without per-domain config, while still rejecting
+  // cross-origin/CSRF requests from other sites.
+  return isSameOriginRequest(req, origin);
 }
 
 function getClientIp(req) {
