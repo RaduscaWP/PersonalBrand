@@ -4,7 +4,7 @@ import {
   buildClientConfirmationEmail,
   buildOwnerNotificationEmail,
 } from '@/lib/contactEmails';
-import { heroServices } from '@/data/heroServices';
+import { heroServiceDomains, heroServices } from '@/data/heroServices';
 import { services } from '@/data/services';
 
 export const runtime = 'nodejs';
@@ -23,11 +23,25 @@ const RATE_LIMIT_KEY_PREFIX = 'portfolio:contact';
 
 const EMAIL_PATTERN = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i;
 const SOURCE_VALUES = new Set(['hero', 'contact']);
-const SERVICE_VALUES = new Set([
-  'General Inquiry',
-  ...services.filter((service) => service.availability === 'now').map((service) => service.title),
-  ...heroServices.map((service) => service.label),
+const SERVICE_OPTIONS = new Map([
+  ['General Inquiry', 'General Inquiry'],
+  ...services
+    .filter((service) => service.availability === 'now')
+    .flatMap((service) => [
+      [service.id, service.title],
+      [service.title, service.title],
+    ]),
+  ...heroServices.flatMap((service) => [
+    [service.id, service.label],
+    [service.label, service.label],
+  ]),
 ]);
+const DOMAIN_OPTIONS = new Map(
+  heroServiceDomains.flatMap((domain) => [
+    [domain.id, domain.label],
+    [domain.label, domain.label],
+  ]),
+);
 const BUDGET_VALUES = new Set([
   '',
   'Not sure yet',
@@ -64,6 +78,18 @@ function cleanLine(value, maxLength) {
   return cleanText(value, maxLength).replace(/\s+/g, ' ');
 }
 
+function normalizeOption(value, options) {
+  const exact = options.get(value);
+  if (exact) return exact;
+
+  const normalized = String(value || '').trim().toLowerCase();
+  for (const [key, label] of options.entries()) {
+    if (String(key).toLowerCase() === normalized) return label;
+  }
+
+  return '';
+}
+
 function makeReference(now = new Date()) {
   const alphabet = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789';
   const code = Array.from(randomBytes(6), (byte) => alphabet[byte % alphabet.length]).join('');
@@ -73,11 +99,14 @@ function makeReference(now = new Date()) {
 
 function normalizeRequest(body) {
   const email = cleanLine(body.email, 254).toLowerCase();
-  const projectType = cleanLine(body.projectType, 90);
+  const rawProjectType = cleanLine(body.projectType, 90);
+  const projectType = normalizeOption(rawProjectType, SERVICE_OPTIONS);
+  const rawDomain = cleanLine(body.domain || body.projectDomain, 90);
 
   if (!email) return { error: 'Email required' };
   if (!EMAIL_PATTERN.test(email)) return { error: 'Enter a valid email address.' };
-  if (!projectType) return { error: 'Service required' };
+  if (!rawProjectType) return { error: 'Service required' };
+  if (!projectType) return { error: 'Service option is invalid.' };
 
   const source = cleanLine(body.source, 30);
 
@@ -86,6 +115,7 @@ function normalizeRequest(body) {
       name: cleanLine(body.name, 90),
       email,
       projectType,
+      domain: normalizeOption(rawDomain, DOMAIN_OPTIONS),
       budget: cleanLine(body.budget, 70),
       timeline: cleanLine(body.timeline, 70),
       description: cleanText(body.description, 2400),
@@ -236,6 +266,42 @@ function isSandboxRecipientError(error) {
   return message.includes('resend.dev') || message.includes('verify a domain') || message.includes('testing emails');
 }
 
+function getResendDeliveryIssue(error) {
+  const name = String(error?.name || '').toLowerCase();
+  const message = String(error?.message || '').toLowerCase();
+
+  if (name.includes('api_key') || message.includes('api key')) {
+    return {
+      code: 'RESEND_API_KEY_INVALID',
+      error: 'Email API key is missing or invalid. Check RESEND_API_KEY in the deployment environment.',
+    };
+  }
+
+  if (
+    isSandboxRecipientError(error) ||
+    name === 'invalid_from_address' ||
+    message.includes('own email address') ||
+    message.includes('from address') ||
+    message.includes('sender')
+  ) {
+    return {
+      code: 'RESEND_SENDER_NOT_VERIFIED',
+      error:
+        'Resend sender is still in testing mode. Verify a sender domain and set CONTACT_FROM_EMAIL to that domain, or send sandbox tests only to the Resend account email.',
+    };
+  }
+
+  return null;
+}
+
+function emailDeliveryIssueResponse(label, error) {
+  const issue = getResendDeliveryIssue(error);
+  if (!issue) return null;
+
+  logServerError(label, error);
+  return Response.json(issue, { status: 503 });
+}
+
 function isBodyTooLarge(req) {
   const contentLength = Number(req.headers.get('content-length') || 0);
   return Number.isFinite(contentLength) && contentLength > MAX_BODY_LENGTH;
@@ -275,7 +341,7 @@ export async function POST(req) {
       return Response.json({ error: 'Invalid request body' }, { status: 400 });
     }
 
-    if (cleanLine(body?.website, 200)) {
+    if (cleanLine(body?.companyUrl, 200)) {
       return Response.json({
         success: true,
         reference: null,
@@ -288,10 +354,6 @@ export async function POST(req) {
     const normalized = normalizeRequest(body && typeof body === 'object' ? body : {});
     if (normalized.error) {
       return Response.json({ error: normalized.error }, { status: 400 });
-    }
-
-    if (!SERVICE_VALUES.has(normalized.value.projectType)) {
-      return Response.json({ error: 'Service option is invalid.' }, { status: 400 });
     }
 
     if (!BUDGET_VALUES.has(normalized.value.budget)) {
@@ -357,6 +419,8 @@ export async function POST(req) {
     );
 
     if (ownerNotification.error) {
+      const response = emailDeliveryIssueResponse('Owner email delivery unavailable', ownerNotification.error);
+      if (response) return response;
       throw new Error(ownerNotification.error.message || 'Failed to send owner notification');
     }
 
@@ -387,6 +451,8 @@ export async function POST(req) {
         if (isSandboxRecipientError(clientConfirmation.error)) {
           warning = 'Client confirmation skipped until a verified sender domain is configured.';
         } else {
+          const response = emailDeliveryIssueResponse('Client email delivery unavailable', clientConfirmation.error);
+          if (response) return response;
           throw new Error(clientConfirmation.error.message || 'Failed to send confirmation email');
         }
       } else {
@@ -402,6 +468,9 @@ export async function POST(req) {
       ...(warning ? { warning } : {}),
     });
   } catch (err) {
+    const response = emailDeliveryIssueResponse('Contact email delivery unavailable', err);
+    if (response) return response;
+
     logServerError('Contact email delivery failed', err);
     return Response.json({ error: 'Failed to send' }, { status: 500 });
   }

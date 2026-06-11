@@ -141,16 +141,19 @@
     background: rgba(8, 8, 8, 0.96);
     backdrop-filter: blur(16px);
     -webkit-backdrop-filter: blur(16px);
+    visibility: hidden;
     opacity: 0;
     pointer-events: none;
     transform: translateY(-8px);
-    transition: opacity 0.24s ease, transform 0.24s ease;
+    transition: opacity 0.24s ease, transform 0.24s ease, visibility 0s linear 0.24s;
   }
 
   .open {
+    visibility: visible;
     opacity: 1;
     pointer-events: auto;
     transform: translateY(0);
+    transition-delay: 0s;
   }
 
   .link {

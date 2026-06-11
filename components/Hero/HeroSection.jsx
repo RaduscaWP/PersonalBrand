@@ -102,7 +102,13 @@ export default function HeroSection() {
   };
 
   const handleSelect = (service) => {
-    updateHeroMedia(service, () => setSelected(service));
+    updateHeroMedia(service, () =>
+      setSelected({
+        ...service,
+        domainId: selectedDomain?.id || '',
+        domainLabel: selectedDomain?.label || '',
+      }),
+    );
   };
 
   return (
@@ -177,33 +183,38 @@ export default function HeroSection() {
               placeholder="Choose a domain"
               ariaLabel="Service domains"
             />
-            <HeroDropdown
-              services={domainServices}
-              selected={selected}
-              onSelect={handleSelect}
-              label="Service"
-              placeholder={selectedDomain ? 'Choose a service' : 'Choose a domain first'}
-              ariaLabel="Services"
-              disabled={!selectedDomain}
-            />
+            {selectedDomain ? (
+              <HeroDropdown
+                services={domainServices}
+                selected={selected}
+                onSelect={handleSelect}
+                label="Service"
+                placeholder="Choose a service"
+                ariaLabel="Services"
+              />
+            ) : null}
           </div>
 
           <p ref={bodyRef} className={styles.panelBody}>
             {active.subtext}
           </p>
 
-          <div className={styles.panelNote}>
-            The first choice narrows the work category. The second choice aligns the video, budget,
-            timeline, and first message with the exact service.
-          </div>
+          {selected ? (
+            <>
+              <div className={styles.panelNote}>
+                The first choice narrows the work category. The second choice aligns the video,
+                budget, timeline, and first message with the exact service.
+              </div>
 
-          <div className={styles.formWrap}>
-            <HeroForm selected={active === defaultHero ? null : selected} />
-          </div>
+              <div className={styles.formWrap}>
+                <HeroForm selected={selected} />
+              </div>
 
-          <p className={styles.microTrust}>
-            Response target: under 24 hours. Scope gets clarified before code starts moving.
-          </p>
+              <p className={styles.microTrust}>
+                Response target: under 24 hours. Scope gets clarified before code starts moving.
+              </p>
+            </>
+          ) : null}
         </aside>
       </div>
     </section>

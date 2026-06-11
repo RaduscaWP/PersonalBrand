@@ -8,12 +8,12 @@ import styles from './Hero.module.scss';
 function getFriendlyError(status, payload) {
   if (status === 400) return payload?.error || 'Check the form details and try again.';
   if (status === 429) return 'Too many requests. Please wait a bit before trying again.';
-  if (status === 503) return 'Email delivery is being configured. Email me directly if this is urgent.';
+  if (status === 503) return payload?.error || 'Email delivery is being configured. Email me directly if this is urgent.';
   return 'Something went wrong. Email me directly if this keeps failing.';
 }
 
 export default function HeroForm({ selected }) {
-  const [form, setForm] = useState({ budget: '', timeline: '', email: '', description: '', website: '' });
+  const [form, setForm] = useState({ budget: '', timeline: '', email: '', description: '', companyUrl: '' });
   const [status, setStatus] = useState('idle');
   const [errorMessage, setErrorMessage] = useState('');
   const [reference, setReference] = useState('');
@@ -56,6 +56,7 @@ export default function HeroForm({ selected }) {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           projectType: selected?.label ?? 'General Inquiry',
+          domain: selected?.domainLabel || '',
           source: 'hero',
           ...form,
         }),
@@ -87,7 +88,7 @@ export default function HeroForm({ selected }) {
   }
 
   return (
-    <form onSubmit={handleSubmit} className={styles.form}>
+    <form onSubmit={handleSubmit} className={styles.form} aria-busy={status === 'sending'}>
       <div className={styles.formCluster}>
         <div className={styles.formControls}>
           <div className={`${styles.formField} ${styles.fieldBudget}`}>
@@ -104,6 +105,7 @@ export default function HeroForm({ selected }) {
               onOpenChange={(open) => setActiveSelect(open ? 'budget' : null)}
               placeholder="Select budget"
               options={budgets}
+              disabled={status === 'sending'}
             />
           </div>
 
@@ -121,6 +123,7 @@ export default function HeroForm({ selected }) {
               onOpenChange={(open) => setActiveSelect(open ? 'timeline' : null)}
               placeholder="Select timeline"
               options={timelines}
+              disabled={status === 'sending'}
             />
           </div>
         </div>
@@ -137,6 +140,7 @@ export default function HeroForm({ selected }) {
               maxLength={254}
               placeholder="you@company.com"
               className={styles.input}
+              disabled={status === 'sending'}
             />
           </label>
 
@@ -153,22 +157,24 @@ export default function HeroForm({ selected }) {
         maxLength={2400}
         placeholder={placeholder}
         className={styles.textarea}
+        disabled={status === 'sending'}
         />
 
       <label className={styles.honeypot} aria-hidden="true">
-        Website
+        Company URL
         <input
           type="text"
           tabIndex={-1}
           autoComplete="off"
           maxLength={200}
-          value={form.website}
-          onChange={(event) => updateField('website', event.target.value)}
+          value={form.companyUrl}
+          onChange={(event) => updateField('companyUrl', event.target.value)}
+          disabled={status === 'sending'}
         />
       </label>
 
       {status === 'error' ? (
-        <p className={styles.formError}>{errorMessage || 'Something went wrong. Email me directly if this keeps failing.'}</p>
+        <p className={styles.formError} role="alert">{errorMessage || 'Something went wrong. Email me directly if this keeps failing.'}</p>
       ) : null}
     </form>
   );

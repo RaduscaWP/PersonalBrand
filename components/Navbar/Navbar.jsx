@@ -2,7 +2,7 @@
 
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { Menu, X } from 'lucide-react';
 import MagneticButton from '../MagneticButton/MagneticButton';
 import styles from './Navbar.module.scss';
@@ -21,6 +21,8 @@ export default function Navbar() {
   const isHome = pathname === '/';
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
+  const burgerRef = useRef(null);
+  const firstLinkRef = useRef(null);
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 56);
@@ -40,6 +42,26 @@ export default function Navbar() {
     setOpen(false);
   }, [pathname]);
 
+  useEffect(() => {
+    if (!open) return undefined;
+
+    const focusFrame = window.requestAnimationFrame(() => firstLinkRef.current?.focus());
+
+    const onKeyDown = (event) => {
+      if (event.key !== 'Escape') return;
+      event.preventDefault();
+      setOpen(false);
+      window.requestAnimationFrame(() => burgerRef.current?.focus());
+    };
+
+    document.addEventListener('keydown', onKeyDown);
+
+    return () => {
+      window.cancelAnimationFrame(focusFrame);
+      document.removeEventListener('keydown', onKeyDown);
+    };
+  }, [open]);
+
   const solid = !isHome || scrolled || open;
 
   return (
@@ -51,9 +73,10 @@ export default function Navbar() {
         </Link>
 
         <ul id="primary-nav" className={`${styles.links} ${open ? styles.open : ''}`}>
-          {links.map(({ href, label }) => (
+          {links.map(({ href, label }, index) => (
             <li key={href}>
               <Link
+                ref={index === 0 ? firstLinkRef : undefined}
                 href={href}
                 className={`${styles.link} ${pathname === href ? styles.active : ''}`}
               >
@@ -80,6 +103,7 @@ export default function Navbar() {
         </div>
 
         <button
+          ref={burgerRef}
           type="button"
           className={styles.burger}
           onClick={() => setOpen((value) => !value)}

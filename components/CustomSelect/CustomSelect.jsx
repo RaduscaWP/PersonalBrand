@@ -24,10 +24,14 @@ export default function CustomSelect({
   open: controlledOpen,
   onOpenChange,
   className = '',
+  disabled = false,
+  invalid = false,
+  describedBy,
 }) {
   const [internalOpen, setInternalOpen] = useState(false);
   const [renderMenu, setRenderMenu] = useState(false);
   const rootRef = useRef(null);
+  const triggerRef = useRef(null);
   const listboxId = useId();
 
   const normalizedOptions = useMemo(() => options.map(normalizeOption), [options]);
@@ -36,10 +40,22 @@ export default function CustomSelect({
   const open = isControlled ? controlledOpen : internalOpen;
 
   const setOpen = useCallback((nextOpen) => {
+    if (disabled) {
+      if (!isControlled) setInternalOpen(false);
+      onOpenChange?.(false);
+      return;
+    }
+
     const resolvedOpen = typeof nextOpen === 'function' ? nextOpen(open) : nextOpen;
     if (!isControlled) setInternalOpen(resolvedOpen);
     onOpenChange?.(resolvedOpen);
-  }, [isControlled, onOpenChange, open]);
+  }, [disabled, isControlled, onOpenChange, open]);
+
+  const closeMenu = useCallback((restoreFocus = false) => {
+    if (!isControlled) setInternalOpen(false);
+    onOpenChange?.(false);
+    if (restoreFocus) window.requestAnimationFrame(() => triggerRef.current?.focus());
+  }, [isControlled, onOpenChange]);
 
   useEffect(() => {
     if (open) {
@@ -57,11 +73,14 @@ export default function CustomSelect({
     if (!open) return undefined;
 
     const handlePointerDown = (event) => {
-      if (!rootRef.current?.contains(event.target)) setOpen(false);
+      if (!rootRef.current?.contains(event.target)) closeMenu(false);
     };
 
     const handleKeyDown = (event) => {
-      if (event.key === 'Escape') setOpen(false);
+      if (event.key === 'Escape') {
+        event.preventDefault();
+        closeMenu(true);
+      }
     };
 
     document.addEventListener('pointerdown', handlePointerDown);
@@ -71,7 +90,11 @@ export default function CustomSelect({
       document.removeEventListener('pointerdown', handlePointerDown);
       document.removeEventListener('keydown', handleKeyDown);
     };
-  }, [open, setOpen]);
+  }, [closeMenu, open]);
+
+  useEffect(() => {
+    if (disabled && open) closeMenu(false);
+  }, [closeMenu, disabled, open]);
 
   return (
     <div
@@ -79,14 +102,18 @@ export default function CustomSelect({
       className={`${styles.root} ${styles[theme]} ${styles[menuPlacement]} ${open ? styles.open : ''} ${className}`}
     >
       <button
+        ref={triggerRef}
         id={id}
         type="button"
         className={`${styles.trigger} ${!selected ? styles.placeholder : ''}`}
         onClick={() => setOpen((current) => !current)}
+        disabled={disabled}
         aria-label={label}
-        aria-haspopup="listbox"
+        aria-haspopup="menu"
         aria-expanded={open}
         aria-controls={listboxId}
+        aria-describedby={describedBy}
+        data-invalid={invalid || undefined}
       >
         <span className={styles.value}>{selected?.label ?? placeholder}</span>
         <ChevronDown size={18} className={styles.chevron} />
@@ -96,7 +123,7 @@ export default function CustomSelect({
         <div
           id={listboxId}
           className={`${styles.menu} ${open ? styles.menuOpen : styles.menuClosing}`}
-          role="listbox"
+          role="menu"
           aria-label={label}
           aria-hidden={!open}
         >
@@ -107,13 +134,13 @@ export default function CustomSelect({
               <button
                 key={option.value}
                 type="button"
-                role="option"
-                aria-selected={active}
-                tabIndex={open ? 0 : -1}
+                role="menuitem"
+                aria-current={active ? 'true' : undefined}
+                tabIndex={open && !disabled ? 0 : -1}
                 className={`${styles.option} ${active ? styles.optionActive : ''}`}
                 onClick={() => {
                   onChange(option.value);
-                  setOpen(false);
+                  closeMenu(true);
                 }}
               >
                 <span>{option.label}</span>

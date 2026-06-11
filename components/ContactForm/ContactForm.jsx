@@ -25,7 +25,7 @@ const timelineOptions = [
 function getFriendlyError(status, payload) {
   if (status === 400) return payload?.error || 'Check the form details and try again.';
   if (status === 429) return 'Too many requests. Please wait a bit before trying again.';
-  if (status === 503) return 'Email delivery is being configured. Email me directly if this is urgent.';
+  if (status === 503) return payload?.error || 'Email delivery is being configured. Email me directly if this is urgent.';
   return 'Something went wrong. Email me directly if this keeps happening.';
 }
 
@@ -40,7 +40,7 @@ export default function ContactForm() {
     budget: '',
     timeline: '',
     description: matched ? `I am interested in ${matched.title}.` : '',
-    website: '',
+    companyUrl: '',
   });
   const [status, setStatus] = useState('idle');
   const [errorMessage, setErrorMessage] = useState('');
@@ -84,7 +84,7 @@ export default function ContactForm() {
           timeline: form.timeline,
           email: form.email,
           description: form.description,
-          website: form.website,
+          companyUrl: form.companyUrl,
           source: 'contact',
         }),
       });
@@ -106,7 +106,7 @@ export default function ContactForm() {
   };
 
   return (
-    <form className={styles.form} onSubmit={submit}>
+    <form className={styles.form} onSubmit={submit} aria-busy={status === 'sending'}>
       <div className={styles.grid}>
         <label className={styles.field}>
           <span className={styles.label}>Your name</span>
@@ -117,6 +117,7 @@ export default function ContactForm() {
             required
             maxLength={90}
             placeholder="Jane Doe"
+            disabled={status === 'sending'}
           />
         </label>
 
@@ -130,6 +131,7 @@ export default function ContactForm() {
             required
             maxLength={254}
             placeholder="jane@company.com"
+            disabled={status === 'sending'}
           />
         </label>
       </div>
@@ -145,6 +147,9 @@ export default function ContactForm() {
             label="Service"
             theme="light"
             options={serviceOptions.map((service) => ({ value: service.title, label: service.title }))}
+            disabled={status === 'sending'}
+            invalid={status === 'validation' && !form.projectType}
+            describedBy={status === 'validation' ? 'contact-service-error' : undefined}
           />
         </div>
 
@@ -158,6 +163,7 @@ export default function ContactForm() {
             label="Budget"
             theme="light"
             options={budgetOptions}
+            disabled={status === 'sending'}
           />
         </div>
       </div>
@@ -172,6 +178,7 @@ export default function ContactForm() {
           label="Timeline"
           theme="light"
           options={timelineOptions}
+          disabled={status === 'sending'}
         />
       </div>
 
@@ -185,18 +192,20 @@ export default function ContactForm() {
           maxLength={2400}
           rows={7}
           placeholder="Tell me what you want to build, what already exists, and anything I should know before quoting."
+          disabled={status === 'sending'}
         />
       </label>
 
       <label className={styles.honeypot} aria-hidden="true">
-        Website
+        Company URL
         <input
-          name="website"
-          value={form.website}
+          name="companyUrl"
+          value={form.companyUrl}
           onChange={update}
           maxLength={200}
           tabIndex={-1}
           autoComplete="off"
+          disabled={status === 'sending'}
         />
       </label>
 
@@ -205,16 +214,16 @@ export default function ContactForm() {
       </button>
 
       {status === 'sent' && (
-        <p className={styles.success}>
+        <p className={styles.success} role="status">
           Got it - I will reply within 24 hours.
           {reference ? <> Reference: <strong>{reference}</strong>.</> : null}
         </p>
       )}
       {status === 'validation' && (
-        <p className={styles.error}>Choose a service before sending the request.</p>
+        <p id="contact-service-error" className={styles.error} role="alert">Choose a service before sending the request.</p>
       )}
       {status === 'error' && (
-        <p className={styles.error}>
+        <p className={styles.error} role="alert">
           {errorMessage || 'Something went wrong. Email me directly if this keeps happening.'}
         </p>
       )}

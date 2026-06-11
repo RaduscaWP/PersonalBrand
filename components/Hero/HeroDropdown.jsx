@@ -16,6 +16,7 @@ export default function HeroDropdown({
 }) {
   const [open, setOpen] = useState(false);
   const wrapRef = useRef(null);
+  const triggerRef = useRef(null);
   const listboxId = useId();
 
   useEffect(() => {
@@ -24,7 +25,10 @@ export default function HeroDropdown({
     };
 
     const onKeyDown = (event) => {
-      if (event.key === 'Escape') setOpen(false);
+      if (event.key !== 'Escape') return;
+      event.preventDefault();
+      setOpen(false);
+      window.requestAnimationFrame(() => triggerRef.current?.focus());
     };
 
     document.addEventListener('pointerdown', onPointerDown);
@@ -40,12 +44,13 @@ export default function HeroDropdown({
     <div ref={wrapRef} className={`${styles.dropdownWrap} ${className}`}>
       <span className={styles.fieldLabel}>{label}</span>
       <button
+        ref={triggerRef}
         type="button"
         className={`${styles.dropdownTrigger} ${open ? styles.dropdownOpen : ''}`}
         onClick={() => setOpen((value) => !value)}
         disabled={disabled}
         aria-expanded={open && !disabled}
-        aria-haspopup="listbox"
+        aria-haspopup="menu"
         aria-controls={listboxId}
       >
         <span>{selected?.label ?? placeholder}</span>
@@ -53,17 +58,18 @@ export default function HeroDropdown({
       </button>
 
       {open && !disabled ? (
-        <div id={listboxId} className={styles.dropdown} role="listbox" aria-label={ariaLabel}>
+        <div id={listboxId} className={styles.dropdown} role="menu" aria-label={ariaLabel}>
           {services.map((service) => (
             <button
               key={service.id}
               type="button"
               className={`${styles.option} ${selected?.id === service.id ? styles.optionActive : ''}`}
-              role="option"
-              aria-selected={selected?.id === service.id}
+              role="menuitem"
+              aria-current={selected?.id === service.id ? 'true' : undefined}
               onClick={() => {
                 onSelect(service);
                 setOpen(false);
+                window.requestAnimationFrame(() => triggerRef.current?.focus());
               }}
             >
               <span>{service.label}</span>

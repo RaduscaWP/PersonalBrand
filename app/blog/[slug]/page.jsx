@@ -10,8 +10,9 @@ export function generateStaticParams() {
   return blogPosts.filter((p) => p.published).map((p) => ({ slug: p.slug }));
 }
 
-export function generateMetadata({ params }) {
-  const post = blogPosts.find((p) => p.slug === params.slug);
+export async function generateMetadata({ params }) {
+  const { slug } = await params;
+  const post = blogPosts.find((p) => p.slug === slug);
   if (!post) return {};
 
   return {
@@ -40,8 +41,9 @@ function getDraftOutline(content) {
   return match[1].trim();
 }
 
-export default function BlogPost({ params }) {
-  const post = blogPosts.find((p) => p.slug === params.slug && p.published);
+export default async function BlogPost({ params }) {
+  const { slug } = await params;
+  const post = blogPosts.find((p) => p.slug === slug && p.published);
   if (!post) notFound();
 
   const draftOutline = post.draft ? getDraftOutline(post.content) : null;
