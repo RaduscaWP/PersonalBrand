@@ -9,7 +9,7 @@ import styles from './services.module.scss';
 export const metadata = {
   title: 'Services',
   description:
-    "Services available from Radu-Stefan: landing pages, Figma-to-code, UI/UX, full websites, web apps, SEO. Plus a roadmap of what's coming.",
+    "Services available from Radu-Stefan: websites, React apps, automation scripts, API integrations, email workflows, UI/UX, and SEO.",
 };
 
 export default function ServicesPage() {
@@ -26,11 +26,11 @@ export default function ServicesPage() {
       <header className={`page-hero page-hero--center page-hero--photo ${styles.hero}`}>
         <span className="page-kicker">Services</span>
         <h1 className="page-title">
-          Clear offers, clear outcomes, <strong>no vague freelancing language.</strong>
+          Software services with clear outcomes, <strong>not vague freelancing language.</strong>
         </h1>
         <p className="page-lede">
-          The service list is designed to help a client self-identify the right offer quickly. What
-          is available now is separated from what is still on the roadmap.
+          Websites are still a core offer, but the work now covers the larger software layer too:
+          automations, scripts, integrations, internal tools, and AI-assisted delivery.
         </p>
       </header>
 
@@ -41,12 +41,12 @@ export default function ServicesPage() {
               <div>
                 <span className="section-kicker">Available Now</span>
                 <h2 className={`section-title ${styles.lightTitle}`}>
-                  The four flagship offers <strong>ready to sell today.</strong>
+                  The website-facing offers <strong>ready to sell today.</strong>
                 </h2>
               </div>
               <p className={`${styles.lightCopy} section-lede`}>
-                These are the offers that should carry the portfolio. They are concrete, visual, and
-                easy for a client to understand without extra explanation.
+                These stay at the top because they are easiest for clients to recognize quickly:
+                pages, websites, Figma implementation, and interface design.
               </p>
             </div>
 
@@ -68,14 +68,14 @@ export default function ServicesPage() {
           <div className="section-inner">
             <div className="section-head">
               <div>
-                <span className="section-kicker">Supporting Work</span>
+                <span className="section-kicker">Software & Automation</span>
                 <h2 className="section-title">
-                  Extra capability without <strong>muddying the offer.</strong>
+                  Scripts, integrations, and tools <strong>below the web layer.</strong>
                 </h2>
               </div>
               <p className="section-lede">
-                These are still available for the right project, but they should not compete with
-                the main conversion-focused homepage offers.
+                This is where the portfolio expands from web design into software development:
+                business automation, API connections, email flows, and internal systems.
               </p>
             </div>
 

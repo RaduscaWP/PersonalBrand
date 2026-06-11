@@ -32,8 +32,8 @@ export default function AboutTeaser() {
               Young on paper. <strong>Reliable in practice.</strong>
             </h2>
             <p className={`${styles.lightCopy} section-lede`}>
-              I help founders, personal brands, and small teams launch websites that look sharper,
-              load faster, and feel considered from the first screen.
+              I help founders, personal brands, and small teams ship websites, automations, and
+              software workflows that feel considered from the first screen to the handoff.
             </p>
 
             <div className={styles.aboutProofs}>
@@ -54,8 +54,8 @@ export default function AboutTeaser() {
           <div className={styles.aboutBody}>
             <p className={styles.lightCopy}>
               I am Radu-Stefan, an 18-year-old developer in Chisinau building with Next.js, React,
-              SCSS, and a design-first mindset. The pitch is simple: clean execution, direct
-              communication, and no half-finished work.
+              TypeScript, SCSS, automation scripts, and AI-assisted coding workflows. The pitch is
+              simple: clean execution, direct communication, and no half-finished work.
             </p>
             <p className={styles.lightCopy}>
               Six years as a national-level water polo goalkeeper shaped the part clients care
@@ -66,7 +66,7 @@ export default function AboutTeaser() {
             <ul className={styles.aboutList}>
               <li>Responsive from line one, not fixed at the end.</li>
               <li>Scope gets clarified before code starts moving.</li>
-              <li>Every build is prepared for Vercel deployment and clean handoff.</li>
+              <li>Every build is prepared for deployment, validation, and clean handoff.</li>
             </ul>
 
             <div className={styles.sectionActions}>

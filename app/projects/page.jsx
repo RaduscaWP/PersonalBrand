@@ -8,7 +8,7 @@ import styles from './projects.module.scss';
 export const metadata = {
   title: 'Projects',
   description:
-    'Selected projects by Radu-Stefan: COSMOS, Arca AI, CryptoTrack, and Grozav Bank.',
+    'Selected projects by Radu-Stefan: COSMOS, Fly With Derek, Arca AI, CryptoTrack, and Grozav Bank.',
 };
 
 function ProjectStudyShell({ variant }) {
@@ -48,6 +48,8 @@ function ProjectStudyShell({ variant }) {
 }
 
 export default function ProjectsPage() {
+  const bentoProjects = projects.filter((project) => project.featured).slice(0, 4);
+
   return (
     <div className={`page-wrap ${styles.page}`}>
       <header className={`page-hero ${styles.hero}`}>
@@ -56,9 +58,9 @@ export default function ProjectsPage() {
           Live work that makes the hiring decision <strong>easier.</strong>
         </h1>
         <p className="page-lede">
-          These projects show range without drifting away from the same standard: stronger
-          structure, clearer interfaces, and a finish that feels usable instead of something that
-          is almost there.
+          These projects show range without drifting away from the same standard: real delivery,
+          stronger structure, clearer interfaces, and a finish that feels usable instead of almost
+          there.
         </p>
       </header>
 
@@ -69,17 +71,17 @@ export default function ProjectsPage() {
               <div>
                 <span className="section-kicker">Featured Grid</span>
                 <h2 className={`section-title ${styles.lightTitle}`}>
-                  Three primary case studies, <strong>one supporting concept.</strong>
+                  Four primary case studies, <strong>with real client work included.</strong>
                 </h2>
               </div>
               <p className={`${styles.lightCopy} section-lede`}>
-                The bento layout keeps the most useful proof visible first: visual judgment, product
-                taste, and the ability to ship something coherent in public.
+                The bento layout keeps the most useful proof visible first: a real client website,
+                public builds, product taste, and the ability to ship coherent work.
               </p>
             </div>
 
             <div className={styles.gridWrap}>
-              <BentoGrid projects={projects} />
+              <BentoGrid projects={bentoProjects} />
             </div>
           </div>
         </SectionReveal>

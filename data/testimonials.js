@@ -3,9 +3,9 @@ export const testimonials = [
     id: 'public-work',
     badge: 'Public work',
     quote:
-      'The portfolio already shows range across storytelling, product UI, dashboards, and fintech presentation. Every example is live, open, and reviewable right now.',
+      'The portfolio already shows range across client delivery, storytelling, product UI, dashboards, and fintech presentation. Every example is live, open, and reviewable right now.',
     author: 'Visible proof',
-    role: 'Four deployed projects, not hidden mockups',
+    role: 'Five deployed projects, not hidden mockups',
   },
   {
     id: 'technical-foundation',

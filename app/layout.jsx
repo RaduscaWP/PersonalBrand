@@ -24,22 +24,25 @@ export const dmSans = DM_Sans({
 
 export const metadata = {
   metadataBase: new URL('https://radu-stefan.dev'),
-  title: 'Radu-Stefan - Full-Stack Developer',
+  title: 'Radu-Stefan - Software Developer',
   description:
-    '18-year-old full-stack developer based in Chisinau, Moldova. Building fast, modern web experiences - landing pages, full websites, web apps, and UI/UX.',
+    '18-year-old software developer based in Chisinau, Moldova. Building websites, web apps, automation scripts, API integrations, and AI-assisted workflows.',
   keywords: [
     'Radu-Stefan',
     'Radusca',
-    'Full-Stack Developer',
+    'Software Developer',
     'Next.js',
     'React',
+    'Automation Scripts',
+    'API Integrations',
+    'AI-Assisted Coding',
     'Web Developer Moldova',
     'Freelance Developer',
     'Figma to Code',
   ],
   openGraph: {
-    title: 'Radu-Stefan - Full-Stack Developer',
-    description: 'Fast, modern web experiences from Chisinau, Moldova.',
+    title: 'Radu-Stefan - Software Developer',
+    description: 'Websites, apps, automations, and AI-assisted software delivery from Chisinau.',
     url: 'https://radu-stefan.dev',
     images: [{ url: '/og-image.jpg', width: 1200, height: 630, alt: 'Radu-Stefan' }],
   },

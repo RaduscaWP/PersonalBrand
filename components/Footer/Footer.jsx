@@ -33,8 +33,9 @@ export default function Footer() {
           </div>
 
           <p>
-            Fast, modern web experiences from Chisinau, Moldova. Built for founders, personal
-            brands, and teams that want clean execution without agency noise.
+            Websites, apps, automations, and AI-assisted software delivery from Chisinau, Moldova.
+            Built for founders, personal brands, and teams that want clean execution without agency
+            noise.
           </p>
 
           <div className={styles.brandLinks}>

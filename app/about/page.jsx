@@ -4,13 +4,14 @@ import { ArrowUpRight, Calendar, GraduationCap, MapPin } from 'lucide-react';
 import SectionReveal from '@/components/SectionReveal/SectionReveal';
 import CertCard from '@/components/CertCard/CertCard';
 import MagneticButton from '@/components/MagneticButton/MagneticButton';
+import { aiCodingSkills } from '@/data/aiSkills';
 import { techStack } from '@/data/stack';
 import styles from './about.module.scss';
 
 export const metadata = {
   title: 'About',
   description:
-    'Radu-Stefan, 18-year-old full-stack developer from Chisinau, Moldova. Three Certiport certifications and shipped projects.',
+    'Radu-Stefan, 18-year-old software developer from Chisinau, Moldova. Three Certiport certifications, AI-assisted coding workflows, and shipped projects.',
 };
 
 const timeline = [
@@ -50,7 +51,7 @@ export default function AboutPage() {
             <div className={styles.portraitFrame}>
               <Image
                 src="/images/profile.jpg"
-                alt="Radu - Full-Stack Developer"
+                alt="Radu - Software Developer"
                 width={400}
                 height={400}
                 priority
@@ -77,20 +78,20 @@ export default function AboutPage() {
               Goalkeeper turned <strong>developer.</strong>
             </h1>
             <p className="page-lede">
-              I build websites and interfaces with the part clients care about most already wired
-              in: discipline, clarity, responsiveness, and the instinct to finish the details
-              properly before calling something done.
+              I build websites, interfaces, automations, and software workflows with the part
+              clients care about most already wired in: discipline, clarity, responsiveness, and
+              the instinct to finish the details properly before calling something done.
             </p>
 
             <div className={styles.bio}>
               <p>
-                I am Radu-Stefan, based in Chisinau, Moldova, building with Next.js, React, SCSS,
-                and a steadily developing cybersecurity mindset.
+                I am Radu-Stefan, based in Chisinau, Moldova, building with Next.js, React,
+                TypeScript, SCSS, Python, APIs, and a steadily developing cybersecurity mindset.
               </p>
               <p>
-                Three certifications and shipped public work matter, but the real differentiator is
-                how I approach the work itself: direct communication, calm process, and client trust
-                earned through the result.
+                Three certifications, shipped public work, and real client delivery matter, but the
+                real differentiator is how I approach the work itself: direct communication, calm
+                process, and client trust earned through the result.
               </p>
             </div>
 
@@ -168,8 +169,8 @@ export default function AboutPage() {
                 </h2>
               </div>
               <p className={`${styles.lightCopy} section-lede`}>
-                The stack stays intentionally focused. The point is not collecting tools. The point
-                is shipping better work with a tighter system.
+                The stack stays intentionally focused. Claude Code and Codex are part of the
+                delivery system, but every project is still reviewed, tested, and delivered by me.
               </p>
             </div>
 
@@ -178,6 +179,21 @@ export default function AboutPage() {
                 <div key={item.name} className={styles.stackItem}>
                   <span>{item.name}</span>
                 </div>
+              ))}
+            </div>
+
+            <div className={styles.aiSkillGrid}>
+              {aiCodingSkills.map((item) => (
+                <article key={item.tool} className={styles.aiSkillCard}>
+                  <span className={styles.aiSkillLevel}>{item.level}</span>
+                  <h3>{item.tool}</h3>
+                  <p>{item.body}</p>
+                  <div className={styles.aiSkillTags}>
+                    {item.skills.map((skill) => (
+                      <span key={skill}>{skill}</span>
+                    ))}
+                  </div>
+                </article>
               ))}
             </div>
           </div>

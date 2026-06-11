@@ -2,10 +2,13 @@ import styles from './AnnouncementBar.module.scss';
 
 const ITEMS = [
   'OPEN FOR FREELANCE',
+  'SOFTWARE DEVELOPMENT',
   'LANDING PAGES',
   'FIGMA TO CODE',
-  'UI/UX DESIGN',
-  'FULL WEBSITES',
+  'AUTOMATION SCRIPTS',
+  'API INTEGRATIONS',
+  'AI-ASSISTED CODING',
+  'REAL CLIENT WORK',
   'REPLIES IN 24H',
 ];
 

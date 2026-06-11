@@ -22,7 +22,7 @@ export default function HomePage() {
         <div className="section-inner">
           <div className="section-head--center">
             <span className="section-kicker">Tech Stack</span>
-            <h2 className="section-title">The tools I reach for.</h2>
+            <h2 className="section-title">The tools behind web, automation, and AI-assisted delivery.</h2>
           </div>
           <TechMarquee items={techStack} />
         </div>

@@ -19,8 +19,9 @@ export default function ProjectsPreview() {
             </h2>
           </div>
           <p className="section-lede">
-            Live projects across education, AI product positioning, and dashboard interfaces. The
-            goal is not to show everything, only the work that helps a client trust the next build.
+            Live projects across client delivery, education, AI product positioning, and dashboards.
+            The goal is not to show everything, only the work that helps a client trust the next
+            build.
           </p>
         </div>
 

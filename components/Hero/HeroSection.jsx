@@ -5,19 +5,20 @@ import { useEffect, useRef, useState } from 'react';
 import { ArrowUpRight } from 'lucide-react';
 import { gsap } from 'gsap';
 import MagneticButton from '@/components/MagneticButton/MagneticButton';
-import { defaultHero, heroServices } from '@/data/heroServices';
+import { defaultHero, heroServiceDomains } from '@/data/heroServices';
 import { initParticles } from '@/lib/threeParticles';
 import HeroDropdown from './HeroDropdown';
 import HeroForm from './HeroForm';
 import styles from './Hero.module.scss';
 
-const fitLabels = ['Founders', 'Personal brands', 'Agencies', 'Small teams'];
+const fitLabels = ['Software developer', 'Web apps', 'Automations', 'AI-assisted workflow'];
 const HERO_VIDEO_OPACITY = 0.64;
 const prefersReducedMotion = () =>
   typeof window !== 'undefined' &&
   window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
 export default function HeroSection() {
+  const [selectedDomain, setSelectedDomain] = useState(null);
   const [selected, setSelected] = useState(null);
   const [videoReady, setVideoReady] = useState(false);
   const videoRef = useRef(null);
@@ -25,7 +26,8 @@ export default function HeroSection() {
   const canvasRef = useRef(null);
   const cleanupRef = useRef(null);
 
-  const active = selected ?? defaultHero;
+  const domainServices = selectedDomain?.services ?? [];
+  const active = selected ?? selectedDomain ?? defaultHero;
 
   useEffect(() => {
     if (!canvasRef.current || window.innerWidth < 768 || prefersReducedMotion()) return undefined;
@@ -50,18 +52,18 @@ export default function HeroSection() {
     return () => ctx.revert();
   }, []);
 
-  const handleSelect = (service) => {
+  const updateHeroMedia = (item, onCommit) => {
     const video = videoRef.current;
     const body = bodyRef.current;
 
     if (!video || prefersReducedMotion()) {
       if (video) {
         setVideoReady(false);
-        video.src = service.video;
+        video.src = item.video;
         video.load();
         video.play().catch(() => {});
       }
-      setSelected(service);
+      onCommit();
       return;
     }
 
@@ -70,14 +72,14 @@ export default function HeroSection() {
       duration: 0.24,
       onComplete: () => {
         setVideoReady(false);
-        video.src = service.video;
+        video.src = item.video;
         video.load();
         video.play().catch(() => {});
       },
     });
 
     if (!body) {
-      setSelected(service);
+      onCommit();
       return;
     }
 
@@ -86,10 +88,21 @@ export default function HeroSection() {
       opacity: 0,
       duration: 0.18,
       onComplete: () => {
-        setSelected(service);
+        onCommit();
         gsap.to(body, { y: 0, opacity: 1, duration: 0.3 });
       },
     });
+  };
+
+  const handleDomainSelect = (domain) => {
+    updateHeroMedia(domain, () => {
+      setSelectedDomain(domain);
+      setSelected(null);
+    });
+  };
+
+  const handleSelect = (service) => {
+    updateHeroMedia(service, () => setSelected(service));
   };
 
   return (
@@ -113,17 +126,16 @@ export default function HeroSection() {
         <div className={styles.copy}>
           <div className={`${styles.badge} hero-badge`}>
             <span className={styles.dot} />
-            Freelance developer for conversion-focused web work
+            Software developer for web, automation, and AI-assisted delivery
           </div>
 
           <h1 className={`${styles.title} hero-title`}>
-            Websites that look sharp and earn trust fast.
+            Software that looks sharp and removes manual work.
           </h1>
 
           <p className={`${styles.lede} hero-copy`}>
-            Landing pages, full websites, Figma-to-code builds, and UI systems for clients who
-            need cleaner execution, stronger first impressions, and a process that feels easy to
-            trust.
+            Websites, web apps, automation scripts, API integrations, and AI-assisted build
+            workflows for clients who need clean execution without losing control of the details.
           </p>
 
           <div className={`${styles.chips} hero-chips`}>
@@ -148,7 +160,7 @@ export default function HeroSection() {
           <div className={styles.panelTop}>
             <div>
               <span className={styles.panelKicker}>Interactive brief</span>
-              <h2 className={styles.panelTitle}>Pick the build and the page adapts.</h2>
+              <h2 className={styles.panelTitle}>Pick the domain, then the build adapts.</h2>
             </div>
             <div className={styles.statusBadge}>
               <span className={styles.greenDot} />
@@ -156,15 +168,33 @@ export default function HeroSection() {
             </div>
           </div>
 
-          <HeroDropdown services={heroServices} selected={selected} onSelect={handleSelect} />
+          <div className={styles.dropdownStack}>
+            <HeroDropdown
+              services={heroServiceDomains}
+              selected={selectedDomain}
+              onSelect={handleDomainSelect}
+              label="Domain"
+              placeholder="Choose a domain"
+              ariaLabel="Service domains"
+            />
+            <HeroDropdown
+              services={domainServices}
+              selected={selected}
+              onSelect={handleSelect}
+              label="Service"
+              placeholder={selectedDomain ? 'Choose a service' : 'Choose a domain first'}
+              ariaLabel="Services"
+              disabled={!selectedDomain}
+            />
+          </div>
 
           <p ref={bodyRef} className={styles.panelBody}>
             {active.subtext}
           </p>
 
           <div className={styles.panelNote}>
-            The dropdown changes the hero video and keeps the form aligned with the service from
-            the first message.
+            The first choice narrows the work category. The second choice aligns the video, budget,
+            timeline, and first message with the exact service.
           </div>
 
           <div className={styles.formWrap}>

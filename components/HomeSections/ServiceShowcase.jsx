@@ -39,11 +39,11 @@ export default function ServiceShowcase() {
         <div className="section-head--center">
           <span className="section-kicker">Services</span>
           <h2 className={`section-title ${styles.lightTitle}`}>
-            Four offers built to <strong>get hired quickly.</strong>
+            Four web offers built to <strong>get hired quickly.</strong>
           </h2>
           <p className={`${styles.lightCopy} section-lede ${styles.centeredLede}`}>
-            These are the services available right now. Each one is framed for clear client value,
-            not vague capability lists.
+            These are the fastest services for a client to recognize. The full services page also
+            includes automation scripts, API integrations, and internal tools.
           </p>
         </div>
 

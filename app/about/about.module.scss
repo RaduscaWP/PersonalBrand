@@ -160,6 +160,60 @@
   border-color: rgba(124, 58, 237, 0.24);
 }
 
+.aiSkillGrid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--space-4);
+  margin-top: var(--space-6);
+}
+
+.aiSkillCard {
+  padding: var(--card-padding);
+  border-radius: 18px;
+  border: 1px solid var(--paper-border);
+  background: #ffffff;
+  color: var(--text-dark);
+}
+
+.aiSkillLevel {
+  display: inline-block;
+  margin-bottom: var(--space-3);
+  color: var(--accent);
+  font-family: 'JetBrains Mono', ui-monospace, monospace;
+  font-size: var(--fs-xs);
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.aiSkillCard h3 {
+  color: var(--text-dark);
+  font-size: 1.35rem;
+}
+
+.aiSkillCard p {
+  margin-top: var(--space-3);
+  color: var(--text-soft-dark);
+  line-height: 1.7;
+}
+
+.aiSkillTags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.45rem;
+  margin-top: var(--space-4);
+}
+
+.aiSkillTags span {
+  padding: 0.24rem 0.62rem;
+  border-radius: var(--radius-pill);
+  border: 1px solid var(--paper-border);
+  background: var(--paper-elevated);
+  color: var(--text-soft-dark);
+  font-family: 'JetBrains Mono', ui-monospace, monospace;
+  font-size: var(--fs-xs);
+}
+
 @media (max-width: 900px) {
   .title {
     max-width: 100%;
@@ -167,6 +221,10 @@
 }
 
 @media (max-width: 640px) {
+  .aiSkillGrid {
+    grid-template-columns: 1fr;
+  }
+
   .timeline {
     padding-left: 1.4rem;
   }

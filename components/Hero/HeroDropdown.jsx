@@ -4,7 +4,16 @@ import { useEffect, useId, useRef, useState } from 'react';
 import { ChevronDown } from 'lucide-react';
 import styles from './Hero.module.scss';
 
-export default function HeroDropdown({ services, selected, onSelect }) {
+export default function HeroDropdown({
+  services,
+  selected,
+  onSelect,
+  label = 'Service',
+  placeholder = 'Choose a service',
+  ariaLabel = 'Services',
+  disabled = false,
+  className = '',
+}) {
   const [open, setOpen] = useState(false);
   const wrapRef = useRef(null);
   const listboxId = useId();
@@ -28,22 +37,23 @@ export default function HeroDropdown({ services, selected, onSelect }) {
   }, []);
 
   return (
-    <div ref={wrapRef} className={styles.dropdownWrap}>
-      <span className={styles.fieldLabel}>Service</span>
+    <div ref={wrapRef} className={`${styles.dropdownWrap} ${className}`}>
+      <span className={styles.fieldLabel}>{label}</span>
       <button
         type="button"
         className={`${styles.dropdownTrigger} ${open ? styles.dropdownOpen : ''}`}
         onClick={() => setOpen((value) => !value)}
-        aria-expanded={open}
+        disabled={disabled}
+        aria-expanded={open && !disabled}
         aria-haspopup="listbox"
         aria-controls={listboxId}
       >
-        <span>{selected?.label ?? 'Choose a service'}</span>
+        <span>{selected?.label ?? placeholder}</span>
         <ChevronDown size={18} className={styles.chevron} />
       </button>
 
-      {open ? (
-        <div id={listboxId} className={styles.dropdown} role="listbox" aria-label="Services">
+      {open && !disabled ? (
+        <div id={listboxId} className={styles.dropdown} role="listbox" aria-label={ariaLabel}>
           {services.map((service) => (
             <button
               key={service.id}

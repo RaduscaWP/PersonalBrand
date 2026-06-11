@@ -4,8 +4,8 @@ import styles from './HomeSections.module.scss';
 const items = [
   {
     icon: BadgeCheck,
-    title: 'Live work first',
-    body: 'The portfolio is built around shipped projects, not invented client stories or fake testimonial filler.',
+    title: 'Real client work',
+    body: 'The portfolio now includes flywithderek.com: a shipped client site with React, TypeScript, Resend API, and security-focused delivery.',
   },
   {
     icon: Award,
