@@ -4,6 +4,7 @@ out
 build
 dist
 output
+test-results
 
 .env
 .env.local
