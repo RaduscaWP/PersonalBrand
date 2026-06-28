@@ -30,12 +30,14 @@ export default function CustomSelect({
 }) {
   const [internalOpen, setInternalOpen] = useState(false);
   const [renderMenu, setRenderMenu] = useState(false);
+  const [highlightedIndex, setHighlightedIndex] = useState(-1);
   const rootRef = useRef(null);
   const triggerRef = useRef(null);
   const listboxId = useId();
 
   const normalizedOptions = useMemo(() => options.map(normalizeOption), [options]);
   const selected = normalizedOptions.find((option) => option.value === value);
+  const selectedIndex = normalizedOptions.findIndex((option) => option.value === value);
   const isControlled = typeof controlledOpen === 'boolean';
   const open = isControlled ? controlledOpen : internalOpen;
 
@@ -57,9 +59,15 @@ export default function CustomSelect({
     if (restoreFocus) window.requestAnimationFrame(() => triggerRef.current?.focus());
   }, [isControlled, onOpenChange]);
 
+  const chooseOption = useCallback((option) => {
+    onChange(option.value);
+    closeMenu(true);
+  }, [closeMenu, onChange]);
+
   useEffect(() => {
     if (open) {
       setRenderMenu(true);
+      setHighlightedIndex(selectedIndex >= 0 ? selectedIndex : 0);
       return undefined;
     }
 
@@ -67,7 +75,7 @@ export default function CustomSelect({
 
     const timeout = window.setTimeout(() => setRenderMenu(false), 180);
     return () => window.clearTimeout(timeout);
-  }, [open, renderMenu]);
+  }, [open, renderMenu, selectedIndex]);
 
   useEffect(() => {
     if (!open) return undefined;
@@ -96,6 +104,49 @@ export default function CustomSelect({
     if (disabled && open) closeMenu(false);
   }, [closeMenu, disabled, open]);
 
+  const handleKeyDown = (event) => {
+    if (disabled) return;
+
+    const lastIndex = normalizedOptions.length - 1;
+    if (lastIndex < 0) return;
+
+    if (event.key === 'ArrowDown' || event.key === 'ArrowUp') {
+      event.preventDefault();
+      if (!open) {
+        setOpen(true);
+        setHighlightedIndex(selectedIndex >= 0 ? selectedIndex : event.key === 'ArrowDown' ? 0 : lastIndex);
+        return;
+      }
+
+      setHighlightedIndex((current) => {
+        const fallback = selectedIndex >= 0 ? selectedIndex : 0;
+        const next = current < 0 ? fallback : current + (event.key === 'ArrowDown' ? 1 : -1);
+        if (next < 0) return lastIndex;
+        if (next > lastIndex) return 0;
+        return next;
+      });
+      return;
+    }
+
+    if (event.key === 'Home' || event.key === 'End') {
+      event.preventDefault();
+      if (!open) setOpen(true);
+      setHighlightedIndex(event.key === 'Home' ? 0 : lastIndex);
+      return;
+    }
+
+    if (event.key === 'Enter' || event.key === ' ') {
+      event.preventDefault();
+      if (!open) {
+        setOpen(true);
+        return;
+      }
+
+      const next = normalizedOptions[highlightedIndex >= 0 ? highlightedIndex : selectedIndex];
+      if (next) chooseOption(next);
+    }
+  };
+
   return (
     <div
       ref={rootRef}
@@ -107,12 +158,16 @@ export default function CustomSelect({
         type="button"
         className={`${styles.trigger} ${!selected ? styles.placeholder : ''}`}
         onClick={() => setOpen((current) => !current)}
+        onKeyDown={handleKeyDown}
         disabled={disabled}
         aria-label={label}
-        aria-haspopup="menu"
+        role="combobox"
+        aria-haspopup="listbox"
         aria-expanded={open}
         aria-controls={listboxId}
+        aria-activedescendant={open && highlightedIndex >= 0 ? `${listboxId}-${highlightedIndex}` : undefined}
         aria-describedby={describedBy}
+        aria-invalid={invalid || undefined}
         data-invalid={invalid || undefined}
       >
         <span className={styles.value}>{selected?.label ?? placeholder}</span>
@@ -123,24 +178,26 @@ export default function CustomSelect({
         <div
           id={listboxId}
           className={`${styles.menu} ${open ? styles.menuOpen : styles.menuClosing}`}
-          role="menu"
+          role="listbox"
           aria-label={label}
           aria-hidden={!open}
         >
-          {normalizedOptions.map((option) => {
+          {normalizedOptions.map((option, index) => {
             const active = option.value === value;
+            const highlighted = highlightedIndex === index;
 
             return (
               <button
+                id={`${listboxId}-${index}`}
                 key={option.value}
                 type="button"
-                role="menuitem"
-                aria-current={active ? 'true' : undefined}
-                tabIndex={open && !disabled ? 0 : -1}
-                className={`${styles.option} ${active ? styles.optionActive : ''}`}
+                role="option"
+                aria-selected={active}
+                tabIndex={-1}
+                className={`${styles.option} ${active ? styles.optionActive : ''} ${highlighted ? styles.optionHighlighted : ''}`}
+                onMouseEnter={() => setHighlightedIndex(index)}
                 onClick={() => {
-                  onChange(option.value);
-                  closeMenu(true);
+                  chooseOption(option);
                 }}
               >
                 <span>{option.label}</span>

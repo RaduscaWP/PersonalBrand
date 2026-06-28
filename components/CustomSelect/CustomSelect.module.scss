@@ -118,6 +118,8 @@
 
 .optionActive {}
 
+.optionHighlighted {}
+
 .light {
   .trigger {
     min-height: 4.25rem;
@@ -151,6 +153,7 @@
   }
 
   .option:hover,
+  .optionHighlighted,
   .optionActive {
     background: rgba(124, 58, 237, 0.08);
     color: var(--text-dark);
@@ -163,8 +166,8 @@
 
 .darkInline {
   .trigger {
-    min-height: auto;
-    padding: 0;
+    min-height: 2.75rem;
+    padding: 0.15rem 0;
     border: 0;
     border-radius: 0;
     background: transparent;
@@ -210,6 +213,7 @@
   }
 
   .option:hover,
+  .optionHighlighted,
   .optionActive {
     background: rgba(124, 58, 237, 0.12);
     color: var(--text-primary);

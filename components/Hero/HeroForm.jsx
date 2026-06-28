@@ -80,7 +80,7 @@ export default function HeroForm({ selected }) {
 
   if (status === 'sent') {
     return (
-      <div className={styles.formSuccess}>
+      <div className={styles.formSuccess} role="status" aria-live="polite">
         Request received. I will reply within 24 hours.
         {reference ? <> Reference: <strong>{reference}</strong>.</> : null}
       </div>
@@ -144,13 +144,22 @@ export default function HeroForm({ selected }) {
             />
           </label>
 
-          <button type="submit" className={styles.submitBtn} disabled={status === 'sending'}>
+          <button
+            type="submit"
+            className={styles.submitBtn}
+            disabled={status === 'sending'}
+            aria-label="Send project request"
+          >
             {status === 'sending' ? '...' : <Send size={18} />}
           </button>
         </div>
       </div>
 
+      <label className="sr-only" htmlFor="hero-project-details">
+        Project details
+      </label>
       <textarea
+        id="hero-project-details"
         rows={4}
         value={form.description}
         onChange={(event) => updateField('description', event.target.value)}

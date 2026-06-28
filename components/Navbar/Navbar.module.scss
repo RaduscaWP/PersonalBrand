@@ -133,6 +133,10 @@
     left: 0;
     right: 0;
     bottom: 0;
+    max-height: calc(100svh - var(--ticker-height) - var(--nav-height));
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    -webkit-overflow-scrolling: touch;
     flex-direction: column;
     align-items: flex-start;
     justify-content: flex-start;
@@ -159,6 +163,7 @@
   .link {
     width: 100%;
     justify-content: flex-start;
+    min-height: 2.75rem;
     padding: 0.7rem 0;
     font-size: 1.05rem;
 
@@ -185,5 +190,21 @@
 
   .mobileCta {
     margin-top: var(--space-3);
+    width: 100%;
+  }
+
+  .mobileCta a {
+    width: 100%;
+  }
+}
+
+@media (max-width: 480px) {
+  .inner {
+    width: min(var(--max-width), calc(100% - 2rem));
+  }
+
+  .links {
+    gap: var(--space-2);
+    padding: var(--space-6) 1rem max(var(--space-8), env(safe-area-inset-bottom));
   }
 }

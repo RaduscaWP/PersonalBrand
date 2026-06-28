@@ -49,6 +49,10 @@
   border-radius: var(--radius-md);
 }
 
+.aboutProofCard > div {
+  min-width: 0;
+}
+
 .aboutProofIcon {
   width: 42px;
   height: 42px;
@@ -305,7 +309,7 @@
 .projectsGrid {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
-  grid-auto-rows: 340px;
+  grid-auto-rows: minmax(360px, auto);
   gap: var(--space-4);
 }
 
@@ -384,11 +388,26 @@
   }
 
   .projectsGrid {
-    grid-auto-rows: 320px;
+    grid-auto-rows: minmax(360px, auto);
   }
 
   .processItem {
     grid-template-columns: 1fr;
     gap: var(--space-3);
+  }
+}
+
+@media (max-width: 480px) {
+  .aboutProofCard {
+    grid-template-columns: 1fr;
+  }
+
+  .aboutProofLabel,
+  .aboutProofValue {
+    overflow-wrap: anywhere;
+  }
+
+  .projectsGrid {
+    grid-auto-rows: minmax(380px, auto);
   }
 }

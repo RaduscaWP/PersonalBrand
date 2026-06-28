@@ -159,6 +159,7 @@ h6 {
   letter-spacing: -0.03em;
   line-height: 0.98;
   color: var(--text-primary);
+  text-wrap: balance;
 }
 
 p,
@@ -170,6 +171,10 @@ textarea,
 button,
 select {
   font-family: var(--font-dm-sans), sans-serif;
+}
+
+p {
+  line-height: 1.65;
 }
 
 code,
@@ -520,6 +525,68 @@ select {
 
   .section-head--center {
     margin-bottom: var(--space-12);
+  }
+}
+
+@media (max-width: 480px) {
+  :root {
+    --content-padding: 1rem;
+    --section-gap: 3.5rem;
+    --section-gap-tight: 2.75rem;
+    --card-padding: 1rem;
+  }
+
+  .page-wrap {
+    padding-top: calc(var(--header-offset) + var(--space-6));
+  }
+
+  .page-hero {
+    width: min(var(--max-width), calc(100% - 2rem));
+    padding-top: var(--space-4);
+  }
+
+  .page-hero--photo,
+  .page-cta-band {
+    padding: var(--space-6);
+    border-radius: 22px;
+  }
+
+  .section-shell {
+    padding: var(--section-gap) 0;
+  }
+
+  .section-inner {
+    width: min(var(--max-width), calc(100% - 2rem));
+  }
+
+  .section-head,
+  .section-head--center {
+    margin-bottom: var(--space-8);
+  }
+
+  .section-title,
+  .page-title {
+    line-height: 1.02;
+  }
+
+  .page-lede,
+  .section-lede {
+    font-size: 1rem;
+    line-height: 1.68;
+  }
+
+  .text-link {
+    min-height: 2.75rem;
+    padding-block: 0.65rem;
+  }
+
+  .page-cta-actions {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .page-cta-actions a {
+    width: 100%;
   }
 }
 

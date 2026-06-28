@@ -34,6 +34,7 @@
 .field input,
 .field textarea {
   width: 100%;
+  min-height: 2.75rem;
   padding: 0.95rem 1rem;
   border: 1px solid var(--paper-border);
   border-radius: 18px;
@@ -54,10 +55,14 @@
 
 .honeypot {
   position: absolute;
-  left: -9999px;
   width: 1px;
   height: 1px;
+  padding: 0;
+  margin: -1px;
   overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
 }
 
 .submit {
@@ -107,5 +112,16 @@
 @media (max-width: 768px) {
   .grid {
     grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 640px) {
+  .form {
+    border-radius: 22px;
+  }
+
+  .submit {
+    width: 100%;
+    align-self: stretch;
   }
 }

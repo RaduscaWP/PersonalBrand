@@ -154,6 +154,22 @@
     align-items: flex-start;
   }
 
+  .brandLinks a {
+    width: 2.75rem;
+    height: 2.75rem;
+  }
+
+  .column a,
+  .status p,
+  .status span,
+  .bottomLinks a {
+    min-height: 2.75rem;
+  }
+
+  .dot {
+    flex-shrink: 0;
+  }
+
   .bottomLinks {
     flex-wrap: wrap;
   }

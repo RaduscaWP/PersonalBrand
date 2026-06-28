@@ -148,3 +148,14 @@
     flex-direction: column;
   }
 }
+
+@media (max-width: 480px) {
+  .card {
+    border-radius: 22px;
+  }
+
+  .cta,
+  .cta a {
+    width: 100%;
+  }
+}

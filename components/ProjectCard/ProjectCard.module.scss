@@ -265,8 +265,8 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: 2.5rem;
-  height: 2.5rem;
+  width: 2.75rem;
+  height: 2.75rem;
   border-radius: 999px;
   background: rgba(255, 255, 255, 0.08);
   border: 1px solid rgba(255, 255, 255, 0.08);
@@ -319,7 +319,9 @@
 .inlineLink {
   display: inline-flex;
   align-items: center;
+  justify-content: center;
   gap: 0.45rem;
+  min-height: 2.75rem;
   font-size: var(--fs-small);
   font-weight: 700;
 }
@@ -334,7 +336,7 @@
 
 @media (max-width: 768px) {
   .card {
-    min-height: 320px;
+    min-height: 360px;
   }
 
   .shellWindow {
@@ -355,5 +357,43 @@
 
   .actions {
     flex-wrap: wrap;
+    gap: var(--space-3);
+  }
+
+  .ghost,
+  .inlineLink {
+    padding: 0.55rem 0.7rem;
+    border-radius: var(--radius-pill);
+  }
+
+  .ghost {
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    background: rgba(8, 8, 8, 0.28);
+  }
+}
+
+@media (max-width: 480px) {
+  .card {
+    min-height: 380px;
+    padding: 1rem;
+  }
+
+  .category {
+    max-width: calc(100% - 3.25rem);
+    overflow-wrap: anywhere;
+    letter-spacing: 0.08em;
+  }
+
+  .description {
+    max-width: none;
+  }
+
+  .actions {
+    align-items: stretch;
+  }
+
+  .ghost,
+  .inlineLink {
+    flex: 1 1 auto;
   }
 }

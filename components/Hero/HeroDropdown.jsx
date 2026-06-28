@@ -15,9 +15,11 @@ export default function HeroDropdown({
   className = '',
 }) {
   const [open, setOpen] = useState(false);
+  const [highlightedIndex, setHighlightedIndex] = useState(-1);
   const wrapRef = useRef(null);
   const triggerRef = useRef(null);
   const listboxId = useId();
+  const selectedIndex = services.findIndex((service) => service.id === selected?.id);
 
   useEffect(() => {
     const onPointerDown = (event) => {
@@ -40,6 +42,59 @@ export default function HeroDropdown({
     };
   }, []);
 
+  useEffect(() => {
+    if (!open) return;
+    setHighlightedIndex(selectedIndex >= 0 ? selectedIndex : 0);
+  }, [open, selectedIndex]);
+
+  const chooseService = (service) => {
+    onSelect(service);
+    setOpen(false);
+    window.requestAnimationFrame(() => triggerRef.current?.focus());
+  };
+
+  const handleKeyDown = (event) => {
+    if (disabled) return;
+    const lastIndex = services.length - 1;
+    if (lastIndex < 0) return;
+
+    if (event.key === 'ArrowDown' || event.key === 'ArrowUp') {
+      event.preventDefault();
+      if (!open) {
+        setOpen(true);
+        setHighlightedIndex(selectedIndex >= 0 ? selectedIndex : event.key === 'ArrowDown' ? 0 : lastIndex);
+        return;
+      }
+
+      setHighlightedIndex((current) => {
+        const fallback = selectedIndex >= 0 ? selectedIndex : 0;
+        const next = current < 0 ? fallback : current + (event.key === 'ArrowDown' ? 1 : -1);
+        if (next < 0) return lastIndex;
+        if (next > lastIndex) return 0;
+        return next;
+      });
+      return;
+    }
+
+    if (event.key === 'Home' || event.key === 'End') {
+      event.preventDefault();
+      if (!open) setOpen(true);
+      setHighlightedIndex(event.key === 'Home' ? 0 : lastIndex);
+      return;
+    }
+
+    if (event.key === 'Enter' || event.key === ' ') {
+      event.preventDefault();
+      if (!open) {
+        setOpen(true);
+        return;
+      }
+
+      const next = services[highlightedIndex >= 0 ? highlightedIndex : selectedIndex];
+      if (next) chooseService(next);
+    }
+  };
+
   return (
     <div ref={wrapRef} className={`${styles.dropdownWrap} ${className}`}>
       <span className={styles.fieldLabel}>{label}</span>
@@ -48,28 +103,31 @@ export default function HeroDropdown({
         type="button"
         className={`${styles.dropdownTrigger} ${open ? styles.dropdownOpen : ''}`}
         onClick={() => setOpen((value) => !value)}
+        onKeyDown={handleKeyDown}
         disabled={disabled}
         aria-expanded={open && !disabled}
-        aria-haspopup="menu"
+        aria-haspopup="listbox"
         aria-controls={listboxId}
+        aria-activedescendant={open && highlightedIndex >= 0 ? `${listboxId}-${highlightedIndex}` : undefined}
       >
         <span>{selected?.label ?? placeholder}</span>
         <ChevronDown size={18} className={styles.chevron} />
       </button>
 
       {open && !disabled ? (
-        <div id={listboxId} className={styles.dropdown} role="menu" aria-label={ariaLabel}>
-          {services.map((service) => (
+        <div id={listboxId} className={styles.dropdown} role="listbox" aria-label={ariaLabel}>
+          {services.map((service, index) => (
             <button
+              id={`${listboxId}-${index}`}
               key={service.id}
               type="button"
-              className={`${styles.option} ${selected?.id === service.id ? styles.optionActive : ''}`}
-              role="menuitem"
-              aria-current={selected?.id === service.id ? 'true' : undefined}
+              className={`${styles.option} ${selected?.id === service.id ? styles.optionActive : ''} ${highlightedIndex === index ? styles.optionHighlighted : ''}`}
+              role="option"
+              aria-selected={selected?.id === service.id}
+              tabIndex={-1}
+              onMouseEnter={() => setHighlightedIndex(index)}
               onClick={() => {
-                onSelect(service);
-                setOpen(false);
-                window.requestAnimationFrame(() => triggerRef.current?.focus());
+                chooseService(service);
               }}
             >
               <span>{service.label}</span>

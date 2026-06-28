@@ -21,8 +21,10 @@
   background: linear-gradient(180deg, #8750f2 0%, var(--accent) 100%);
   color: #fff;
   box-shadow: 0 10px 28px rgba(124, 58, 237, 0.22);
+}
 
-  &:hover {
+@media (hover: hover) and (pointer: fine) {
+  .primary:hover {
     background: var(--accent-hover);
     box-shadow: 0 16px 34px rgba(124, 58, 237, 0.28);
   }
@@ -32,10 +34,18 @@
   background: rgba(255, 255, 255, 0.02);
   color: var(--text-primary);
   border-color: var(--border-hover);
+}
 
-  &:hover {
+@media (hover: hover) and (pointer: fine) {
+  .secondary:hover {
     background: rgba(124, 58, 237, 0.08);
     border-color: var(--border-accent);
     color: var(--text-primary);
+  }
+}
+
+@media (pointer: coarse) {
+  .btn {
+    cursor: pointer;
   }
 }

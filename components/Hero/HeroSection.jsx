@@ -21,6 +21,7 @@ export default function HeroSection() {
   const [selectedDomain, setSelectedDomain] = useState(null);
   const [selected, setSelected] = useState(null);
   const [videoReady, setVideoReady] = useState(false);
+  const [reduceMotion, setReduceMotion] = useState(false);
   const videoRef = useRef(null);
   const bodyRef = useRef(null);
   const canvasRef = useRef(null);
@@ -30,13 +31,30 @@ export default function HeroSection() {
   const active = selected ?? selectedDomain ?? defaultHero;
 
   useEffect(() => {
-    if (!canvasRef.current || window.innerWidth < 768 || prefersReducedMotion()) return undefined;
-    cleanupRef.current = initParticles(canvasRef.current);
-    return () => cleanupRef.current?.();
+    const mediaQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
+    const updateMotionPreference = () => setReduceMotion(mediaQuery.matches);
+
+    updateMotionPreference();
+    mediaQuery.addEventListener?.('change', updateMotionPreference);
+    return () => mediaQuery.removeEventListener?.('change', updateMotionPreference);
   }, []);
 
   useEffect(() => {
-    if (prefersReducedMotion()) return undefined;
+    if (!reduceMotion) return;
+    videoRef.current?.pause();
+    setVideoReady(false);
+  }, [reduceMotion]);
+
+  useEffect(() => {
+    if (!canvasRef.current || window.innerWidth < 768 || reduceMotion || prefersReducedMotion()) {
+      return undefined;
+    }
+    cleanupRef.current = initParticles(canvasRef.current);
+    return () => cleanupRef.current?.();
+  }, [reduceMotion]);
+
+  useEffect(() => {
+    if (reduceMotion || prefersReducedMotion()) return undefined;
 
     const ctx = gsap.context(() => {
       const timeline = gsap.timeline({ delay: 0.08 });
@@ -50,18 +68,18 @@ export default function HeroSection() {
     });
 
     return () => ctx.revert();
-  }, []);
+  }, [reduceMotion]);
 
   const updateHeroMedia = (item, onCommit) => {
     const video = videoRef.current;
     const body = bodyRef.current;
 
-    if (!video || prefersReducedMotion()) {
+    if (!video || reduceMotion || prefersReducedMotion()) {
       if (video) {
+        video.pause();
         setVideoReady(false);
         video.src = item.video;
         video.load();
-        video.play().catch(() => {});
       }
       onCommit();
       return;
@@ -74,7 +92,7 @@ export default function HeroSection() {
         setVideoReady(false);
         video.src = item.video;
         video.load();
-        video.play().catch(() => {});
+        if (!reduceMotion) video.play().catch(() => {});
       },
     });
 
@@ -115,11 +133,11 @@ export default function HeroSection() {
     <section className={styles.hero} style={{ '--hero-video-opacity': HERO_VIDEO_OPACITY }}>
       <video
         ref={videoRef}
-        className={`${styles.videoBg} ${videoReady ? styles.videoReady : ''}`}
+        className={`${styles.videoBg} ${videoReady ? styles.videoReady : ''} ${reduceMotion ? styles.videoReduced : ''}`}
         src={defaultHero.video}
-        autoPlay
+        autoPlay={!reduceMotion}
         muted
-        loop
+        loop={!reduceMotion}
         playsInline
         onLoadedData={() => setVideoReady(true)}
         onCanPlay={() => setVideoReady(true)}
