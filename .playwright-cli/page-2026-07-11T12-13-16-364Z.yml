@@ -1,0 +1,403 @@
+- generic [active] [ref=e1]:
+  - generic "Freelance availability ticker" [ref=e2]:
+    - generic [ref=e3]:
+      - generic [ref=e4]:
+        - generic [ref=e5]: OPEN FOR FREELANCE /
+        - generic [ref=e6]: SOFTWARE DEVELOPMENT /
+        - generic [ref=e7]: LANDING PAGES /
+        - generic [ref=e8]: FIGMA TO CODE /
+        - generic [ref=e9]: AUTOMATION SCRIPTS /
+        - generic [ref=e10]: API INTEGRATIONS /
+        - generic [ref=e11]: AI-ASSISTED CODING /
+        - generic [ref=e12]: REAL CLIENT WORK /
+        - generic [ref=e13]: REPLIES IN 24H /
+      - generic [ref=e14]:
+        - generic [ref=e15]: OPEN FOR FREELANCE /
+        - generic [ref=e16]: SOFTWARE DEVELOPMENT /
+        - generic [ref=e17]: LANDING PAGES /
+        - generic [ref=e18]: FIGMA TO CODE /
+        - generic [ref=e19]: AUTOMATION SCRIPTS /
+        - generic [ref=e20]: API INTEGRATIONS /
+        - generic [ref=e21]: AI-ASSISTED CODING /
+        - generic [ref=e22]: REAL CLIENT WORK /
+        - generic [ref=e23]: REPLIES IN 24H /
+      - generic [ref=e24]:
+        - generic [ref=e25]: OPEN FOR FREELANCE /
+        - generic [ref=e26]: SOFTWARE DEVELOPMENT /
+        - generic [ref=e27]: LANDING PAGES /
+        - generic [ref=e28]: FIGMA TO CODE /
+        - generic [ref=e29]: AUTOMATION SCRIPTS /
+        - generic [ref=e30]: API INTEGRATIONS /
+        - generic [ref=e31]: AI-ASSISTED CODING /
+        - generic [ref=e32]: REAL CLIENT WORK /
+        - generic [ref=e33]: REPLIES IN 24H /
+      - generic [ref=e34]:
+        - generic [ref=e35]: OPEN FOR FREELANCE /
+        - generic [ref=e36]: SOFTWARE DEVELOPMENT /
+        - generic [ref=e37]: LANDING PAGES /
+        - generic [ref=e38]: FIGMA TO CODE /
+        - generic [ref=e39]: AUTOMATION SCRIPTS /
+        - generic [ref=e40]: API INTEGRATIONS /
+        - generic [ref=e41]: AI-ASSISTED CODING /
+        - generic [ref=e42]: REAL CLIENT WORK /
+        - generic [ref=e43]: REPLIES IN 24H /
+  - navigation [ref=e44]:
+    - generic [ref=e45]:
+      - link "Radu-Stefan home" [ref=e46]:
+        - /url: /
+        - generic [ref=e47]: Radu
+        - generic [ref=e48]: Stefan
+      - list [ref=e49]:
+        - listitem [ref=e50]:
+          - link "Home" [ref=e51]:
+            - /url: /
+        - listitem [ref=e52]:
+          - link "Services" [ref=e53]:
+            - /url: /services
+        - listitem [ref=e54]:
+          - link "Projects" [ref=e55]:
+            - /url: /projects
+        - listitem [ref=e56]:
+          - link "About" [ref=e57]:
+            - /url: /about
+        - listitem [ref=e58]:
+          - link "Pricing" [ref=e59]:
+            - /url: /pricing
+        - listitem [ref=e60]:
+          - link "Blog" [ref=e61]:
+            - /url: /blog
+      - link "Start project" [ref=e63]:
+        - /url: /contact
+  - main [ref=e64]:
+    - generic [ref=e65]:
+      - generic [ref=e70]:
+        - generic [ref=e71]:
+          - generic [ref=e72]: Software developer for web, automation, and AI-assisted delivery
+          - heading "Software that looks sharp and removes manual work." [level=1] [ref=e74]
+          - paragraph [ref=e75]: Websites, web apps, automation scripts, API integrations, and AI-assisted build workflows for clients who need clean execution without losing control of the details.
+          - generic [ref=e76]:
+            - generic [ref=e77]: Software developer
+            - generic [ref=e78]: Web apps
+            - generic [ref=e79]: Automations
+            - generic [ref=e80]: AI-assisted workflow
+          - generic [ref=e81]:
+            - link "Start a project" [ref=e82]:
+              - /url: /contact
+            - link "See live work" [ref=e83]:
+              - /url: /projects
+        - complementary [ref=e87]:
+          - generic [ref=e88]:
+            - generic [ref=e89]:
+              - text: Interactive brief
+              - heading "Pick the domain, then the build adapts." [level=2] [ref=e90]
+            - generic [ref=e91]: Available now
+          - generic [ref=e94]:
+            - text: Domain
+            - button "Choose a domain" [ref=e95]
+          - paragraph [ref=e99]: Choose a domain first, then a service. The page adapts the video, scope language, budget, and timeline around the work you actually need.
+      - region "Proof stats" [ref=e100]:
+        - generic [ref=e101]:
+          - generic [ref=e102]:
+            - generic [ref=e103]: 5+
+            - generic [ref=e104]: Live builds
+          - generic [ref=e106]:
+            - generic [ref=e107]: "3"
+            - generic [ref=e108]: Certiport certificates
+          - generic [ref=e110]:
+            - generic [ref=e111]: 24h
+            - generic [ref=e112]: Reply target
+          - generic [ref=e114]:
+            - generic [ref=e115]: "2"
+            - generic [ref=e116]: AI coding tools
+      - generic [ref=e119]:
+        - generic [ref=e120]:
+          - generic [ref=e121]: About
+          - heading [level=2] [ref=e122]:
+            - text: Young on paper.
+            - strong [ref=e123]: Reliable in practice.
+          - paragraph [ref=e124]: I help founders, personal brands, and small teams ship websites, automations, and software workflows that feel considered from the first screen to the handoff.
+          - generic [ref=e125]:
+            - article [ref=e126]:
+              - generic [ref=e131]:
+                - paragraph [ref=e132]: Clean delivery
+                - paragraph [ref=e133]: Scope first, then build
+            - article [ref=e134]:
+              - generic [ref=e139]:
+                - paragraph [ref=e140]: Fast communication
+                - paragraph [ref=e141]: Replies usually inside 24h
+            - article [ref=e142]:
+              - generic [ref=e148]:
+                - paragraph [ref=e149]: Client-friendly process
+                - paragraph [ref=e150]: Design, build, deploy, handoff
+        - generic [ref=e151]:
+          - paragraph [ref=e152]: "I am Radu-Stefan, an 18-year-old developer in Chisinau building with Next.js, React, TypeScript, SCSS, automation scripts, and AI-assisted coding workflows. The pitch is simple: clean execution, direct communication, and no half-finished work."
+          - paragraph [ref=e153]: "Six years as a national-level water polo goalkeeper shaped the part clients care about most: composure under pressure, consistency, and attention to the details that stop a project from feeling amateur."
+          - list [ref=e154]:
+            - listitem [ref=e155]: Responsive from line one, not fixed at the end.
+            - listitem [ref=e156]: Scope gets clarified before code starts moving.
+            - listitem [ref=e157]: Every build is prepared for deployment, validation, and clean handoff.
+          - generic [ref=e158]:
+            - link "Read the full story" [ref=e159]:
+              - /url: /about
+            - link "See live work" [ref=e160]:
+              - /url: /projects
+      - generic [ref=e165]:
+        - generic [ref=e166]:
+          - generic [ref=e167]: Services
+          - heading [level=2] [ref=e168]:
+            - text: Four web offers built to
+            - strong [ref=e169]: get hired quickly.
+          - paragraph [ref=e170]: These are the fastest services for a client to recognize. The full services page also includes automation scripts, API integrations, and internal tools.
+        - group "Signature service previews" [ref=e171]:
+          - button "PIXEL-PERFECT Landing Page Conversion-focused single pages built fast, deployed to Vercel, mobile-first from line one." [ref=e172] [cursor=pointer]:
+            - generic [ref=e173]: PIXEL-PERFECT
+            - generic [ref=e177]:
+              - heading "Landing Page" [level=3] [ref=e178]
+              - paragraph [ref=e179]: Conversion-focused single pages built fast, deployed to Vercel, mobile-first from line one.
+          - button "EXACT BUILD Figma to Code You design it - I build it exactly. HTML/CSS/React, every pixel, every hover state." [ref=e180] [cursor=pointer]:
+            - generic [ref=e181]: EXACT BUILD
+            - generic [ref=e189]:
+              - heading "Figma to Code" [level=3] [ref=e190]
+              - paragraph [ref=e191]: You design it - I build it exactly. HTML/CSS/React, every pixel, every hover state.
+          - button "BEFORE CODE UI/UX Design Clean Figma systems designed before a single line of code is written. Components included." [ref=e192] [cursor=pointer]:
+            - generic [ref=e193]: BEFORE CODE
+            - generic [ref=e201]:
+              - heading "UI/UX Design" [level=3] [ref=e202]
+              - paragraph [ref=e203]: Clean Figma systems designed before a single line of code is written. Components included.
+          - button "EXAMPLE Full Website Multi-page with navigation, SEO, contact form, Vercel deployment. The complete package. Tap or hover to return" [pressed] [ref=e204] [cursor=pointer]:
+            - generic [ref=e205]: EXAMPLE
+            - generic [ref=e210]:
+              - heading "Full Website" [level=3] [ref=e211]
+              - paragraph [ref=e212]: Multi-page with navigation, SEO, contact form, Vercel deployment. The complete package.
+              - generic [ref=e213]: Tap or hover to return
+        - link "Explore the full service page" [ref=e215]:
+          - /url: /services
+      - generic [ref=e221]:
+        - generic [ref=e222]:
+          - generic [ref=e223]: How I Work
+          - heading [level=2] [ref=e224]:
+            - text: Clear process.
+            - strong [ref=e225]: Less client guesswork.
+          - paragraph [ref=e226]: The workflow is built to keep the project calm, transparent, and easy to trust from the first message through launch.
+          - generic [ref=e238]:
+            - generic [ref=e239]: What this should feel like
+            - heading "Structured, visual, and calm from the first message." [level=3] [ref=e240]
+            - paragraph [ref=e241]: The same TBC-style confidence comes from real media and clear framing, not empty dark space.
+        - list [ref=e242]:
+          - listitem [ref=e243]:
+            - generic [ref=e244]: "01"
+            - generic [ref=e245]:
+              - heading "Clarify the scope" [level=3] [ref=e246]
+              - paragraph [ref=e247]: You send the goal, references, timeline, and what already exists. I translate that into a buildable scope instead of rushing into code.
+          - listitem [ref=e248]:
+            - generic [ref=e249]: "02"
+            - generic [ref=e250]:
+              - heading "Lock the direction" [level=3] [ref=e251]
+              - paragraph [ref=e252]: We agree on the structure, the visual direction, and the outcome the page has to achieve before time gets wasted on rework.
+          - listitem [ref=e253]:
+            - generic [ref=e254]: "03"
+            - generic [ref=e255]:
+              - heading "Build with feedback" [level=3] [ref=e256]
+              - paragraph [ref=e257]: The project gets built in stages with clean progress updates, working previews, and revisions focused on what improves the result.
+          - listitem [ref=e258]:
+            - generic [ref=e259]: "04"
+            - generic [ref=e260]:
+              - heading "Launch ready" [level=3] [ref=e261]
+              - paragraph [ref=e262]: Delivery includes responsive polish, deployment prep, and a handoff that makes the project feel usable, not just technically complete.
+      - generic [ref=e264]:
+        - generic [ref=e265]:
+          - generic [ref=e266]:
+            - generic [ref=e267]: Selected Work
+            - heading [level=2] [ref=e268]:
+              - text: Work that already
+              - strong [ref=e269]: proves the point.
+          - paragraph [ref=e270]: Live projects across client delivery, education, AI product positioning, and dashboards. The goal is not to show everything, only the work that helps a client trust the next build.
+        - generic [ref=e271]:
+          - article [ref=e272]:
+            - generic [ref=e298]:
+              - generic [ref=e299]: Educational Website
+              - link "COSMOS live site" [ref=e300]:
+                - /url: https://space-project-orcin.vercel.app/
+            - generic [ref=e304]:
+              - generic [ref=e305]:
+                - generic [ref=e306]: Three.js
+                - generic [ref=e307]: HTML
+                - generic [ref=e308]: CSS
+                - generic [ref=e309]: JavaScript
+              - heading "COSMOS" [level=3] [ref=e310]
+              - paragraph [ref=e311]: Romanian-language space and astronomy educational platform with Three.js 3D Jupiter model, scrollytelling narrative, Voyager disassembly mode, and interactive quiz system.
+              - generic [ref=e312]:
+                - link "COSMOS GitHub repository" [ref=e313]:
+                  - /url: https://github.com/RaduscaWP
+                  - text: GitHub
+                - link "Live site" [ref=e317]:
+                  - /url: https://space-project-orcin.vercel.app/
+          - article [ref=e321]:
+            - generic [ref=e347]:
+              - generic [ref=e348]: Client Website
+              - link "Fly With Derek live site" [ref=e349]:
+                - /url: https://flywithderek.com/
+            - generic [ref=e353]:
+              - generic [ref=e354]:
+                - generic [ref=e355]: React
+                - generic [ref=e356]: TypeScript
+                - generic [ref=e357]: Resend API
+                - generic [ref=e358]: Security
+                - generic [ref=e359]: HTML/CSS
+              - heading "Fly With Derek" [level=3] [ref=e360]
+              - paragraph [ref=e361]: Real client aviation advisory site for Derek Monti with React, TypeScript, Resend API email handling, JavaScript, security hardening, HTML, and CSS.
+              - generic [ref=e362]:
+                - link "Fly With Derek GitHub repository" [ref=e363]:
+                  - /url: https://github.com/RaduscaWP
+                  - text: GitHub
+                - link "Live site" [ref=e367]:
+                  - /url: https://flywithderek.com/
+          - article [ref=e371]:
+            - generic [ref=e397]:
+              - generic [ref=e398]: AI Platform
+              - link "Arca AI live site" [ref=e399]:
+                - /url: https://arca-ai-rho.vercel.app/
+            - generic [ref=e403]:
+              - generic [ref=e404]:
+                - generic [ref=e405]: React
+                - generic [ref=e406]: JavaScript
+                - generic [ref=e407]: AI Integration
+                - generic [ref=e408]: CSS
+              - heading "Arca AI" [level=3] [ref=e409]
+              - paragraph [ref=e410]: AI-powered product concept with a modern dark interface, sharp layout rhythm, and a clear product story.
+              - generic [ref=e411]:
+                - link "Arca AI GitHub repository" [ref=e412]:
+                  - /url: https://github.com/RaduscaWP
+                  - text: GitHub
+                - link "Live site" [ref=e416]:
+                  - /url: https://arca-ai-rho.vercel.app/
+        - generic [ref=e420]:
+          - link "Start a project" [ref=e421]:
+            - /url: /contact
+          - link "View all projects" [ref=e422]:
+            - /url: /projects
+      - generic [ref=e427]:
+        - generic [ref=e428]:
+          - generic [ref=e429]: Tech Stack
+          - heading "The tools behind web, automation, and AI-assisted delivery." [level=2] [ref=e430]
+        - generic [ref=e432]:
+          - generic [ref=e433]: HTML5
+          - generic [ref=e439]: SCSS
+          - generic [ref=e444]: JavaScript
+          - generic [ref=e448]: TypeScript
+          - generic [ref=e453]: React
+          - generic [ref=e458]: Next.js
+          - generic [ref=e461]: Node.js
+          - generic [ref=e465]: Python
+          - generic [ref=e471]: API Integrations
+          - generic [ref=e476]: Automation
+          - generic [ref=e480]: Resend
+          - generic [ref=e485]: Claude Code
+          - generic [ref=e489]: Codex
+          - generic [ref=e494]: Git
+          - generic [ref=e499]: Figma
+          - generic [ref=e506]: Vercel
+          - generic [ref=e512]: Three.js
+          - generic [ref=e519]: SQL
+          - generic [ref=e524]: HTML5
+          - generic [ref=e530]: SCSS
+          - generic [ref=e535]: JavaScript
+          - generic [ref=e539]: TypeScript
+          - generic [ref=e544]: React
+          - generic [ref=e549]: Next.js
+          - generic [ref=e552]: Node.js
+          - generic [ref=e556]: Python
+          - generic [ref=e562]: API Integrations
+          - generic [ref=e567]: Automation
+          - generic [ref=e571]: Resend
+          - generic [ref=e576]: Claude Code
+          - generic [ref=e580]: Codex
+          - generic [ref=e585]: Git
+          - generic [ref=e590]: Figma
+          - generic [ref=e597]: Vercel
+          - generic [ref=e603]: Three.js
+          - generic [ref=e610]: SQL
+      - generic [ref=e616]:
+        - generic [ref=e617]:
+          - generic [ref=e618]:
+            - generic [ref=e619]: Proof
+            - heading [level=2] [ref=e620]:
+              - text: The trust layer is simple.
+              - strong [ref=e621]: Show the evidence.
+          - paragraph [ref=e622]: "This section answers the question a client actually has: \"Why should I believe this person can handle the job?\" The answer comes from proof, not inflated wording."
+        - generic [ref=e623]:
+          - article [ref=e624]:
+            - heading "Real client work" [level=3] [ref=e629]
+            - paragraph [ref=e630]: "The portfolio now includes flywithderek.com: a shipped client site with React, TypeScript, Resend API, and security-focused delivery."
+          - article [ref=e631]:
+            - heading "Three certifications" [level=3] [ref=e636]
+            - paragraph [ref=e637]: Python, Databases, and Networking score reports are already in the repo and surfaced as real proof.
+          - article [ref=e638]:
+            - heading "Launch-minded builds" [level=3] [ref=e645]
+            - paragraph [ref=e646]: Projects are structured for deployment, responsive polish, and a handoff a client can actually use.
+          - article [ref=e647]:
+            - heading "Fast communication" [level=3] [ref=e652]
+            - paragraph [ref=e653]: Response expectations are clear upfront. The site consistently positions contact as direct and human.
+      - generic [ref=e655]:
+        - heading "Need a site that looks sharp, communicates clearly, and feels ready to ship?" [level=2] [ref=e656]
+        - paragraph [ref=e657]: Send the brief. If the scope is right, the next step is a focused quote and a build plan with no agency theater attached to it.
+        - generic [ref=e658]:
+          - link "Start a project" [ref=e659]:
+            - /url: /contact
+          - link "See pricing" [ref=e660]:
+            - /url: /pricing
+  - contentinfo [ref=e661]:
+    - generic [ref=e662]:
+      - generic [ref=e663]:
+        - generic [ref=e664]:
+          - img "Radu-Stefan" [ref=e665]
+          - generic [ref=e666]:
+            - strong [ref=e667]: Radu-Stefan
+            - generic [ref=e668]: Developer portfolio
+        - paragraph [ref=e669]: Websites, apps, automations, and AI-assisted software delivery from Chisinau, Moldova. Built for founders, personal brands, and teams that want clean execution without agency noise.
+        - generic [ref=e670]:
+          - link "GitHub" [ref=e671]:
+            - /url: https://github.com/RaduscaWP
+          - link "Instagram" [ref=e675]:
+            - /url: https://www.instagram.com/radusca_/
+          - link "Email" [ref=e679]:
+            - /url: mailto:grozavradustefan@gmail.com
+      - generic [ref=e683]:
+        - heading "Navigate" [level=2] [ref=e684]
+        - link "Home" [ref=e685]:
+          - /url: /
+        - link "About" [ref=e686]:
+          - /url: /about
+        - link "Projects" [ref=e687]:
+          - /url: /projects
+        - link "Services" [ref=e688]:
+          - /url: /services
+        - link "Pricing" [ref=e689]:
+          - /url: /pricing
+        - link "Blog" [ref=e690]:
+          - /url: /blog
+        - link "Contact" [ref=e691]:
+          - /url: /contact
+      - generic [ref=e692]:
+        - heading "Elsewhere" [level=2] [ref=e693]
+        - link "GitHub" [ref=e694]:
+          - /url: https://github.com/RaduscaWP
+        - link "Instagram" [ref=e698]:
+          - /url: https://www.instagram.com/radusca_/
+        - link "Email" [ref=e702]:
+          - /url: mailto:grozavradustefan@gmail.com
+      - generic [ref=e706]:
+        - heading "Status" [level=2] [ref=e707]
+        - paragraph [ref=e708]: Open for freelance projects
+        - paragraph [ref=e710]: Chisinau, Moldova
+        - generic [ref=e714]: "Typical reply target: under 24 hours."
+    - generic [ref=e715]:
+      - generic [ref=e716]: © 2026 Radu-Stefan. All rights reserved.
+      - generic [ref=e717]:
+        - link "Live work" [ref=e718]:
+          - /url: /projects
+        - link "Services" [ref=e719]:
+          - /url: /services
+        - link "Start a project" [ref=e720]:
+          - /url: /contact
+  - button "Open Next.js Dev Tools" [ref=e726] [cursor=pointer]

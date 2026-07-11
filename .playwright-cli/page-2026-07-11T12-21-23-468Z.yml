@@ -1,0 +1,332 @@
+- generic [active] [ref=f7e1]:
+  - generic "Freelance availability ticker" [ref=f7e2]:
+    - generic [ref=f7e3]:
+      - generic [ref=f7e4]:
+        - generic [ref=f7e5]: OPEN FOR FREELANCE /
+        - generic [ref=f7e6]: SOFTWARE DEVELOPMENT /
+        - generic [ref=f7e7]: LANDING PAGES /
+        - generic [ref=f7e8]: FIGMA TO CODE /
+        - generic [ref=f7e9]: AUTOMATION SCRIPTS /
+        - generic [ref=f7e10]: API INTEGRATIONS /
+        - generic [ref=f7e11]: AI-ASSISTED CODING /
+        - generic [ref=f7e12]: REAL CLIENT WORK /
+        - generic [ref=f7e13]: REPLIES IN 24H /
+      - generic [ref=f7e14]:
+        - generic [ref=f7e15]: OPEN FOR FREELANCE /
+        - generic [ref=f7e16]: SOFTWARE DEVELOPMENT /
+        - generic [ref=f7e17]: LANDING PAGES /
+        - generic [ref=f7e18]: FIGMA TO CODE /
+        - generic [ref=f7e19]: AUTOMATION SCRIPTS /
+        - generic [ref=f7e20]: API INTEGRATIONS /
+        - generic [ref=f7e21]: AI-ASSISTED CODING /
+        - generic [ref=f7e22]: REAL CLIENT WORK /
+        - generic [ref=f7e23]: REPLIES IN 24H /
+      - generic [ref=f7e24]:
+        - generic [ref=f7e25]: OPEN FOR FREELANCE /
+        - generic [ref=f7e26]: SOFTWARE DEVELOPMENT /
+        - generic [ref=f7e27]: LANDING PAGES /
+        - generic [ref=f7e28]: FIGMA TO CODE /
+        - generic [ref=f7e29]: AUTOMATION SCRIPTS /
+        - generic [ref=f7e30]: API INTEGRATIONS /
+        - generic [ref=f7e31]: AI-ASSISTED CODING /
+        - generic [ref=f7e32]: REAL CLIENT WORK /
+        - generic [ref=f7e33]: REPLIES IN 24H /
+      - generic [ref=f7e34]:
+        - generic [ref=f7e35]: OPEN FOR FREELANCE /
+        - generic [ref=f7e36]: SOFTWARE DEVELOPMENT /
+        - generic [ref=f7e37]: LANDING PAGES /
+        - generic [ref=f7e38]: FIGMA TO CODE /
+        - generic [ref=f7e39]: AUTOMATION SCRIPTS /
+        - generic [ref=f7e40]: API INTEGRATIONS /
+        - generic [ref=f7e41]: AI-ASSISTED CODING /
+        - generic [ref=f7e42]: REAL CLIENT WORK /
+        - generic [ref=f7e43]: REPLIES IN 24H /
+  - navigation [ref=f7e44]:
+    - generic [ref=f7e45]:
+      - link "Radu-Stefan home" [ref=f7e46]:
+        - /url: /
+        - generic [ref=f7e47]: Radu
+        - generic [ref=f7e48]: Stefan
+      - list [ref=f7e49]:
+        - listitem [ref=f7e50]:
+          - link "Home" [ref=f7e51]:
+            - /url: /
+        - listitem [ref=f7e52]:
+          - link "Services" [ref=f7e53]:
+            - /url: /services
+        - listitem [ref=f7e54]:
+          - link "Projects" [ref=f7e55]:
+            - /url: /projects
+        - listitem [ref=f7e56]:
+          - link "About" [ref=f7e57]:
+            - /url: /about
+        - listitem [ref=f7e58]:
+          - link "Pricing" [ref=f7e59]:
+            - /url: /pricing
+        - listitem [ref=f7e60]:
+          - link "Blog" [ref=f7e61]:
+            - /url: /blog
+      - link "Start project" [ref=f7e63]:
+        - /url: /contact
+  - main [ref=f7e64]:
+    - generic [ref=f7e66]:
+      - generic [ref=f7e67]:
+        - generic [ref=f7e68]: Pricing
+        - heading [level=1] [ref=f7e69]:
+          - text: Clear enough to trust,
+          - strong [ref=f7e70]: honest enough to keep flexible.
+        - paragraph [ref=f7e71]: Public ranges give you a realistic starting point. Final quotes stay flexible because scope, content readiness, and integration depth change the work.
+        - generic [ref=f7e72]: Starting ranges are shown in USD. Every project still gets a clear scope, timeline, and final quote before build work starts.
+        - generic [ref=f7e76]:
+          - article [ref=f7e77]:
+            - generic [ref=f7e78]: Currency
+            - text: USD or EUR
+          - article [ref=f7e79]:
+            - generic [ref=f7e80]: Deposit
+            - text: 50% upfront
+          - article [ref=f7e81]:
+            - generic [ref=f7e82]: Response
+            - text: Under 24 hours
+          - article [ref=f7e83]:
+            - generic [ref=f7e84]: Best fit
+            - text: Founders and small teams
+      - generic [ref=f7e87]:
+        - generic [ref=f7e88]:
+          - generic [ref=f7e89]:
+            - generic [ref=f7e90]: Packages
+            - heading [level=2] [ref=f7e91]:
+              - text: Enough structure to compare.
+              - strong [ref=f7e92]: Enough honesty to trust.
+          - paragraph [ref=f7e93]: "These ranges are built for market-entry freelance work: serious enough to signal quality, flexible enough for small teams and founders."
+        - generic [ref=f7e94]:
+          - article [ref=f7e95]:
+            - generic [ref=f7e96]: Most Popular
+            - generic [ref=f7e97]:
+              - heading "Landing Page" [level=3] [ref=f7e98]
+              - paragraph [ref=f7e99]: Perfect for startups, products, events, or personal brands.
+            - generic [ref=f7e100]:
+              - generic [ref=f7e101]:
+                - generic [ref=f7e102]: Starting range
+                - generic [ref=f7e103]: $350 - $1,200+
+                - generic [ref=f7e104]: Final quote depends on sections, copy, motion, and integrations.
+              - generic [ref=f7e105]: 3-5 days
+            - list [ref=f7e109]:
+              - listitem [ref=f7e110]:
+                - generic [ref=f7e113]: 1-page fully responsive
+              - listitem [ref=f7e114]:
+                - generic [ref=f7e117]: SEO metadata (title, desc, OG)
+              - listitem [ref=f7e118]:
+                - generic [ref=f7e121]: Contact form + email delivery
+              - listitem [ref=f7e122]:
+                - generic [ref=f7e125]: Vercel deployment
+              - listitem [ref=f7e126]:
+                - generic [ref=f7e129]: 2 rounds of revisions
+              - listitem [ref=f7e130]:
+                - generic [ref=f7e133]: Delivered in 3-5 days
+            - link "Start a project" [ref=f7e135]:
+              - /url: /contact?service=landing-page
+          - article [ref=f7e136]:
+            - generic [ref=f7e137]:
+              - heading "Figma to Code" [level=3] [ref=f7e138]
+              - paragraph [ref=f7e139]: You provide the Figma file - I build it pixel-perfectly.
+            - generic [ref=f7e140]:
+              - generic [ref=f7e141]:
+                - generic [ref=f7e142]: Starting range
+                - generic [ref=f7e143]: $250 - $1,200+
+                - generic [ref=f7e144]: Based on screen count, responsive variants, and interaction states.
+              - generic [ref=f7e145]: 2-4 days
+            - list [ref=f7e149]:
+              - listitem [ref=f7e150]:
+                - generic [ref=f7e153]: Pixel-perfect HTML/CSS/React
+              - listitem [ref=f7e154]:
+                - generic [ref=f7e157]: Fully responsive
+              - listitem [ref=f7e158]:
+                - generic [ref=f7e161]: Clean commented code
+              - listitem [ref=f7e162]:
+                - generic [ref=f7e165]: Hover states included
+              - listitem [ref=f7e166]:
+                - generic [ref=f7e169]: 1 round of revisions
+              - listitem [ref=f7e170]:
+                - generic [ref=f7e173]: Delivered in 2-4 days
+            - link "Start a project" [ref=f7e175]:
+              - /url: /contact?service=figma-to-code
+          - article [ref=f7e176]:
+            - generic [ref=f7e177]:
+              - heading "UI/UX Design" [level=3] [ref=f7e178]
+              - paragraph [ref=f7e179]: Professional Figma files, yours to keep forever.
+            - generic [ref=f7e180]:
+              - generic [ref=f7e181]:
+                - generic [ref=f7e182]: Starting range
+                - generic [ref=f7e183]: $350 - $1,500+
+                - generic [ref=f7e184]: Based on pages, component depth, and prototype fidelity.
+              - generic [ref=f7e185]: 3-6 days
+            - list [ref=f7e189]:
+              - listitem [ref=f7e190]:
+                - generic [ref=f7e193]: Figma file - yours forever
+              - listitem [ref=f7e194]:
+                - generic [ref=f7e197]: Desktop + mobile variants
+              - listitem [ref=f7e198]:
+                - generic [ref=f7e201]: Component system
+              - listitem [ref=f7e202]:
+                - generic [ref=f7e205]: Annotated for developers
+              - listitem [ref=f7e206]:
+                - generic [ref=f7e209]: 2 rounds of revisions
+              - listitem [ref=f7e210]:
+                - generic [ref=f7e213]: Delivered in 3-6 days
+            - link "Start a project" [ref=f7e215]:
+              - /url: /contact?service=uiux-design
+          - article [ref=f7e216]:
+            - generic [ref=f7e217]:
+              - heading "Full Website" [level=3] [ref=f7e218]
+              - paragraph [ref=f7e219]: Multi-page sites with everything you need to go live.
+            - generic [ref=f7e220]:
+              - generic [ref=f7e221]:
+                - generic [ref=f7e222]: Starting range
+                - generic [ref=f7e223]: $900 - $2,500+
+                - generic [ref=f7e224]: Based on page count, content readiness, SEO, and forms.
+              - generic [ref=f7e225]: 1-2 weeks
+            - list [ref=f7e229]:
+              - listitem [ref=f7e230]:
+                - generic [ref=f7e233]: Up to 6 pages
+              - listitem [ref=f7e234]:
+                - generic [ref=f7e237]: Responsive Navbar + Footer
+              - listitem [ref=f7e238]:
+                - generic [ref=f7e241]: Contact form via Resend
+              - listitem [ref=f7e242]:
+                - generic [ref=f7e245]: Full SEO setup
+              - listitem [ref=f7e246]:
+                - generic [ref=f7e249]: Vercel deployment + domain guidance
+              - listitem [ref=f7e250]:
+                - generic [ref=f7e253]: 3 rounds of revisions
+              - listitem [ref=f7e254]:
+                - generic [ref=f7e257]: Delivered in 1-2 weeks
+            - link "Start a project" [ref=f7e259]:
+              - /url: /contact?service=full-website
+          - article [ref=f7e260]:
+            - generic [ref=f7e261]:
+              - heading "Web Application" [level=3] [ref=f7e262]
+              - paragraph [ref=f7e263]: React/Next.js apps with real interactivity.
+            - generic [ref=f7e264]:
+              - generic [ref=f7e265]:
+                - generic [ref=f7e266]: Starting range
+                - generic [ref=f7e267]: From $1,200
+                - generic [ref=f7e268]: Scoped after reviewing features, auth, APIs, and data needs.
+              - generic [ref=f7e269]: 1-3 weeks
+            - list [ref=f7e273]:
+              - listitem [ref=f7e274]:
+                - generic [ref=f7e277]: React or Next.js codebase
+              - listitem [ref=f7e278]:
+                - generic [ref=f7e281]: State management
+              - listitem [ref=f7e282]:
+                - generic [ref=f7e285]: REST API integration
+              - listitem [ref=f7e286]:
+                - generic [ref=f7e289]: Auth if needed
+              - listitem [ref=f7e290]:
+                - generic [ref=f7e293]: Vercel deployment
+              - listitem [ref=f7e294]:
+                - generic [ref=f7e297]: Delivered in 1-3 weeks
+            - link "Start a project" [ref=f7e299]:
+              - /url: /contact?service=web-app
+          - article [ref=f7e300]:
+            - generic [ref=f7e301]:
+              - heading "SEO Package" [level=3] [ref=f7e302]
+              - paragraph [ref=f7e303]: Monthly SEO management for existing websites.
+            - generic [ref=f7e304]:
+              - generic [ref=f7e305]:
+                - generic [ref=f7e306]: Starting range
+                - generic [ref=f7e307]: $250 - $600 / month
+                - generic [ref=f7e308]: Monthly scope depends on site size and reporting depth.
+              - generic [ref=f7e309]: Ongoing
+            - list [ref=f7e312]:
+              - listitem [ref=f7e313]:
+                - generic [ref=f7e316]: Technical SEO audit
+              - listitem [ref=f7e317]:
+                - generic [ref=f7e320]: Metadata optimization
+              - listitem [ref=f7e321]:
+                - generic [ref=f7e324]: Core Web Vitals monitoring
+              - listitem [ref=f7e325]:
+                - generic [ref=f7e328]: Sitemap + robots.txt
+              - listitem [ref=f7e329]:
+                - generic [ref=f7e332]: Monthly report
+            - link "Start a project" [ref=f7e334]:
+              - /url: /contact?service=seo
+      - generic [ref=f7e337]:
+        - generic [ref=f7e338]:
+          - generic [ref=f7e339]:
+            - generic [ref=f7e340]: FAQ
+            - heading [level=2] [ref=f7e341]:
+              - text: The questions clients usually ask
+              - strong [ref=f7e342]: before saying yes.
+          - paragraph [ref=f7e343]: "This section is there to reduce hesitation: payment, revisions, ownership, and compatibility with an existing project."
+        - generic [ref=f7e344]:
+          - group [ref=f7e345]:
+            - generic "How do I pay?" [ref=f7e346] [cursor=pointer]: +
+          - group [ref=f7e349]:
+            - generic "What if I need revisions?" [ref=f7e350] [cursor=pointer]: +
+          - group [ref=f7e353]:
+            - generic "Do you own the code afterwards?" [ref=f7e354] [cursor=pointer]: +
+          - group [ref=f7e357]:
+            - generic "Can you work with my existing codebase?" [ref=f7e358] [cursor=pointer]: +
+      - generic [ref=f7e362]:
+        - heading "Need a real quote instead of a public estimate?" [level=2] [ref=f7e363]
+        - paragraph [ref=f7e364]: Send the brief and I will turn it into a clear scope, timing expectation, and pricing path before any build work starts.
+        - generic [ref=f7e365]:
+          - link "Start a project" [ref=f7e366]:
+            - /url: /contact
+          - link "See services" [ref=f7e367]:
+            - /url: /services
+  - contentinfo [ref=f7e371]:
+    - generic [ref=f7e372]:
+      - generic [ref=f7e373]:
+        - generic [ref=f7e374]:
+          - img "Radu-Stefan" [ref=f7e375]
+          - generic [ref=f7e376]:
+            - strong [ref=f7e377]: Radu-Stefan
+            - generic [ref=f7e378]: Developer portfolio
+        - paragraph [ref=f7e379]: Websites, apps, automations, and AI-assisted software delivery from Chisinau, Moldova. Built for founders, personal brands, and teams that want clean execution without agency noise.
+        - generic [ref=f7e380]:
+          - link "GitHub" [ref=f7e381]:
+            - /url: https://github.com/RaduscaWP
+          - link "Instagram" [ref=f7e385]:
+            - /url: https://www.instagram.com/radusca_/
+          - link "Email" [ref=f7e389]:
+            - /url: mailto:grozavradustefan@gmail.com
+      - generic [ref=f7e393]:
+        - heading "Navigate" [level=2] [ref=f7e394]
+        - link "Home" [ref=f7e395]:
+          - /url: /
+        - link "About" [ref=f7e396]:
+          - /url: /about
+        - link "Projects" [ref=f7e397]:
+          - /url: /projects
+        - link "Services" [ref=f7e398]:
+          - /url: /services
+        - link "Pricing" [ref=f7e399]:
+          - /url: /pricing
+        - link "Blog" [ref=f7e400]:
+          - /url: /blog
+        - link "Contact" [ref=f7e401]:
+          - /url: /contact
+      - generic [ref=f7e402]:
+        - heading "Elsewhere" [level=2] [ref=f7e403]
+        - link "GitHub" [ref=f7e404]:
+          - /url: https://github.com/RaduscaWP
+        - link "Instagram" [ref=f7e408]:
+          - /url: https://www.instagram.com/radusca_/
+        - link "Email" [ref=f7e412]:
+          - /url: mailto:grozavradustefan@gmail.com
+      - generic [ref=f7e416]:
+        - heading "Status" [level=2] [ref=f7e417]
+        - paragraph [ref=f7e418]: Open for freelance projects
+        - paragraph [ref=f7e420]: Chisinau, Moldova
+        - generic [ref=f7e424]: "Typical reply target: under 24 hours."
+    - generic [ref=f7e425]:
+      - generic [ref=f7e426]: © 2026 Radu-Stefan. All rights reserved.
+      - generic [ref=f7e427]:
+        - link "Live work" [ref=f7e428]:
+          - /url: /projects
+        - link "Services" [ref=f7e429]:
+          - /url: /services
+        - link "Start a project" [ref=f7e430]:
+          - /url: /contact
+  - button "Open Next.js Dev Tools" [ref=f7e436] [cursor=pointer]

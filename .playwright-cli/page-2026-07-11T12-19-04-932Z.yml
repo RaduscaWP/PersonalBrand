@@ -1,0 +1,309 @@
+- generic [active] [ref=f4e1]:
+  - generic "Freelance availability ticker" [ref=f4e2]:
+    - generic [ref=f4e3]:
+      - generic [ref=f4e4]:
+        - generic [ref=f4e5]: OPEN FOR FREELANCE /
+        - generic [ref=f4e6]: SOFTWARE DEVELOPMENT /
+        - generic [ref=f4e7]: LANDING PAGES /
+        - generic [ref=f4e8]: FIGMA TO CODE /
+        - generic [ref=f4e9]: AUTOMATION SCRIPTS /
+        - generic [ref=f4e10]: API INTEGRATIONS /
+        - generic [ref=f4e11]: AI-ASSISTED CODING /
+        - generic [ref=f4e12]: REAL CLIENT WORK /
+        - generic [ref=f4e13]: REPLIES IN 24H /
+      - generic [ref=f4e14]:
+        - generic [ref=f4e15]: OPEN FOR FREELANCE /
+        - generic [ref=f4e16]: SOFTWARE DEVELOPMENT /
+        - generic [ref=f4e17]: LANDING PAGES /
+        - generic [ref=f4e18]: FIGMA TO CODE /
+        - generic [ref=f4e19]: AUTOMATION SCRIPTS /
+        - generic [ref=f4e20]: API INTEGRATIONS /
+        - generic [ref=f4e21]: AI-ASSISTED CODING /
+        - generic [ref=f4e22]: REAL CLIENT WORK /
+        - generic [ref=f4e23]: REPLIES IN 24H /
+      - generic [ref=f4e24]:
+        - generic [ref=f4e25]: OPEN FOR FREELANCE /
+        - generic [ref=f4e26]: SOFTWARE DEVELOPMENT /
+        - generic [ref=f4e27]: LANDING PAGES /
+        - generic [ref=f4e28]: FIGMA TO CODE /
+        - generic [ref=f4e29]: AUTOMATION SCRIPTS /
+        - generic [ref=f4e30]: API INTEGRATIONS /
+        - generic [ref=f4e31]: AI-ASSISTED CODING /
+        - generic [ref=f4e32]: REAL CLIENT WORK /
+        - generic [ref=f4e33]: REPLIES IN 24H /
+      - generic [ref=f4e34]:
+        - generic [ref=f4e35]: OPEN FOR FREELANCE /
+        - generic [ref=f4e36]: SOFTWARE DEVELOPMENT /
+        - generic [ref=f4e37]: LANDING PAGES /
+        - generic [ref=f4e38]: FIGMA TO CODE /
+        - generic [ref=f4e39]: AUTOMATION SCRIPTS /
+        - generic [ref=f4e40]: API INTEGRATIONS /
+        - generic [ref=f4e41]: AI-ASSISTED CODING /
+        - generic [ref=f4e42]: REAL CLIENT WORK /
+        - generic [ref=f4e43]: REPLIES IN 24H /
+  - navigation [ref=f4e44]:
+    - generic [ref=f4e45]:
+      - link "Radu-Stefan home" [ref=f4e46]:
+        - /url: /
+        - generic [ref=f4e47]: Radu
+        - generic [ref=f4e48]: Stefan
+      - list [ref=f4e49]:
+        - listitem [ref=f4e50]:
+          - link "Home" [ref=f4e51]:
+            - /url: /
+        - listitem [ref=f4e52]:
+          - link "Services" [ref=f4e53]:
+            - /url: /services
+        - listitem [ref=f4e54]:
+          - link "Projects" [ref=f4e55]:
+            - /url: /projects
+        - listitem [ref=f4e56]:
+          - link "About" [ref=f4e57]:
+            - /url: /about
+        - listitem [ref=f4e58]:
+          - link "Pricing" [ref=f4e59]:
+            - /url: /pricing
+        - listitem [ref=f4e60]:
+          - link "Blog" [ref=f4e61]:
+            - /url: /blog
+      - link "Start project" [ref=f4e63]:
+        - /url: /contact
+  - main [ref=f4e64]:
+    - generic [ref=f4e66]:
+      - generic [ref=f4e67]:
+        - generic [ref=f4e68]: Projects
+        - heading [level=1] [ref=f4e69]:
+          - text: Live work that makes the hiring decision
+          - strong [ref=f4e70]: easier.
+        - paragraph [ref=f4e71]: "These projects show range without drifting away from the same standard: real delivery, stronger structure, clearer interfaces, and a finish that feels usable instead of almost there."
+      - generic [ref=f4e74]:
+        - generic [ref=f4e75]:
+          - generic [ref=f4e76]:
+            - generic [ref=f4e77]: Featured Grid
+            - heading [level=2] [ref=f4e78]:
+              - text: Four primary case studies,
+              - strong [ref=f4e79]: with real client work included.
+          - paragraph [ref=f4e80]: "The bento layout keeps the most useful proof visible first: a real client website, public builds, product taste, and the ability to ship coherent work."
+        - generic [ref=f4e82]:
+          - article [ref=f4e83]:
+            - generic [ref=f4e109]:
+              - generic [ref=f4e110]: Educational Website
+              - link "COSMOS live site" [ref=f4e111]:
+                - /url: https://space-project-orcin.vercel.app/
+            - generic [ref=f4e115]:
+              - generic [ref=f4e116]:
+                - generic [ref=f4e117]: Three.js
+                - generic [ref=f4e118]: HTML
+                - generic [ref=f4e119]: CSS
+                - generic [ref=f4e120]: JavaScript
+              - heading "COSMOS" [level=3] [ref=f4e121]
+              - paragraph [ref=f4e122]: Romanian-language space and astronomy educational platform with Three.js 3D Jupiter model, scrollytelling narrative, Voyager disassembly mode, and interactive quiz system.
+              - generic [ref=f4e123]:
+                - link "COSMOS GitHub repository" [ref=f4e124]:
+                  - /url: https://github.com/RaduscaWP
+                  - text: GitHub
+                - link "Live site" [ref=f4e128]:
+                  - /url: https://space-project-orcin.vercel.app/
+          - article [ref=f4e132]:
+            - generic [ref=f4e158]:
+              - generic [ref=f4e159]: Client Website
+              - link "Fly With Derek live site" [ref=f4e160]:
+                - /url: https://flywithderek.com/
+            - generic [ref=f4e164]:
+              - generic [ref=f4e165]:
+                - generic [ref=f4e166]: React
+                - generic [ref=f4e167]: TypeScript
+                - generic [ref=f4e168]: Resend API
+                - generic [ref=f4e169]: Security
+                - generic [ref=f4e170]: HTML/CSS
+              - heading "Fly With Derek" [level=3] [ref=f4e171]
+              - paragraph [ref=f4e172]: Real client aviation advisory site for Derek Monti with React, TypeScript, Resend API email handling, JavaScript, security hardening, HTML, and CSS.
+              - generic [ref=f4e173]:
+                - link "Fly With Derek GitHub repository" [ref=f4e174]:
+                  - /url: https://github.com/RaduscaWP
+                  - text: GitHub
+                - link "Live site" [ref=f4e178]:
+                  - /url: https://flywithderek.com/
+          - article [ref=f4e182]:
+            - generic [ref=f4e208]:
+              - generic [ref=f4e209]: AI Platform
+              - link "Arca AI live site" [ref=f4e210]:
+                - /url: https://arca-ai-rho.vercel.app/
+            - generic [ref=f4e214]:
+              - generic [ref=f4e215]:
+                - generic [ref=f4e216]: React
+                - generic [ref=f4e217]: JavaScript
+                - generic [ref=f4e218]: AI Integration
+                - generic [ref=f4e219]: CSS
+              - heading "Arca AI" [level=3] [ref=f4e220]
+              - paragraph [ref=f4e221]: AI-powered product concept with a modern dark interface, sharp layout rhythm, and a clear product story.
+              - generic [ref=f4e222]:
+                - link "Arca AI GitHub repository" [ref=f4e223]:
+                  - /url: https://github.com/RaduscaWP
+                  - text: GitHub
+                - link "Live site" [ref=f4e227]:
+                  - /url: https://arca-ai-rho.vercel.app/
+          - article [ref=f4e231]:
+            - generic [ref=f4e257]:
+              - generic [ref=f4e258]: Dashboard
+              - link "CryptoTrack live site" [ref=f4e259]:
+                - /url: https://crypto-track-rho.vercel.app/
+            - generic [ref=f4e263]:
+              - generic [ref=f4e264]:
+                - generic [ref=f4e265]: React
+                - generic [ref=f4e266]: REST API
+                - generic [ref=f4e267]: SCSS
+                - generic [ref=f4e268]: JavaScript
+              - heading "CryptoTrack" [level=3] [ref=f4e269]
+              - paragraph [ref=f4e270]: Real-time cryptocurrency dashboard with live market data, price charts, and a clean fintech-style interface.
+              - generic [ref=f4e271]:
+                - link "CryptoTrack GitHub repository" [ref=f4e272]:
+                  - /url: https://github.com/RaduscaWP
+                  - text: GitHub
+                - link "Live site" [ref=f4e276]:
+                  - /url: https://crypto-track-rho.vercel.app/
+      - generic [ref=f4e282]:
+        - generic [ref=f4e283]:
+          - generic [ref=f4e284]:
+            - generic [ref=f4e285]: Case Notes
+            - heading [level=2] [ref=f4e286]:
+              - text: What each build is
+              - strong [ref=f4e287]: actually proving.
+          - paragraph [ref=f4e288]: A strong portfolio should explain why the work matters, not just display it. Each summary below frames the real value behind the visuals.
+        - generic [ref=f4e289]:
+          - article [ref=f4e290]:
+            - generic [ref=f4e291]:
+              - generic [ref=f4e292]: Educational Website
+              - heading "COSMOS" [level=2] [ref=f4e293]
+              - paragraph [ref=f4e294]: Romanian-language space and astronomy educational platform with Three.js 3D Jupiter model, scrollytelling narrative, Voyager disassembly mode, and interactive quiz system.
+              - generic [ref=f4e295]:
+                - generic [ref=f4e296]: Three.js
+                - generic [ref=f4e297]: HTML
+                - generic [ref=f4e298]: CSS
+                - generic [ref=f4e299]: JavaScript
+              - generic [ref=f4e300]:
+                - link "Live site" [ref=f4e301]:
+                  - /url: https://space-project-orcin.vercel.app/
+                - link "GitHub" [ref=f4e305]:
+                  - /url: https://github.com/RaduscaWP
+          - article [ref=f4e333]:
+            - generic [ref=f4e334]:
+              - generic [ref=f4e335]: Client Website
+              - heading "Fly With Derek" [level=2] [ref=f4e336]
+              - paragraph [ref=f4e337]: Real client aviation advisory site for Derek Monti with React, TypeScript, Resend API email handling, JavaScript, security hardening, HTML, and CSS.
+              - generic [ref=f4e338]:
+                - generic [ref=f4e339]: React
+                - generic [ref=f4e340]: TypeScript
+                - generic [ref=f4e341]: Resend API
+                - generic [ref=f4e342]: Security
+                - generic [ref=f4e343]: HTML/CSS
+              - generic [ref=f4e344]:
+                - link "Live site" [ref=f4e345]:
+                  - /url: https://flywithderek.com/
+                - link "GitHub" [ref=f4e349]:
+                  - /url: https://github.com/RaduscaWP
+          - article [ref=f4e377]:
+            - generic [ref=f4e378]:
+              - generic [ref=f4e379]: AI Platform
+              - heading "Arca AI" [level=2] [ref=f4e380]
+              - paragraph [ref=f4e381]: AI-powered product concept with a modern dark interface, sharp layout rhythm, and a clear product story.
+              - generic [ref=f4e382]:
+                - generic [ref=f4e383]: React
+                - generic [ref=f4e384]: JavaScript
+                - generic [ref=f4e385]: AI Integration
+                - generic [ref=f4e386]: CSS
+              - generic [ref=f4e387]:
+                - link "Live site" [ref=f4e388]:
+                  - /url: https://arca-ai-rho.vercel.app/
+                - link "GitHub" [ref=f4e392]:
+                  - /url: https://github.com/RaduscaWP
+          - article [ref=f4e420]:
+            - generic [ref=f4e421]:
+              - generic [ref=f4e422]: Dashboard
+              - heading "CryptoTrack" [level=2] [ref=f4e423]
+              - paragraph [ref=f4e424]: Real-time cryptocurrency dashboard with live market data, price charts, and a clean fintech-style interface.
+              - generic [ref=f4e425]:
+                - generic [ref=f4e426]: React
+                - generic [ref=f4e427]: REST API
+                - generic [ref=f4e428]: SCSS
+                - generic [ref=f4e429]: JavaScript
+              - generic [ref=f4e430]:
+                - link "Live site" [ref=f4e431]:
+                  - /url: https://crypto-track-rho.vercel.app/
+                - link "GitHub" [ref=f4e435]:
+                  - /url: https://github.com/RaduscaWP
+          - article [ref=f4e463]:
+            - generic [ref=f4e464]:
+              - generic [ref=f4e465]: Fintech Concept
+              - heading "Grozav Bank" [level=2] [ref=f4e466]
+              - paragraph [ref=f4e467]: Crypto-focused financial platform concept with sleek fintech UI, professionally designed.
+              - generic [ref=f4e468]:
+                - generic [ref=f4e469]: React
+                - generic [ref=f4e470]: JavaScript
+                - generic [ref=f4e471]: SCSS
+                - generic [ref=f4e472]: Figma
+              - generic [ref=f4e473]:
+                - link "Live site" [ref=f4e474]:
+                  - /url: https://grozav-bank.vercel.app/
+                - link "GitHub" [ref=f4e478]:
+                  - /url: https://github.com/RaduscaWP
+      - generic [ref=f4e507]:
+        - heading "Want your project to be the next case study?" [level=2] [ref=f4e508]
+        - paragraph [ref=f4e509]: If the brief is clear already, send it. If it is not, I can help shape the right scope first and then build from there.
+        - link "Start a project" [ref=f4e511]:
+          - /url: /contact
+  - contentinfo [ref=f4e512]:
+    - generic [ref=f4e513]:
+      - generic [ref=f4e514]:
+        - generic [ref=f4e515]:
+          - img "Radu-Stefan" [ref=f4e516]
+          - generic [ref=f4e517]:
+            - strong [ref=f4e518]: Radu-Stefan
+            - generic [ref=f4e519]: Developer portfolio
+        - paragraph [ref=f4e520]: Websites, apps, automations, and AI-assisted software delivery from Chisinau, Moldova. Built for founders, personal brands, and teams that want clean execution without agency noise.
+        - generic [ref=f4e521]:
+          - link "GitHub" [ref=f4e522]:
+            - /url: https://github.com/RaduscaWP
+          - link "Instagram" [ref=f4e526]:
+            - /url: https://www.instagram.com/radusca_/
+          - link "Email" [ref=f4e530]:
+            - /url: mailto:grozavradustefan@gmail.com
+      - generic [ref=f4e534]:
+        - heading "Navigate" [level=2] [ref=f4e535]
+        - link "Home" [ref=f4e536]:
+          - /url: /
+        - link "About" [ref=f4e537]:
+          - /url: /about
+        - link "Projects" [ref=f4e538]:
+          - /url: /projects
+        - link "Services" [ref=f4e539]:
+          - /url: /services
+        - link "Pricing" [ref=f4e540]:
+          - /url: /pricing
+        - link "Blog" [ref=f4e541]:
+          - /url: /blog
+        - link "Contact" [ref=f4e542]:
+          - /url: /contact
+      - generic [ref=f4e543]:
+        - heading "Elsewhere" [level=2] [ref=f4e544]
+        - link "GitHub" [ref=f4e545]:
+          - /url: https://github.com/RaduscaWP
+        - link "Instagram" [ref=f4e549]:
+          - /url: https://www.instagram.com/radusca_/
+        - link "Email" [ref=f4e553]:
+          - /url: mailto:grozavradustefan@gmail.com
+      - generic [ref=f4e557]:
+        - heading "Status" [level=2] [ref=f4e558]
+        - paragraph [ref=f4e559]: Open for freelance projects
+        - paragraph [ref=f4e561]: Chisinau, Moldova
+        - generic [ref=f4e565]: "Typical reply target: under 24 hours."
+    - generic [ref=f4e566]:
+      - generic [ref=f4e567]: © 2026 Radu-Stefan. All rights reserved.
+      - generic [ref=f4e568]:
+        - link "Live work" [ref=f4e569]:
+          - /url: /projects
+        - link "Services" [ref=f4e570]:
+          - /url: /services
+        - link "Start a project" [ref=f4e571]:
+          - /url: /contact
+  - button "Open Next.js Dev Tools" [ref=f4e577] [cursor=pointer]

@@ -1,0 +1,166 @@
+- generic [active] [ref=f10e1]:
+  - generic "Freelance availability ticker" [ref=f10e2]:
+    - generic [ref=f10e3]:
+      - generic [ref=f10e4]:
+        - generic [ref=f10e5]: OPEN FOR FREELANCE /
+        - generic [ref=f10e6]: SOFTWARE DEVELOPMENT /
+        - generic [ref=f10e7]: LANDING PAGES /
+        - generic [ref=f10e8]: FIGMA TO CODE /
+        - generic [ref=f10e9]: AUTOMATION SCRIPTS /
+        - generic [ref=f10e10]: API INTEGRATIONS /
+        - generic [ref=f10e11]: AI-ASSISTED CODING /
+        - generic [ref=f10e12]: REAL CLIENT WORK /
+        - generic [ref=f10e13]: REPLIES IN 24H /
+      - generic [ref=f10e14]:
+        - generic [ref=f10e15]: OPEN FOR FREELANCE /
+        - generic [ref=f10e16]: SOFTWARE DEVELOPMENT /
+        - generic [ref=f10e17]: LANDING PAGES /
+        - generic [ref=f10e18]: FIGMA TO CODE /
+        - generic [ref=f10e19]: AUTOMATION SCRIPTS /
+        - generic [ref=f10e20]: API INTEGRATIONS /
+        - generic [ref=f10e21]: AI-ASSISTED CODING /
+        - generic [ref=f10e22]: REAL CLIENT WORK /
+        - generic [ref=f10e23]: REPLIES IN 24H /
+      - generic [ref=f10e24]:
+        - generic [ref=f10e25]: OPEN FOR FREELANCE /
+        - generic [ref=f10e26]: SOFTWARE DEVELOPMENT /
+        - generic [ref=f10e27]: LANDING PAGES /
+        - generic [ref=f10e28]: FIGMA TO CODE /
+        - generic [ref=f10e29]: AUTOMATION SCRIPTS /
+        - generic [ref=f10e30]: API INTEGRATIONS /
+        - generic [ref=f10e31]: AI-ASSISTED CODING /
+        - generic [ref=f10e32]: REAL CLIENT WORK /
+        - generic [ref=f10e33]: REPLIES IN 24H /
+      - generic [ref=f10e34]:
+        - generic [ref=f10e35]: OPEN FOR FREELANCE /
+        - generic [ref=f10e36]: SOFTWARE DEVELOPMENT /
+        - generic [ref=f10e37]: LANDING PAGES /
+        - generic [ref=f10e38]: FIGMA TO CODE /
+        - generic [ref=f10e39]: AUTOMATION SCRIPTS /
+        - generic [ref=f10e40]: API INTEGRATIONS /
+        - generic [ref=f10e41]: AI-ASSISTED CODING /
+        - generic [ref=f10e42]: REAL CLIENT WORK /
+        - generic [ref=f10e43]: REPLIES IN 24H /
+  - navigation [ref=f10e44]:
+    - generic [ref=f10e45]:
+      - link "Radu-Stefan home" [ref=f10e46]:
+        - /url: /
+        - generic [ref=f10e47]: Radu
+        - generic [ref=f10e48]: Stefan
+      - list [ref=f10e49]:
+        - listitem [ref=f10e50]:
+          - link "Home" [ref=f10e51]:
+            - /url: /
+        - listitem [ref=f10e52]:
+          - link "Services" [ref=f10e53]:
+            - /url: /services
+        - listitem [ref=f10e54]:
+          - link "Projects" [ref=f10e55]:
+            - /url: /projects
+        - listitem [ref=f10e56]:
+          - link "About" [ref=f10e57]:
+            - /url: /about
+        - listitem [ref=f10e58]:
+          - link "Pricing" [ref=f10e59]:
+            - /url: /pricing
+        - listitem [ref=f10e60]:
+          - link "Blog" [ref=f10e61]:
+            - /url: /blog
+      - link "Start project" [ref=f10e63]:
+        - /url: /contact
+  - main [ref=f10e64]:
+    - generic [ref=f10e66]:
+      - generic [ref=f10e67]:
+        - generic [ref=f10e68]: Blog
+        - heading [level=1] [ref=f10e69]:
+          - text: Notes, breakdowns, and article
+          - strong [ref=f10e70]: outlines in progress.
+        - paragraph [ref=f10e71]: Draft articles stay clearly marked until they are fully written. That keeps the section honest while still showing the topics the portfolio is growing into.
+      - generic [ref=f10e74]:
+        - generic [ref=f10e75]:
+          - generic [ref=f10e76]:
+            - generic [ref=f10e77]: Current Posts
+            - heading [level=2] [ref=f10e78]:
+              - text: Writing that supports the portfolio
+              - strong [ref=f10e79]: without pretending to be finished.
+          - paragraph [ref=f10e80]: Some pieces are published as outlines for now. The point is to signal direction without passing placeholder content off as polished work.
+        - generic [ref=f10e81]:
+          - link "Career Apr 15, 2026 / 5 min read / Draft Why I'm Learning Cybersecurity Alongside Web Development Most developers wait until they're established before touching security. I think that's backwards. Preview outline" [ref=f10e82]:
+            - /url: /blog/cybersecurity-alongside-webdev
+            - generic [ref=f10e83]:
+              - generic [ref=f10e84]: Career
+              - generic [ref=f10e85]: Apr 15, 2026 / 5 min read / Draft
+            - heading "Why I'm Learning Cybersecurity Alongside Web Development" [level=3] [ref=f10e86]
+            - paragraph [ref=f10e87]: Most developers wait until they're established before touching security. I think that's backwards.
+            - generic [ref=f10e88]: Preview outline
+          - 'link "Dev Mar 20, 2026 / 7 min read / Draft Building COSMOS: Lessons from My First Three.js Project I set out to build an educational space website. I ended up learning more than I planned. Preview outline" [ref=f10e92]':
+            - /url: /blog/building-cosmos-threejs
+            - generic [ref=f10e93]:
+              - generic [ref=f10e94]: Dev
+              - generic [ref=f10e95]: Mar 20, 2026 / 7 min read / Draft
+            - 'heading "Building COSMOS: Lessons from My First Three.js Project" [level=3] [ref=f10e96]'
+            - paragraph [ref=f10e97]: I set out to build an educational space website. I ended up learning more than I planned.
+            - generic [ref=f10e98]: Preview outline
+          - 'link "Personal Feb 10, 2026 / 6 min read / Draft From Water Polo to Code: Discipline Transfers Six years as a national-level goalkeeper taught me things no tutorial ever could. Preview outline" [ref=f10e102]':
+            - /url: /blog/water-polo-to-code
+            - generic [ref=f10e103]:
+              - generic [ref=f10e104]: Personal
+              - generic [ref=f10e105]: Feb 10, 2026 / 6 min read / Draft
+            - 'heading "From Water Polo to Code: Discipline Transfers" [level=3] [ref=f10e106]'
+            - paragraph [ref=f10e107]: Six years as a national-level goalkeeper taught me things no tutorial ever could.
+            - generic [ref=f10e108]: Preview outline
+  - contentinfo [ref=f10e112]:
+    - generic [ref=f10e113]:
+      - generic [ref=f10e114]:
+        - generic [ref=f10e115]:
+          - img "Radu-Stefan" [ref=f10e116]
+          - generic [ref=f10e117]:
+            - strong [ref=f10e118]: Radu-Stefan
+            - generic [ref=f10e119]: Developer portfolio
+        - paragraph [ref=f10e120]: Websites, apps, automations, and AI-assisted software delivery from Chisinau, Moldova. Built for founders, personal brands, and teams that want clean execution without agency noise.
+        - generic [ref=f10e121]:
+          - link "GitHub" [ref=f10e122]:
+            - /url: https://github.com/RaduscaWP
+          - link "Instagram" [ref=f10e126]:
+            - /url: https://www.instagram.com/radusca_/
+          - link "Email" [ref=f10e130]:
+            - /url: mailto:grozavradustefan@gmail.com
+      - generic [ref=f10e134]:
+        - heading "Navigate" [level=2] [ref=f10e135]
+        - link "Home" [ref=f10e136]:
+          - /url: /
+        - link "About" [ref=f10e137]:
+          - /url: /about
+        - link "Projects" [ref=f10e138]:
+          - /url: /projects
+        - link "Services" [ref=f10e139]:
+          - /url: /services
+        - link "Pricing" [ref=f10e140]:
+          - /url: /pricing
+        - link "Blog" [ref=f10e141]:
+          - /url: /blog
+        - link "Contact" [ref=f10e142]:
+          - /url: /contact
+      - generic [ref=f10e143]:
+        - heading "Elsewhere" [level=2] [ref=f10e144]
+        - link "GitHub" [ref=f10e145]:
+          - /url: https://github.com/RaduscaWP
+        - link "Instagram" [ref=f10e149]:
+          - /url: https://www.instagram.com/radusca_/
+        - link "Email" [ref=f10e153]:
+          - /url: mailto:grozavradustefan@gmail.com
+      - generic [ref=f10e157]:
+        - heading "Status" [level=2] [ref=f10e158]
+        - paragraph [ref=f10e159]: Open for freelance projects
+        - paragraph [ref=f10e161]: Chisinau, Moldova
+        - generic [ref=f10e165]: "Typical reply target: under 24 hours."
+    - generic [ref=f10e166]:
+      - generic [ref=f10e167]: © 2026 Radu-Stefan. All rights reserved.
+      - generic [ref=f10e168]:
+        - link "Live work" [ref=f10e169]:
+          - /url: /projects
+        - link "Services" [ref=f10e170]:
+          - /url: /services
+        - link "Start a project" [ref=f10e171]:
+          - /url: /contact
+  - button "Open Next.js Dev Tools" [ref=f10e177] [cursor=pointer]
