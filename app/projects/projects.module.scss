@@ -150,6 +150,9 @@
   gap: 0.35rem;
   font-size: var(--fs-small);
   font-weight: 700;
+  min-height: 2.75rem;
+  padding: 0.55rem 0.65rem;
+  border-radius: var(--radius-pill);
 }
 
 .caseLink {
@@ -158,6 +161,15 @@
 
 .caseLinkMuted {
   color: var(--text-secondary);
+}
+
+.caseUnavailable {
+  display: inline-flex;
+  align-items: center;
+  min-height: 2.75rem;
+  color: var(--text-muted);
+  font-size: var(--fs-small);
+  font-weight: 700;
 }
 
 .studyMedia {
@@ -182,6 +194,18 @@
     opacity: 0.16;
     mask-image: linear-gradient(180deg, rgba(0, 0, 0, 0.85), transparent 80%);
   }
+}
+
+.studyImage {
+  object-fit: cover;
+  object-position: top center;
+  filter: saturate(0.92) contrast(1.02) brightness(0.88);
+  transition: transform var(--motion-reveal) var(--ease-out), filter var(--motion-standard) ease;
+}
+
+.studyCard:hover .studyImage {
+  transform: scale(1.025);
+  filter: saturate(1) contrast(1.02) brightness(0.96);
 }
 
 .studyShell {

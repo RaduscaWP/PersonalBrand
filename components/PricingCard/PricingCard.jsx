@@ -35,7 +35,7 @@ export default function PricingCard({ plan }) {
       <div className={styles.cta}>
         <MagneticButton
           href={`/contact?service=${plan.id}`}
-          variant={plan.highlight ? 'primary' : 'secondary'}
+          variant={plan.highlight ? 'primary' : 'paper'}
         >
           Start a project
         </MagneticButton>

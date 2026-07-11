@@ -15,10 +15,11 @@ export default function MagneticButton({
   const ref = useRef(null);
 
   const onMove = (e) => {
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
     const rect = ref.current?.getBoundingClientRect();
     if (!rect) return;
-    const x = (e.clientX - rect.left - rect.width / 2) * 0.25;
-    const y = (e.clientY - rect.top - rect.height / 2) * 0.25;
+    const x = (e.clientX - rect.left - rect.width / 2) * 0.14;
+    const y = (e.clientY - rect.top - rect.height / 2) * 0.14;
     ref.current.style.transform = `translate(${x}px, ${y}px)`;
   };
 

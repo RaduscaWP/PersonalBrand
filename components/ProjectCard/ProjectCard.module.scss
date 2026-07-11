@@ -33,6 +33,11 @@
     opacity: 0.82;
     transform: translate3d(0, -6px, 0);
   }
+
+  &:hover .projectImage {
+    transform: scale(1.04);
+    filter: saturate(1) contrast(1.02) brightness(0.82);
+  }
 }
 
 .media {
@@ -55,6 +60,14 @@
     opacity: 0.14;
     mask-image: linear-gradient(180deg, rgba(0, 0, 0, 0.75), transparent 82%);
   }
+}
+
+.projectImage {
+  object-fit: cover;
+  object-position: top center;
+  transform: scale(1.01);
+  filter: saturate(0.88) contrast(1.02) brightness(0.72);
+  transition: transform var(--motion-reveal) var(--ease-out), filter var(--motion-standard) ease;
 }
 
 .shellGlow {
@@ -332,6 +345,15 @@
 
 .inlineLink {
   color: var(--accent-light);
+}
+
+.unavailable {
+  display: inline-flex;
+  align-items: center;
+  min-height: 2.75rem;
+  color: var(--text-secondary);
+  font-size: var(--fs-small);
+  font-weight: 700;
 }
 
 @media (max-width: 768px) {

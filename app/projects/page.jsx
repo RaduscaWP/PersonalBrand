@@ -1,3 +1,4 @@
+import Image from 'next/image';
 import { ArrowUpRight } from 'lucide-react';
 import SectionReveal from '@/components/SectionReveal/SectionReveal';
 import BentoGrid from '@/components/BentoGrid/BentoGrid';
@@ -120,14 +121,18 @@ export default function ProjectsPage() {
                     </div>
 
                     <div className={styles.studyActions}>
-                      <a
-                        href={project.liveUrl}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className={styles.caseLink}
-                      >
-                        Live site <ArrowUpRight size={14} />
-                      </a>
+                      {project.liveUrl ? (
+                        <a
+                          href={project.liveUrl}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className={styles.caseLink}
+                        >
+                          Live site <ArrowUpRight size={14} />
+                        </a>
+                      ) : (
+                        <span className={styles.caseUnavailable}>Live demo unavailable</span>
+                      )}
                       <a
                         href={project.githubUrl}
                         target="_blank"
@@ -140,7 +145,17 @@ export default function ProjectsPage() {
                   </div>
 
                   <div className={styles.studyMedia}>
-                    <ProjectStudyShell variant={(index % 4) + 1} />
+                    {project.image ? (
+                      <Image
+                        src={project.image}
+                        alt={`${project.title} website preview`}
+                        fill
+                        sizes="(max-width: 900px) 100vw, 50vw"
+                        className={styles.studyImage}
+                      />
+                    ) : (
+                      <ProjectStudyShell variant={(index % 4) + 1} />
+                    )}
                     <div className={styles.studyMediaOverlay} aria-hidden="true" />
                   </div>
                 </article>

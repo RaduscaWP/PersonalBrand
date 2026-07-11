@@ -6,9 +6,9 @@ import { ArrowUpRight } from 'lucide-react';
 import { gsap } from 'gsap';
 import MagneticButton from '@/components/MagneticButton/MagneticButton';
 import { defaultHero, heroServiceDomains } from '@/data/heroServices';
-import { initParticles } from '@/lib/threeParticles';
 import HeroDropdown from './HeroDropdown';
 import HeroForm from './HeroForm';
+import HeroTitle from './HeroTitle';
 import styles from './Hero.module.scss';
 
 const fitLabels = ['Software developer', 'Web apps', 'Automations', 'AI-assisted workflow'];
@@ -25,7 +25,6 @@ export default function HeroSection() {
   const videoRef = useRef(null);
   const bodyRef = useRef(null);
   const canvasRef = useRef(null);
-  const cleanupRef = useRef(null);
 
   const domainServices = selectedDomain?.services ?? [];
   const active = selected ?? selectedDomain ?? defaultHero;
@@ -49,8 +48,18 @@ export default function HeroSection() {
     if (!canvasRef.current || window.innerWidth < 768 || reduceMotion || prefersReducedMotion()) {
       return undefined;
     }
-    cleanupRef.current = initParticles(canvasRef.current);
-    return () => cleanupRef.current?.();
+    let disposed = false;
+    let cleanup;
+
+    import('@/lib/threeParticles').then(({ initParticles }) => {
+      if (disposed || !canvasRef.current) return;
+      cleanup = initParticles(canvasRef.current);
+    });
+
+    return () => {
+      disposed = true;
+      cleanup?.();
+    };
   }, [reduceMotion]);
 
   useEffect(() => {
@@ -59,12 +68,12 @@ export default function HeroSection() {
     const ctx = gsap.context(() => {
       const timeline = gsap.timeline({ delay: 0.08 });
       timeline
-        .from('.hero-badge', { y: 24, opacity: 0, duration: 0.45 })
-        .from('.hero-title', { y: 42, opacity: 0, duration: 0.7, ease: 'power3.out' }, '-=0.15')
-        .from('.hero-copy', { y: 26, opacity: 0, duration: 0.55, ease: 'power3.out' }, '-=0.35')
-        .from('.hero-chips', { y: 22, opacity: 0, duration: 0.45 }, '-=0.32')
-        .from('.hero-actions', { y: 20, opacity: 0, duration: 0.45 }, '-=0.28')
-        .from('.hero-panel', { x: 40, opacity: 0, duration: 0.7, ease: 'power3.out' }, '-=0.5');
+        .from('.hero-badge', { y: 18, opacity: 0, duration: 0.32 })
+        .from('.hero-title', { y: 20, opacity: 0, duration: 0.38, ease: 'power3.out' }, '-=0.14')
+        .from('.hero-copy', { y: 18, opacity: 0, duration: 0.34, ease: 'power3.out' }, '-=0.22')
+        .from('.hero-chips', { y: 14, opacity: 0, duration: 0.28 }, '-=0.2')
+        .from('.hero-actions', { y: 12, opacity: 0, duration: 0.28 }, '-=0.18')
+        .from('.hero-panel', { x: 28, opacity: 0, duration: 0.5, ease: 'power3.out' }, '-=0.34');
     });
 
     return () => ctx.revert();
@@ -139,6 +148,9 @@ export default function HeroSection() {
         muted
         loop={!reduceMotion}
         playsInline
+        preload="metadata"
+        poster={active.fallbackImage || defaultHero.fallbackImage}
+        aria-hidden="true"
         onLoadedData={() => setVideoReady(true)}
         onCanPlay={() => setVideoReady(true)}
       />
@@ -153,9 +165,7 @@ export default function HeroSection() {
             Software developer for web, automation, and AI-assisted delivery
           </div>
 
-          <h1 className={`${styles.title} hero-title`}>
-            Software that looks sharp and removes manual work.
-          </h1>
+          <HeroTitle reduceMotion={reduceMotion} />
 
           <p className={`${styles.lede} hero-copy`}>
             Websites, web apps, automation scripts, API integrations, and AI-assisted build

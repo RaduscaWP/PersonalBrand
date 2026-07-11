@@ -16,6 +16,8 @@
   font-weight: 700;
   letter-spacing: 0.16em;
   text-transform: uppercase;
+  min-height: 2.75rem;
+  padding-block: 0.6rem;
 }
 
 .back:hover {
@@ -117,6 +119,8 @@
   font-weight: 700;
   letter-spacing: 0.14em;
   text-transform: uppercase;
+  min-height: 2.75rem;
+  padding-block: 0.6rem;
 }
 
 .textLink:hover {
@@ -126,5 +130,13 @@
 @media (max-width: 768px) {
   .title {
     max-width: 100%;
+  }
+}
+
+@media (max-width: 480px) {
+  .title {
+    font-size: clamp(2.15rem, 11vw, 2.6rem);
+    line-height: 1;
+    overflow-wrap: break-word;
   }
 }

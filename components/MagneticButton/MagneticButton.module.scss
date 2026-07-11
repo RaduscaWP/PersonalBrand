@@ -15,6 +15,10 @@
   cursor: none;
   transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.3s, background 0.2s,
     border-color 0.2s, color 0.2s;
+
+  &:active {
+    box-shadow: none;
+  }
 }
 
 .primary {
@@ -36,11 +40,29 @@
   border-color: var(--border-hover);
 }
 
+.paper {
+  background: rgba(124, 58, 237, 0.04);
+  color: var(--text-dark);
+  border-color: rgba(16, 24, 40, 0.18);
+}
+
 @media (hover: hover) and (pointer: fine) {
   .secondary:hover {
     background: rgba(124, 58, 237, 0.08);
     border-color: var(--border-accent);
     color: var(--text-primary);
+  }
+
+  .paper:hover {
+    background: rgba(124, 58, 237, 0.1);
+    border-color: rgba(124, 58, 237, 0.42);
+    color: var(--accent-hover);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .btn {
+    transform: none !important;
   }
 }
 

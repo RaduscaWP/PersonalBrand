@@ -22,6 +22,8 @@ export default function HeroDropdown({
   const selectedIndex = services.findIndex((service) => service.id === selected?.id);
 
   useEffect(() => {
+    if (!open) return undefined;
+
     const onPointerDown = (event) => {
       if (!wrapRef.current?.contains(event.target)) setOpen(false);
     };
@@ -40,7 +42,7 @@ export default function HeroDropdown({
       document.removeEventListener('pointerdown', onPointerDown);
       document.removeEventListener('keydown', onKeyDown);
     };
-  }, []);
+  }, [open]);
 
   useEffect(() => {
     if (!open) return;

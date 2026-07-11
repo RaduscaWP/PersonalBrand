@@ -5,6 +5,7 @@ build
 dist
 output
 test-results
+.playwright-cli
 
 .env
 .env.local

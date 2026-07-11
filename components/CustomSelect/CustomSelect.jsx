@@ -88,6 +88,8 @@ export default function CustomSelect({
       if (event.key === 'Escape') {
         event.preventDefault();
         closeMenu(true);
+      } else if (event.key === 'Tab') {
+        closeMenu(false);
       }
     };
 

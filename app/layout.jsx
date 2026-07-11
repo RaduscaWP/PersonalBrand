@@ -6,6 +6,7 @@ import Navbar from '@/components/Navbar/Navbar';
 import Footer from '@/components/Footer/Footer';
 import CustomCursor from '@/components/CustomCursor/CustomCursor';
 import PageTransition from '@/components/PageTransition/PageTransition';
+import { SITE_URL } from '@/lib/site';
 import './globals.scss';
 
 export const syne = Syne({
@@ -23,7 +24,7 @@ export const dmSans = DM_Sans({
 });
 
 export const metadata = {
-  metadataBase: new URL('https://radu-stefan.dev'),
+  metadataBase: new URL(SITE_URL),
   title: 'Radu-Stefan - Software Developer',
   description:
     '18-year-old software developer based in Chisinau, Moldova. Building websites, web apps, automation scripts, API integrations, and AI-assisted workflows.',
@@ -43,8 +44,15 @@ export const metadata = {
   openGraph: {
     title: 'Radu-Stefan - Software Developer',
     description: 'Websites, apps, automations, and AI-assisted software delivery from Chisinau.',
-    url: 'https://radu-stefan.dev',
-    images: [{ url: '/og-image.jpg', width: 1200, height: 630, alt: 'Radu-Stefan' }],
+    url: SITE_URL,
+    images: [
+      {
+        url: '/images/hero-default.jpg',
+        width: 1920,
+        height: 1080,
+        alt: 'Radu-Stefan software developer portfolio',
+      },
+    ],
   },
   twitter: { card: 'summary_large_image' },
   robots: { index: true, follow: true },
@@ -62,10 +70,13 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en" className={`${syne.variable} ${dmSans.variable}`}>
       <body>
+        <a href="#main-content" className="skip-link">
+          Skip to content
+        </a>
         <CustomCursor />
         <AnnouncementBar />
         <Navbar />
-        <main className="site-main">
+        <main id="main-content" className="site-main" tabIndex={-1}>
           <PageTransition>{children}</PageTransition>
         </main>
         <Footer />

@@ -83,6 +83,16 @@
   --ticker-height: 34px;
   --nav-height: 84px;
   --header-offset: calc(var(--ticker-height) + var(--nav-height));
+
+  --nav-surface: rgba(8, 8, 8, 0.96);
+  --motion-fast: 180ms;
+  --motion-standard: 300ms;
+  --motion-reveal: 600ms;
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+  --z-content: 1;
+  --z-nav: 1100;
+  --z-cursor: 9998;
+  --z-skip-link: 10000;
 }
 
 *,
@@ -145,7 +155,88 @@ body[data-menu-open='true'] {
 
 main.site-main {
   position: relative;
-  z-index: 1;
+  z-index: var(--z-content);
+  outline: none;
+}
+
+.skip-link {
+  position: fixed;
+  top: var(--space-3);
+  left: var(--space-3);
+  z-index: var(--z-skip-link);
+  min-height: 2.75rem;
+  padding: 0.7rem 1rem;
+  border-radius: var(--radius-pill);
+  background: var(--text-primary);
+  color: var(--bg-primary);
+  font-weight: 800;
+  transform: translateY(calc(-100% - var(--space-6)));
+  transition: transform var(--motion-fast) var(--ease-out);
+}
+
+.skip-link:focus-visible {
+  transform: translateY(0);
+}
+
+.route-state {
+  width: min(720px, calc(100% - var(--content-padding) * 2));
+  min-height: 100svh;
+  margin: 0 auto;
+  padding: calc(var(--header-offset) + var(--space-16)) 0 var(--space-16);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-4);
+  text-align: center;
+  color: var(--text-secondary);
+}
+
+.route-state__pulse {
+  width: 0.72rem;
+  height: 0.72rem;
+  border-radius: 999px;
+  background: var(--accent);
+  box-shadow: 0 0 0 0.5rem var(--accent-dim);
+  animation: routePulse 1s ease-in-out infinite alternate;
+}
+
+.route-state--error h1 {
+  max-width: 12ch;
+  font-size: var(--fs-h1);
+}
+
+.route-state--error p {
+  max-width: 48ch;
+}
+
+.route-state__actions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: var(--space-3);
+  margin-top: var(--space-4);
+}
+
+.route-state__actions button,
+.route-state__actions a {
+  min-height: 3rem;
+  padding: 0.75rem 1.25rem;
+  border-radius: var(--radius-pill);
+  border: 1px solid var(--border-hover);
+  font-weight: 700;
+}
+
+.route-state__actions button {
+  background: var(--accent);
+  color: #fff;
+}
+
+@keyframes routePulse {
+  to {
+    opacity: 0.45;
+    transform: scale(0.82);
+  }
 }
 
 h1,

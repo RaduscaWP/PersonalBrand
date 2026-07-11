@@ -1,6 +1,8 @@
+import { SITE_URL } from '@/lib/site';
+
 export default function robots() {
   return {
     rules: [{ userAgent: '*', allow: '/' }],
-    sitemap: 'https://radu-stefan.dev/sitemap.xml',
+    sitemap: `${SITE_URL}/sitemap.xml`,
   };
 }

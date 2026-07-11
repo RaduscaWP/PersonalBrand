@@ -106,6 +106,53 @@
   line-height: 0.92;
 }
 
+.typedFrame {
+  position: relative;
+  display: block;
+}
+
+.typedMeasure {
+  display: block;
+  visibility: hidden;
+}
+
+.typedFinal {
+  display: block;
+}
+
+.typedVisible {
+  position: absolute;
+  inset: 0;
+  display: block;
+}
+
+.typedCursor {
+  display: inline-block;
+  width: 0.075em;
+  height: 0.76em;
+  margin-left: 0.08em;
+  border-radius: 999px;
+  background: var(--accent-light);
+  vertical-align: -0.03em;
+  animation: heroCursorBlink 0.68s steps(1, end) infinite;
+}
+
+.typedCursor[data-phase='done'] {
+  animation: heroCursorFade 0.42s ease forwards;
+}
+
+@keyframes heroCursorBlink {
+  50% {
+    opacity: 0;
+  }
+}
+
+@keyframes heroCursorFade {
+  to {
+    opacity: 0;
+  }
+}
+
 .lede {
   max-width: 42ch;
   margin-top: var(--space-6);
@@ -415,6 +462,13 @@
   color: var(--text-muted);
 }
 
+.input:focus-visible,
+.textarea:focus-visible {
+  outline: 2px solid var(--accent-light);
+  outline-offset: 2px;
+  border-color: var(--border-accent);
+}
+
 .submitBtn {
   grid-area: submit;
   display: inline-flex;
@@ -658,5 +712,41 @@
 
   .textarea {
     min-height: 8.5rem;
+  }
+}
+
+@media (max-width: 480px) and (max-height: 820px) {
+  .content {
+    gap: var(--space-5);
+  }
+
+  .badge {
+    padding: 0.42rem 0.65rem;
+  }
+
+  .title {
+    margin-top: var(--space-4);
+    font-size: clamp(2.25rem, 11.5vw, 2.7rem);
+    line-height: 0.98;
+  }
+
+  .lede {
+    margin-top: var(--space-4);
+    font-size: 0.96rem;
+    line-height: 1.55;
+  }
+
+  .chips {
+    display: none;
+  }
+
+  .actions {
+    margin-top: var(--space-4);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .typedCursor {
+    display: none;
   }
 }

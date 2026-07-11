@@ -215,6 +215,14 @@
 }
 
 @media (max-width: 900px) {
+  .copy {
+    grid-row: 1;
+  }
+
+  .portraitColumn {
+    grid-row: 2;
+  }
+
   .title {
     max-width: 100%;
   }

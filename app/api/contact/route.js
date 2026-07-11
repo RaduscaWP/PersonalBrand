@@ -6,6 +6,7 @@ import {
 } from '@/lib/contactEmails';
 import { heroServiceDomains, heroServices } from '@/data/heroServices';
 import { services } from '@/data/services';
+import { SITE_URL } from '@/lib/site';
 
 export const runtime = 'nodejs';
 
@@ -13,7 +14,6 @@ const CONTACT_TO_EMAIL = process.env.CONTACT_TO_EMAIL || 'grozavradustefan@gmail
 const CONTACT_FROM_EMAIL = process.env.CONTACT_FROM_EMAIL || 'onboarding@resend.dev';
 const CONTACT_FROM_NAME = process.env.CONTACT_FROM_NAME || 'Radu Portfolio';
 const CONTACT_FROM = `${CONTACT_FROM_NAME} <${CONTACT_FROM_EMAIL}>`;
-const SITE_URL = process.env.SITE_URL || process.env.NEXT_PUBLIC_SITE_URL || 'https://personal-brand-phi-tan.vercel.app';
 const RATE_LIMIT_MAX = Math.max(1, Number(process.env.CONTACT_RATE_LIMIT_MAX) || 5);
 const RATE_LIMIT_WINDOW_SECONDS = Math.max(30, Number(process.env.CONTACT_RATE_LIMIT_WINDOW_SECONDS) || 3600);
 const MAX_BODY_LENGTH = 8000;

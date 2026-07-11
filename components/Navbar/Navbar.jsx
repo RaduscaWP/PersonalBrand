@@ -21,6 +21,8 @@ export default function Navbar() {
   const isHome = pathname === '/';
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
+  const navRef = useRef(null);
+  const menuRef = useRef(null);
   const burgerRef = useRef(null);
   const firstLinkRef = useRef(null);
 
@@ -33,8 +35,20 @@ export default function Navbar() {
 
   useEffect(() => {
     document.body.dataset.menuOpen = open ? 'true' : 'false';
+    const inertTargets = [
+      document.querySelector('main.site-main'),
+      document.querySelector('footer'),
+    ].filter(Boolean);
+
+    inertTargets.forEach((target) => {
+      target.inert = open;
+    });
+
     return () => {
       document.body.dataset.menuOpen = 'false';
+      inertTargets.forEach((target) => {
+        target.inert = false;
+      });
     };
   }, [open]);
 
@@ -48,10 +62,28 @@ export default function Navbar() {
     const focusFrame = window.requestAnimationFrame(() => firstLinkRef.current?.focus());
 
     const onKeyDown = (event) => {
-      if (event.key !== 'Escape') return;
-      event.preventDefault();
-      setOpen(false);
-      window.requestAnimationFrame(() => burgerRef.current?.focus());
+      if (event.key === 'Escape') {
+        event.preventDefault();
+        setOpen(false);
+        window.requestAnimationFrame(() => burgerRef.current?.focus());
+        return;
+      }
+
+      if (event.key !== 'Tab') return;
+
+      const focusable = [...(navRef.current?.querySelectorAll('a[href], button:not([disabled])') ?? [])]
+        .filter((element) => element.getClientRects().length > 0);
+      const first = focusable[0];
+      const last = focusable.at(-1);
+
+      if (!first || !last) return;
+      if (event.shiftKey && document.activeElement === first) {
+        event.preventDefault();
+        last.focus();
+      } else if (!event.shiftKey && document.activeElement === last) {
+        event.preventDefault();
+        first.focus();
+      }
     };
 
     document.addEventListener('keydown', onKeyDown);
@@ -65,20 +97,28 @@ export default function Navbar() {
   const solid = !isHome || scrolled || open;
 
   return (
-    <nav className={`${styles.nav} ${solid ? styles.solid : ''}`}>
+    <nav ref={navRef} className={`${styles.nav} ${solid ? styles.solid : ''}`}>
       <div className={styles.inner}>
         <Link href="/" className={styles.logo} aria-label="Radu-Stefan home">
           <span>Radu</span>
           <span>Stefan</span>
         </Link>
 
-        <ul id="primary-nav" className={`${styles.links} ${open ? styles.open : ''}`}>
+        <ul
+          ref={menuRef}
+          id="primary-nav"
+          className={`${styles.links} ${open ? styles.open : ''}`}
+          onClick={(event) => {
+            if (event.target === event.currentTarget) setOpen(false);
+          }}
+        >
           {links.map(({ href, label }, index) => (
             <li key={href}>
               <Link
                 ref={index === 0 ? firstLinkRef : undefined}
                 href={href}
                 className={`${styles.link} ${pathname === href ? styles.active : ''}`}
+                aria-current={pathname === href ? 'page' : undefined}
               >
                 {label}
               </Link>
