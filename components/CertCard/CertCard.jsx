@@ -1,4 +1,5 @@
 import { Award, ExternalLink } from 'lucide-react';
+import HoverSwapText from '@/components/motion/HoverSwapText';
 import styles from './CertCard.module.scss';
 
 const certs = [
@@ -46,7 +47,7 @@ export default function CertCard() {
           </div>
 
           <a href={cert.pdf} target="_blank" rel="noopener noreferrer" className={styles.link}>
-            View Certificate <ExternalLink size={13} />
+            <HoverSwapText alternate="Open PDF">View Certificate</HoverSwapText> <ExternalLink size={13} />
           </a>
         </div>
       ))}

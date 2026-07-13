@@ -1,6 +1,6 @@
 'use client';
 
-import { useMemo, useRef, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import Link from 'next/link';
 import { ArrowUpRight } from 'lucide-react';
 import ServiceCard from '@/components/ServiceCard/ServiceCard';
@@ -16,41 +16,70 @@ export default function ServiceShowcase() {
     [],
   );
 
-  const defaultActive = previewServices.find((service) => service.featured)?.id ?? previewServices[0]?.id;
-  const [activeId, setActiveId] = useState(defaultActive);
+  const [activeId, setActiveId] = useState(null);
   const gridRef = useRef(null);
 
   const activate = (id) => {
-    setActiveId((current) => {
-      if (current === id && id !== defaultActive) return defaultActive;
-      return id;
-    });
+    setActiveId(id);
   };
+
+  const toggle = (id) => {
+    setActiveId((current) => (current === id ? null : id));
+  };
+
+  const deactivate = (id) => {
+    setActiveId((current) => (current === id ? null : current));
+  };
+
+  useEffect(() => {
+    const resetFromOutsideTap = (event) => {
+      if (
+        event.pointerType === 'touch' &&
+        gridRef.current &&
+        !gridRef.current.contains(event.target)
+      ) {
+        setActiveId(null);
+      }
+    };
+
+    document.addEventListener('pointerdown', resetFromOutsideTap);
+    return () => document.removeEventListener('pointerdown', resetFromOutsideTap);
+  }, []);
 
   const resetIfFocusLeaves = (event) => {
     if (!gridRef.current?.contains(event.relatedTarget)) {
-      setActiveId(defaultActive);
+      setActiveId(null);
+    }
+  };
+
+  const resetIfPointerLeaves = () => {
+    const focusedElement = document.activeElement;
+    const hasKeyboardFocus =
+      gridRef.current?.contains(focusedElement) && focusedElement?.matches?.(':focus-visible');
+
+    if (!hasKeyboardFocus) {
+      setActiveId(null);
     }
   };
 
   return (
-    <section className="section-shell section-shell--light">
+    <section className="section-shell section-shell--light" data-story-act="adaptation">
       <div className="section-inner">
         <div className="section-head--center">
-          <span className="section-kicker">Services</span>
+          <span className="section-kicker">Act 02 / Adaptation</span>
           <h2 className={`section-title ${styles.lightTitle}`}>
-            Four web offers built to <strong>get hired quickly.</strong>
+            Start with the problem. <strong>Then choose the right build.</strong>
           </h2>
           <p className={`${styles.lightCopy} section-lede ${styles.centeredLede}`}>
-            These are the fastest services for a client to recognize. The full services page also
-            includes automation scripts, API integrations, and internal tools.
+            Four clear entry points make the work easy to recognize. The full service system also
+            covers automation, API integrations, and internal software.
           </p>
         </div>
 
         <div
           ref={gridRef}
           className={styles.serviceGrid}
-          onMouseLeave={() => setActiveId(defaultActive)}
+          onMouseLeave={resetIfPointerLeaves}
           onBlurCapture={resetIfFocusLeaves}
           role="group"
           aria-label="Signature service previews"
@@ -62,6 +91,8 @@ export default function ServiceShowcase() {
               active={service.id === activeId}
               interactive
               onActivate={() => activate(service.id)}
+              onToggle={() => toggle(service.id)}
+              onDeactivate={() => deactivate(service.id)}
             />
           ))}
         </div>

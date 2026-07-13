@@ -1,11 +1,16 @@
 'use client';
 
 import Link from 'next/link';
-import { useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import { ArrowUpRight } from 'lucide-react';
-import { gsap } from 'gsap';
 import MagneticButton from '@/components/MagneticButton/MagneticButton';
+import { useMotion } from '@/components/motion/MotionProvider';
 import { defaultHero, heroServiceDomains } from '@/data/heroServices';
+import useMediaQuery from '@/hooks/useMediaQuery';
+import { gsap, useGSAP } from '@/lib/motion/register';
+import { motion } from '@/lib/motion/tokens';
+import { canUseWebGL, reportWebGLFallback } from '@/lib/motion/webgl';
+import { trackEvent } from '@/lib/analytics';
 import HeroDropdown from './HeroDropdown';
 import HeroForm from './HeroForm';
 import HeroTitle from './HeroTitle';
@@ -13,115 +18,216 @@ import styles from './Hero.module.scss';
 
 const fitLabels = ['Software developer', 'Web apps', 'Automations', 'AI-assisted workflow'];
 const HERO_VIDEO_OPACITY = 0.64;
-const prefersReducedMotion = () =>
-  typeof window !== 'undefined' &&
-  window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
 export default function HeroSection() {
   const [selectedDomain, setSelectedDomain] = useState(null);
   const [selected, setSelected] = useState(null);
   const [videoReady, setVideoReady] = useState(false);
-  const [reduceMotion, setReduceMotion] = useState(false);
+  const [videoSource, setVideoSource] = useState(defaultHero.video);
+  const { introComplete, pointer, reduceMotion, saveData } = useMotion();
+  const compactViewport = useMediaQuery('(max-width: 767px)', true);
+  const allowVideo = !reduceMotion && !saveData && !compactViewport && !pointer.coarse;
+  const allowParticles = introComplete && pointer.enhanced && allowVideo;
+  const rootRef = useRef(null);
   const videoRef = useRef(null);
   const bodyRef = useRef(null);
   const canvasRef = useRef(null);
+  const heroReadyRef = useRef(false);
+  const briefStartedRef = useRef(false);
 
   const domainServices = selectedDomain?.services ?? [];
   const active = selected ?? selectedDomain ?? defaultHero;
 
-  useEffect(() => {
-    const mediaQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
-    const updateMotionPreference = () => setReduceMotion(mediaQuery.matches);
-
-    updateMotionPreference();
-    mediaQuery.addEventListener?.('change', updateMotionPreference);
-    return () => mediaQuery.removeEventListener?.('change', updateMotionPreference);
+  const signalHeroReady = useCallback(() => {
+    if (heroReadyRef.current) return;
+    heroReadyRef.current = true;
+    window.dispatchEvent(new CustomEvent('radusca:hero-ready'));
   }, []);
 
   useEffect(() => {
-    if (!reduceMotion) return;
-    videoRef.current?.pause();
-    setVideoReady(false);
-  }, [reduceMotion]);
+    let secondFrame;
+    const firstFrame = window.requestAnimationFrame(() => {
+      secondFrame = window.requestAnimationFrame(signalHeroReady);
+    });
+    return () => {
+      window.cancelAnimationFrame(firstFrame);
+      window.cancelAnimationFrame(secondFrame);
+    };
+  }, [signalHeroReady]);
 
   useEffect(() => {
-    if (!canvasRef.current || window.innerWidth < 768 || reduceMotion || prefersReducedMotion()) {
+    if (allowVideo) return;
+    videoRef.current?.pause();
+    setVideoReady(false);
+  }, [allowVideo]);
+
+  useEffect(() => {
+    if (!canvasRef.current || !allowParticles) {
       return undefined;
     }
+
+    if (!canUseWebGL()) {
+      reportWebGLFallback('hero-capability-check');
+      return undefined;
+    }
+
     let disposed = false;
     let cleanup;
+    let idleId;
 
-    import('@/lib/threeParticles').then(({ initParticles }) => {
-      if (disposed || !canvasRef.current) return;
-      cleanup = initParticles(canvasRef.current);
-    });
+    const initialize = () => {
+      import('@/lib/threeParticles')
+        .then(({ initParticles }) => {
+          if (disposed || !canvasRef.current) return;
+          cleanup = initParticles(canvasRef.current);
+        })
+        .catch(() => reportWebGLFallback('dynamic-import'));
+    };
+
+    if ('requestIdleCallback' in window) {
+      idleId = window.requestIdleCallback(initialize, { timeout: 900 });
+    } else {
+      idleId = window.setTimeout(initialize, 260);
+    }
 
     return () => {
       disposed = true;
+      if ('cancelIdleCallback' in window) window.cancelIdleCallback(idleId);
+      else window.clearTimeout(idleId);
       cleanup?.();
     };
-  }, [reduceMotion]);
+  }, [allowParticles]);
 
-  useEffect(() => {
-    if (reduceMotion || prefersReducedMotion()) return undefined;
+  useGSAP(
+    () => {
+      if (!rootRef.current || !introComplete) return undefined;
 
-    const ctx = gsap.context(() => {
-      const timeline = gsap.timeline({ delay: 0.08 });
+      const targets = rootRef.current.querySelectorAll(
+        '.hero-badge, [data-hero-line], .hero-copy, .hero-chips, .hero-actions, .hero-panel',
+      );
+      if (reduceMotion) {
+        gsap.set(targets, { clearProps: 'all' });
+        return undefined;
+      }
+
+      const timeline = gsap.timeline({ defaults: { ease: motion.ease.strongOut } });
       timeline
-        .from('.hero-badge', { y: 18, opacity: 0, duration: 0.32 })
-        .from('.hero-title', { y: 20, opacity: 0, duration: 0.38, ease: 'power3.out' }, '-=0.14')
-        .from('.hero-copy', { y: 18, opacity: 0, duration: 0.34, ease: 'power3.out' }, '-=0.22')
-        .from('.hero-chips', { y: 14, opacity: 0, duration: 0.28 }, '-=0.2')
-        .from('.hero-actions', { y: 12, opacity: 0, duration: 0.28 }, '-=0.18')
-        .from('.hero-panel', { x: 28, opacity: 0, duration: 0.5, ease: 'power3.out' }, '-=0.34');
-    });
+        .from('.hero-badge', {
+          y: motion.distance.reveal,
+          autoAlpha: 0,
+          duration: motion.duration.control,
+        })
+        .from(
+          '[data-hero-line]',
+          {
+            yPercent: 105,
+            autoAlpha: 0,
+            duration: motion.duration.hero,
+            stagger: motion.stagger.lines,
+          },
+          0.08,
+        )
+        .from(
+          '.hero-copy',
+          { y: 18, autoAlpha: 0, duration: motion.duration.reveal },
+          0.32,
+        )
+        .from(
+          '.hero-chips > *',
+          {
+            y: 10,
+            autoAlpha: 0,
+            duration: motion.duration.control,
+            stagger: 0.05,
+          },
+          0.45,
+        )
+        .from(
+          '.hero-actions',
+          { y: 14, autoAlpha: 0, duration: motion.duration.control },
+          0.54,
+        )
+        .from(
+          '.hero-panel',
+          {
+            y: 24,
+            scale: 0.985,
+            autoAlpha: 0,
+            duration: motion.duration.reveal,
+          },
+          0.6,
+        );
 
-    return () => ctx.revert();
-  }, [reduceMotion]);
+      return timeline;
+    },
+    {
+      scope: rootRef,
+      dependencies: [introComplete, reduceMotion],
+      revertOnUpdate: true,
+    },
+  );
 
-  const updateHeroMedia = (item, onCommit) => {
+  const updateHeroMedia = useCallback((item, onCommit) => {
     const video = videoRef.current;
     const body = bodyRef.current;
-
-    if (!video || reduceMotion || prefersReducedMotion()) {
-      if (video) {
-        video.pause();
-        setVideoReady(false);
-        video.src = item.video;
-        video.load();
-      }
+    const commit = () => {
       onCommit();
+      setVideoSource(item.video);
+      setVideoReady(false);
+    };
+
+    if (!video || !allowVideo) {
+      commit();
       return;
     }
 
+    gsap.killTweensOf([video, body]);
     gsap.to(video, {
       opacity: 0,
-      duration: 0.24,
+      duration: motion.duration.micro,
       onComplete: () => {
-        setVideoReady(false);
-        video.src = item.video;
-        video.load();
-        if (!reduceMotion) video.play().catch(() => {});
+        commit();
+        if (body) {
+          window.requestAnimationFrame(() => {
+            gsap.to(body, {
+              y: 0,
+              autoAlpha: 1,
+              duration: motion.duration.control,
+              ease: motion.ease.out,
+            });
+          });
+        }
       },
     });
 
     if (!body) {
-      onCommit();
       return;
     }
 
     gsap.to(body, {
       y: -10,
-      opacity: 0,
-      duration: 0.18,
-      onComplete: () => {
-        onCommit();
-        gsap.to(body, { y: 0, opacity: 1, duration: 0.3 });
-      },
+      autoAlpha: 0,
+      duration: motion.duration.instant,
     });
-  };
+  }, [allowVideo]);
+
+  const onVideoReady = useCallback(() => {
+    if (!allowVideo || !videoRef.current) return;
+    setVideoReady(true);
+    videoRef.current.play().catch(() => undefined);
+    gsap.to(videoRef.current, {
+      opacity: HERO_VIDEO_OPACITY,
+      duration: motion.duration.reveal,
+      ease: motion.ease.out,
+      overwrite: true,
+    });
+  }, [allowVideo]);
 
   const handleDomainSelect = (domain) => {
+    if (!briefStartedRef.current) {
+      briefStartedRef.current = true;
+      trackEvent('interactive_brief_started', { domain: domain.id });
+    }
     updateHeroMedia(domain, () => {
       setSelectedDomain(domain);
       setSelected(null);
@@ -129,6 +235,10 @@ export default function HeroSection() {
   };
 
   const handleSelect = (service) => {
+    trackEvent('service_selected', {
+      domain: selectedDomain?.id || '',
+      service: service.id,
+    });
     updateHeroMedia(service, () =>
       setSelected({
         ...service,
@@ -139,20 +249,26 @@ export default function HeroSection() {
   };
 
   return (
-    <section className={styles.hero} style={{ '--hero-video-opacity': HERO_VIDEO_OPACITY }}>
+    <section
+      ref={rootRef}
+      className={styles.hero}
+      data-story-act="promise"
+      style={{ '--hero-video-opacity': HERO_VIDEO_OPACITY }}
+    >
       <video
         ref={videoRef}
-        className={`${styles.videoBg} ${videoReady ? styles.videoReady : ''} ${reduceMotion ? styles.videoReduced : ''}`}
-        src={defaultHero.video}
-        autoPlay={!reduceMotion}
+        className={`${styles.videoBg} ${videoReady ? styles.videoReady : ''} ${!allowVideo ? styles.videoReduced : ''}`}
+        src={allowVideo ? videoSource : undefined}
+        autoPlay={allowVideo}
         muted
-        loop={!reduceMotion}
+        loop={allowVideo}
         playsInline
-        preload="metadata"
+        preload={allowVideo ? 'metadata' : 'none'}
         poster={active.fallbackImage || defaultHero.fallbackImage}
         aria-hidden="true"
-        onLoadedData={() => setVideoReady(true)}
-        onCanPlay={() => setVideoReady(true)}
+        onLoadedData={onVideoReady}
+        onCanPlay={onVideoReady}
+        onError={() => setVideoReady(false)}
       />
       <div className={styles.videoFallback} aria-hidden="true" />
       <div className={styles.overlay} />
@@ -165,7 +281,7 @@ export default function HeroSection() {
             Software developer for web, automation, and AI-assisted delivery
           </div>
 
-          <HeroTitle reduceMotion={reduceMotion} />
+          <HeroTitle />
 
           <p className={`${styles.lede} hero-copy`}>
             Websites, web apps, automation scripts, API integrations, and AI-assisted build
@@ -181,16 +297,20 @@ export default function HeroSection() {
           </div>
 
           <div className={`${styles.actions} hero-actions`}>
-            <MagneticButton href="/contact" variant="primary">
+            <MagneticButton
+              href="/contact"
+              variant="primary"
+              onClick={() => trackEvent('hero_start_project_click')}
+            >
               Start a project
             </MagneticButton>
-            <Link href="/projects" className="text-link">
+            <Link href="/projects" className="text-link" data-cursor="VIEW">
               See live work <ArrowUpRight size={14} />
             </Link>
           </div>
         </div>
 
-        <aside className={`${styles.panel} hero-panel`}>
+        <div className={`${styles.panel} hero-panel`} data-story-act="adaptation">
           <div className={styles.panelTop}>
             <div>
               <span className={styles.panelKicker}>Interactive brief</span>
@@ -243,7 +363,7 @@ export default function HeroSection() {
               </p>
             </>
           ) : null}
-        </aside>
+        </div>
       </div>
     </section>
   );

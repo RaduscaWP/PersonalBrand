@@ -9,11 +9,11 @@ export default function ProjectsPreview() {
   const featuredProjects = projects.filter((project) => project.featured).slice(0, 3);
 
   return (
-    <section className="section-shell section-shell--dark">
+    <section className="section-shell section-shell--dark" data-story-act="proof">
       <div className="section-inner">
         <div className="section-head">
           <div>
-            <span className="section-kicker">Selected Work</span>
+            <span className="section-kicker">Act 03 / Proof</span>
             <h2 className="section-title">
               Work that already <strong>proves the point.</strong>
             </h2>

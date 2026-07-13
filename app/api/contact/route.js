@@ -98,27 +98,32 @@ function makeReference(now = new Date()) {
 }
 
 function normalizeRequest(body) {
+  const name = cleanLine(body.name, 90);
   const email = cleanLine(body.email, 254).toLowerCase();
   const rawProjectType = cleanLine(body.projectType, 90);
   const projectType = normalizeOption(rawProjectType, SERVICE_OPTIONS);
   const rawDomain = cleanLine(body.domain || body.projectDomain, 90);
 
+  const description = cleanText(body.description, 2400);
+
+  if (!name || name.length < 2) return { error: 'Enter your name.' };
   if (!email) return { error: 'Email required' };
   if (!EMAIL_PATTERN.test(email)) return { error: 'Enter a valid email address.' };
   if (!rawProjectType) return { error: 'Service required' };
   if (!projectType) return { error: 'Service option is invalid.' };
+  if (description.length < 20) return { error: 'Add more project detail before sending.' };
 
   const source = cleanLine(body.source, 30);
 
   return {
     value: {
-      name: cleanLine(body.name, 90),
+      name,
       email,
       projectType,
       domain: normalizeOption(rawDomain, DOMAIN_OPTIONS),
       budget: cleanLine(body.budget, 70),
       timeline: cleanLine(body.timeline, 70),
-      description: cleanText(body.description, 2400),
+      description,
       source: SOURCE_VALUES.has(source) ? source : 'unknown',
     },
   };
@@ -421,8 +426,7 @@ export async function POST(req) {
     const clientEmail = buildClientConfirmationEmail(request);
     const service = cleanSubject(request.projectType);
 
-    const ownerNotification = await resend.emails.send(
-      {
+    const ownerNotification = await resend.emails.send({
         from: CONTACT_FROM,
         to: CONTACT_TO_EMAIL,
         reply_to: request.email,
@@ -434,9 +438,7 @@ export async function POST(req) {
           { name: 'source', value: request.source },
           { name: 'reference', value: reference },
         ],
-      },
-      { idempotencyKey: `portfolio-owner/${reference}` }
-    );
+      });
 
     if (ownerNotification.error) {
       const response = emailDeliveryIssueResponse('Owner email delivery unavailable', ownerNotification.error);
@@ -450,8 +452,7 @@ export async function POST(req) {
     if (isSandboxSender() && !sameEmail(request.email, CONTACT_TO_EMAIL)) {
       warning = 'Client confirmation skipped until a verified sender domain is configured.';
     } else {
-      const clientConfirmation = await resend.emails.send(
-        {
+      const clientConfirmation = await resend.emails.send({
           from: CONTACT_FROM,
           to: request.email,
           reply_to: CONTACT_TO_EMAIL,
@@ -463,17 +464,17 @@ export async function POST(req) {
             { name: 'source', value: request.source },
             { name: 'reference', value: reference },
           ],
-        },
-        { idempotencyKey: `portfolio-client/${reference}` }
-      );
+        });
 
       if (clientConfirmation.error) {
         if (isSandboxRecipientError(clientConfirmation.error)) {
           warning = 'Client confirmation skipped until a verified sender domain is configured.';
         } else {
-          const response = emailDeliveryIssueResponse('Client email delivery unavailable', clientConfirmation.error);
-          if (response) return response;
-          throw new Error(clientConfirmation.error.message || 'Failed to send confirmation email');
+          logServerError(
+            'Client confirmation failed after the owner notification was delivered',
+            clientConfirmation.error
+          );
+          warning = 'Your request was received, but the confirmation email could not be delivered.';
         }
       } else {
         clientDelivered = true;

@@ -29,10 +29,13 @@ export default function HeroDropdown({
     };
 
     const onKeyDown = (event) => {
-      if (event.key !== 'Escape') return;
-      event.preventDefault();
-      setOpen(false);
-      window.requestAnimationFrame(() => triggerRef.current?.focus());
+      if (event.key === 'Escape') {
+        event.preventDefault();
+        setOpen(false);
+        window.requestAnimationFrame(() => triggerRef.current?.focus());
+      } else if (event.key === 'Tab') {
+        setOpen(false);
+      }
     };
 
     document.addEventListener('pointerdown', onPointerDown);
@@ -107,6 +110,8 @@ export default function HeroDropdown({
         onClick={() => setOpen((value) => !value)}
         onKeyDown={handleKeyDown}
         disabled={disabled}
+        role="combobox"
+        aria-label={ariaLabel}
         aria-expanded={open && !disabled}
         aria-haspopup="listbox"
         aria-controls={listboxId}

@@ -38,7 +38,7 @@
 
 .meta {
   color: var(--text-faint-dark);
-  font-family: 'JetBrains Mono', ui-monospace, monospace;
+  font-family: var(--font-jetbrains-mono), ui-monospace, monospace;
   font-size: var(--fs-xs);
   font-weight: 700;
   letter-spacing: 0.15em;
@@ -54,7 +54,7 @@
 
 .score {
   color: var(--text-soft-dark);
-  font-family: 'JetBrains Mono', ui-monospace, monospace;
+  font-family: var(--font-jetbrains-mono), ui-monospace, monospace;
   font-size: var(--fs-xs);
 }
 
@@ -64,7 +64,7 @@
   gap: 0.35rem;
   margin-top: auto;
   color: var(--text-dark);
-  font-family: 'JetBrains Mono', ui-monospace, monospace;
+  font-family: var(--font-jetbrains-mono), ui-monospace, monospace;
   font-size: var(--fs-xs);
   font-weight: 700;
   letter-spacing: 0.12em;

@@ -24,7 +24,7 @@
 
 .label {
   color: var(--text-faint-dark);
-  font-family: 'JetBrains Mono', ui-monospace, monospace;
+  font-family: var(--font-jetbrains-mono), ui-monospace, monospace;
   font-size: var(--fs-xs);
   font-weight: 700;
   letter-spacing: 0.15em;
@@ -47,10 +47,77 @@
     border-color: rgba(124, 58, 237, 0.28);
     box-shadow: 0 0 0 4px rgba(124, 58, 237, 0.08);
   }
+
+  &[aria-invalid='true'] {
+    border-color: rgba(239, 68, 68, 0.72);
+    box-shadow: 0 0 0 4px rgba(239, 68, 68, 0.08);
+  }
 }
 
 .field textarea {
   resize: vertical;
+}
+
+.fieldError {
+  color: #a72828;
+  font-size: 0.82rem;
+  font-weight: 650;
+  line-height: 1.45;
+}
+
+.briefContext {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 0.75rem;
+  align-items: start;
+  padding: 0.95rem 1rem;
+  border: 1px solid rgba(124, 58, 237, 0.2);
+  border-radius: 18px;
+  background: rgba(124, 58, 237, 0.07);
+  color: var(--text-dark);
+
+  svg {
+    margin-top: 0.12rem;
+    color: var(--accent);
+  }
+
+  strong,
+  span {
+    display: block;
+  }
+
+  span {
+    margin-top: 0.2rem;
+    color: var(--text-soft-dark);
+    font-size: var(--fs-small);
+    overflow-wrap: anywhere;
+  }
+}
+
+.errorSummary {
+  padding: 1rem;
+  border: 1px solid rgba(239, 68, 68, 0.62);
+  border-radius: 18px;
+  background: rgba(239, 68, 68, 0.07);
+  color: #8f2222;
+  outline: none;
+
+  &:focus-visible {
+    box-shadow: 0 0 0 4px rgba(239, 68, 68, 0.12);
+  }
+
+  ul {
+    display: grid;
+    gap: 0.35rem;
+    margin-top: 0.5rem;
+    padding-left: 1.15rem;
+  }
+
+  a {
+    color: inherit;
+    text-decoration: underline;
+    text-underline-offset: 0.18em;
+  }
 }
 
 .honeypot {
@@ -123,5 +190,10 @@
   .submit {
     width: 100%;
     align-self: stretch;
+  }
+
+  .field input,
+  .field textarea {
+    font-size: 1rem;
   }
 }

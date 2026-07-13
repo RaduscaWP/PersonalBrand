@@ -36,14 +36,14 @@
   border-radius: var(--radius-pill);
   background: color-mix(in srgb, var(--cat-accent) 14%, transparent);
   color: var(--cat-accent);
-  font-family: 'JetBrains Mono', ui-monospace, monospace;
+  font-family: var(--font-jetbrains-mono), ui-monospace, monospace;
   font-size: var(--fs-xs);
   font-weight: 700;
 }
 
 .date {
   color: var(--text-faint-dark);
-  font-family: 'JetBrains Mono', ui-monospace, monospace;
+  font-family: var(--font-jetbrains-mono), ui-monospace, monospace;
   font-size: var(--fs-xs);
 }
 
@@ -66,7 +66,7 @@
   align-items: center;
   gap: 0.42rem;
   color: var(--text-dark);
-  font-family: 'JetBrains Mono', ui-monospace, monospace;
+  font-family: var(--font-jetbrains-mono), ui-monospace, monospace;
   font-size: var(--fs-xs);
   font-weight: 700;
   letter-spacing: 0.14em;

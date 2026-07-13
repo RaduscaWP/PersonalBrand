@@ -1,0 +1,63 @@
+.split {
+  text-wrap: initial;
+}
+
+.swap {
+  position: relative;
+  display: inline-grid;
+  overflow: hidden;
+  vertical-align: bottom;
+}
+
+.swapTrack {
+  display: grid;
+  transition: transform var(--motion-control) var(--ease-out);
+}
+
+.swapLabel {
+  grid-column: 1;
+  grid-row: 1;
+  display: block;
+  transform: translateY(0);
+  transition: transform var(--motion-control) var(--ease-out);
+}
+
+.swapLabelAlt {
+  transform: translateY(105%);
+}
+
+:global(a:hover) .swapLabel,
+:global(a:focus-visible) .swapLabel,
+:global(button:hover) .swapLabel,
+:global(button:focus-visible) .swapLabel {
+  transform: translateY(-105%);
+}
+
+:global(a:hover) .swapLabelAlt,
+:global(a:focus-visible) .swapLabelAlt,
+:global(button:hover) .swapLabelAlt,
+:global(button:focus-visible) .swapLabelAlt {
+  transform: translateY(0);
+}
+
+.count {
+  display: inline-block;
+  min-width: var(--count-width, auto);
+  font-variant-numeric: tabular-nums;
+}
+
+.imageReveal {
+  position: relative;
+  overflow: hidden;
+}
+
+@media (hover: none), (pointer: coarse), (prefers-reduced-motion: reduce) {
+  .swapTrack,
+  .swapLabel {
+    transition: none;
+  }
+
+  .swapLabelAlt {
+    display: none;
+  }
+}

@@ -4,39 +4,52 @@ import { ArrowUpRight, Calendar, GraduationCap, MapPin } from 'lucide-react';
 import SectionReveal from '@/components/SectionReveal/SectionReveal';
 import CertCard from '@/components/CertCard/CertCard';
 import MagneticButton from '@/components/MagneticButton/MagneticButton';
+import ImageReveal from '@/components/motion/ImageReveal';
+import TimelineStory from '@/components/About/TimelineStory';
 import { aiCodingSkills } from '@/data/aiSkills';
 import { techStack } from '@/data/stack';
+import { createMetadata } from '@/lib/metadata';
 import styles from './about.module.scss';
 
-export const metadata = {
+export const metadata = createMetadata({
   title: 'About',
   description:
-    'Radu-Stefan, 18-year-old software developer from Chisinau, Moldova. Three Certiport certifications, AI-assisted coding workflows, and shipped projects.',
-};
+    'Meet Radu-Stefan, a software developer in Chisinau with three Certiport certifications, shipped client work, and a disciplined approach to delivery.',
+  path: '/about',
+  image: '/images/profile.jpg',
+  imageWidth: 1024,
+  imageHeight: 1536,
+  imageAlt: 'Radu-Stefan, software developer in Chisinau',
+});
 
 const timeline = [
   {
     year: '2017',
+    stage: 'Pressure',
     title: 'Started water polo',
     body: 'Discipline, repetition, and pressure tolerance started there long before I wrote production code.',
   },
   {
     year: '2020',
+    stage: 'Discipline',
     title: 'Started learning front-end',
     body: 'HTML, CSS, and JavaScript turned the web from something I used into something I could shape.',
   },
   {
     year: '2023',
+    stage: 'Transition',
     title: 'Shifted the focus fully',
     body: 'The same training mindset moved into development: show up consistently, improve the details, ship finished work.',
   },
   {
     year: '2025',
+    stage: 'Proof',
     title: 'Certiport x3',
     body: 'Python, Databases, and Networking certifications added formal proof to the self-directed work.',
   },
   {
     year: '2026',
+    stage: 'Current standard',
     title: 'Freelance-ready portfolio',
     body: 'The site becomes a client-facing system: live work, clearer offers, and a process designed to convert trust into projects.',
   },
@@ -48,16 +61,18 @@ export default function AboutPage() {
       <section className={`page-hero ${styles.hero}`}>
         <div className={`page-hero--split ${styles.heroInner}`}>
           <div className={styles.portraitColumn}>
-            <div className={styles.portraitFrame}>
-              <Image
-                src="/images/profile.jpg"
-                alt="Radu - Software Developer"
-                width={400}
-                height={400}
-                priority
-                className={styles.portraitImg}
-              />
-            </div>
+            <ImageReveal className={styles.portraitReveal}>
+              <div className={styles.portraitFrame}>
+                <Image
+                  src="/images/profile.jpg"
+                  alt="Radu - Software Developer"
+                  width={400}
+                  height={400}
+                  priority
+                  className={styles.portraitImg}
+                />
+              </div>
+            </ImageReveal>
 
             <div className={styles.metaCard}>
               <span className={styles.metaRow}>
@@ -143,17 +158,7 @@ export default function AboutPage() {
               </p>
             </div>
 
-            <ol className={styles.timeline}>
-              {timeline.map((item) => (
-                <li key={item.year} className={styles.timelineItem}>
-                  <span className={styles.timelineYear}>{item.year}</span>
-                  <div className={styles.timelineBody}>
-                    <h3>{item.title}</h3>
-                    <p>{item.body}</p>
-                  </div>
-                </li>
-              ))}
-            </ol>
+            <TimelineStory items={timeline} />
           </div>
         </SectionReveal>
       </section>

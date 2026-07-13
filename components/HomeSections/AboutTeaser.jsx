@@ -23,11 +23,11 @@ const proofItems = [
 
 export default function AboutTeaser() {
   return (
-    <section className="section-shell section-shell--light">
+    <section className="section-shell section-shell--light" data-story-act="trust">
       <div className="section-inner">
         <div className={styles.aboutGrid}>
           <div className={styles.aboutIntro}>
-            <span className="section-kicker">About</span>
+            <span className="section-kicker">Act 05 / Trust</span>
             <h2 className={`section-title ${styles.lightTitle}`}>
               Young on paper. <strong>Reliable in practice.</strong>
             </h2>

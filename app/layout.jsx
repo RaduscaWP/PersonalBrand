@@ -1,4 +1,4 @@
-import { Syne, DM_Sans } from 'next/font/google';
+import { DM_Sans, JetBrains_Mono, Syne } from 'next/font/google';
 import { Analytics } from '@vercel/analytics/next';
 import { SpeedInsights } from '@vercel/speed-insights/next';
 import AnnouncementBar from '@/components/AnnouncementBar/AnnouncementBar';
@@ -6,7 +6,13 @@ import Navbar from '@/components/Navbar/Navbar';
 import Footer from '@/components/Footer/Footer';
 import CustomCursor from '@/components/CustomCursor/CustomCursor';
 import PageTransition from '@/components/PageTransition/PageTransition';
+import FirstVisitLoader from '@/components/motion/FirstVisitLoader';
+import MotionBoundary from '@/components/motion/MotionBoundary';
+import MotionProvider from '@/components/motion/MotionProvider';
+import { createMetadata, DEFAULT_DESCRIPTION, DEFAULT_TITLE } from '@/lib/metadata';
 import { SITE_URL } from '@/lib/site';
+import { serializeStructuredData, siteStructuredData } from '@/lib/structuredData';
+import { INTRO_SESSION_KEY } from '@/lib/motion/session';
 import './globals.scss';
 
 export const syne = Syne({
@@ -23,11 +29,20 @@ export const dmSans = DM_Sans({
   display: 'swap',
 });
 
+export const jetBrainsMono = JetBrains_Mono({
+  subsets: ['latin'],
+  weight: ['400', '500', '600'],
+  variable: '--font-jetbrains-mono',
+  display: 'swap',
+});
+
 export const metadata = {
   metadataBase: new URL(SITE_URL),
-  title: 'Radu-Stefan - Software Developer',
-  description:
-    '18-year-old software developer based in Chisinau, Moldova. Building websites, web apps, automation scripts, API integrations, and AI-assisted workflows.',
+  ...createMetadata({
+    title: DEFAULT_TITLE,
+    description: DEFAULT_DESCRIPTION,
+    path: '/',
+  }),
   keywords: [
     'Radu-Stefan',
     'Radusca',
@@ -41,21 +56,6 @@ export const metadata = {
     'Freelance Developer',
     'Figma to Code',
   ],
-  openGraph: {
-    title: 'Radu-Stefan - Software Developer',
-    description: 'Websites, apps, automations, and AI-assisted software delivery from Chisinau.',
-    url: SITE_URL,
-    images: [
-      {
-        url: '/images/hero-default.jpg',
-        width: 1920,
-        height: 1080,
-        alt: 'Radu-Stefan software developer portfolio',
-      },
-    ],
-  },
-  twitter: { card: 'summary_large_image' },
-  robots: { index: true, follow: true },
 };
 
 export const viewport = {
@@ -67,25 +67,61 @@ export const viewport = {
 const isVercelRuntime = process.env.VERCEL === '1';
 
 export default function RootLayout({ children }) {
+  const introScript = `
+    try {
+      var reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      var played = window.sessionStorage.getItem('${INTRO_SESSION_KEY}') === 'true';
+      document.documentElement.dataset.intro = reduced || played ? 'skip' : 'pending';
+    } catch (error) {
+      document.documentElement.dataset.intro = 'pending';
+    }
+  `;
+
   return (
-    <html lang="en" className={`${syne.variable} ${dmSans.variable}`}>
+    <html
+      lang="en"
+      data-intro="pending"
+      data-scroll-behavior="smooth"
+      suppressHydrationWarning
+      className={`${syne.variable} ${dmSans.variable} ${jetBrainsMono.variable}`}
+    >
+      <head>
+        <script dangerouslySetInnerHTML={{ __html: introScript }} />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: serializeStructuredData(siteStructuredData) }}
+        />
+      </head>
       <body>
-        <a href="#main-content" className="skip-link">
-          Skip to content
-        </a>
-        <CustomCursor />
-        <AnnouncementBar />
-        <Navbar />
-        <main id="main-content" className="site-main" tabIndex={-1}>
-          <PageTransition>{children}</PageTransition>
-        </main>
-        <Footer />
-        {isVercelRuntime ? (
-          <>
-            <Analytics />
-            <SpeedInsights />
-          </>
-        ) : null}
+        <noscript>
+          <style>{`.first-visit-loader { display: none !important; }`}</style>
+        </noscript>
+        <MotionProvider>
+          <MotionBoundary>
+            <FirstVisitLoader />
+          </MotionBoundary>
+          <a href="#main-content" className="skip-link">
+            Skip to content
+          </a>
+          <MotionBoundary>
+            <CustomCursor />
+          </MotionBoundary>
+          <AnnouncementBar />
+          <Navbar />
+          <main id="main-content" className="site-main" tabIndex={-1}>
+            <MotionBoundary>
+              <PageTransition />
+            </MotionBoundary>
+            {children}
+          </main>
+          <Footer />
+          {isVercelRuntime ? (
+            <>
+              <Analytics />
+              <SpeedInsights />
+            </>
+          ) : null}
+        </MotionProvider>
       </body>
     </html>
   );

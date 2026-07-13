@@ -37,7 +37,7 @@
   padding: 0.25rem 0.8rem;
   background: var(--accent);
   color: #fff;
-  font-family: 'JetBrains Mono', monospace;
+  font-family: var(--font-jetbrains-mono), monospace;
   font-size: var(--fs-xs);
   font-weight: 600;
   letter-spacing: 0.08em;
@@ -82,7 +82,7 @@
 }
 
 .priceLabel {
-  font-family: 'JetBrains Mono', monospace;
+  font-family: var(--font-jetbrains-mono), monospace;
   font-size: var(--fs-xs);
   color: var(--accent);
   letter-spacing: 0.14em;
@@ -109,7 +109,7 @@
   display: inline-flex;
   align-items: center;
   gap: 0.3rem;
-  font-family: 'JetBrains Mono', monospace;
+  font-family: var(--font-jetbrains-mono), monospace;
   font-size: var(--fs-xs);
   color: var(--text-faint-dark);
 }

@@ -10,6 +10,11 @@
   overflow: hidden;
   border-bottom: 1px solid rgba(255, 255, 255, 0.08);
   background: linear-gradient(90deg, #6d28d9 0%, #7c3aed 36%, #5b21b6 100%);
+
+  &:focus-visible {
+    outline: 2px solid #ffffff;
+    outline-offset: -2px;
+  }
 }
 
 .track {
@@ -19,9 +24,14 @@
   will-change: transform;
   animation: marquee 22s linear infinite;
 
-  &:hover {
+  &:hover,
+  .bar:focus & {
     animation-play-state: paused;
   }
+}
+
+:global(html[data-intro='pending']) .track {
+  animation-play-state: paused;
 }
 
 .segment {
@@ -35,7 +45,7 @@
   flex-shrink: 0;
   padding-right: 2.25rem;
   color: #ffffff;
-  font-family: 'JetBrains Mono', ui-monospace, monospace;
+  font-family: var(--font-jetbrains-mono), ui-monospace, monospace;
   font-size: 0.68rem;
   font-weight: 600;
   letter-spacing: 0.16em;
@@ -58,5 +68,28 @@
 
   to {
     transform: translateX(-25%);
+  }
+}
+
+@media (max-width: 767px), (prefers-reduced-motion: reduce) {
+  .track {
+    width: 100%;
+    justify-content: center;
+    animation: none;
+    transform: none;
+  }
+
+  .segment:not(:first-child),
+  .item:not(:first-child) {
+    display: none;
+  }
+
+  .item {
+    padding-right: 0;
+    font-size: 0.64rem;
+
+    &::after {
+      display: none;
+    }
   }
 }

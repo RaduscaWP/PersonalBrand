@@ -28,7 +28,7 @@
   display: block;
   margin-bottom: var(--space-2);
   color: var(--accent);
-  font-family: 'JetBrains Mono', ui-monospace, monospace;
+  font-family: var(--font-jetbrains-mono), ui-monospace, monospace;
   font-size: var(--fs-xs);
   font-weight: 600;
   letter-spacing: 0.18em;

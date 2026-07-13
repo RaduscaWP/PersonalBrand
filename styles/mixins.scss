@@ -23,7 +23,7 @@
 }
 
 @mixin mono-label {
-  font-family: 'JetBrains Mono', monospace;
+  font-family: var(--font-jetbrains-mono), monospace;
   font-size: var(--fs-mono);
   color: var(--text-secondary);
   text-transform: uppercase;

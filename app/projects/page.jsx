@@ -1,168 +1,74 @@
 import Image from 'next/image';
-import { ArrowUpRight } from 'lucide-react';
-import SectionReveal from '@/components/SectionReveal/SectionReveal';
-import BentoGrid from '@/components/BentoGrid/BentoGrid';
 import MagneticButton from '@/components/MagneticButton/MagneticButton';
+import ProjectNarrative from '@/components/InnerPages/ProjectNarrative';
 import { projects } from '@/data/projects';
+import { createMetadata } from '@/lib/metadata';
+import { createBreadcrumbStructuredData, serializeStructuredData } from '@/lib/structuredData';
 import styles from './projects.module.scss';
 
-export const metadata = {
+export const metadata = createMetadata({
   title: 'Projects',
   description:
-    'Selected projects by Radu-Stefan: COSMOS, Fly With Derek, Arca AI, CryptoTrack, and Grozav Bank.',
-};
+    'Explore Radu-Stefan’s selected client and product work, including Fly With Derek, COSMOS, Arca AI, CryptoTrack, and Grozav Bank.',
+  path: '/projects',
+  image: '/images/projects/flywithderek-live.png',
+  imageWidth: 1440,
+  imageHeight: 900,
+  imageAlt: 'Fly With Derek client website built by Radu-Stefan',
+});
 
-function ProjectStudyShell({ variant }) {
-  return (
-    <div className={styles.studyShell} data-variant={variant} aria-hidden="true">
-      <div className={styles.studyShellGlow} />
-      <div className={styles.studyShellFrame}>
-        <div className={styles.studyShellChrome}>
-          <span />
-          <span />
-          <span />
-        </div>
-        <div className={styles.studyShellBody}>
-          <div className={styles.studyShellSidebar}>
-            <span />
-            <span />
-            <span />
-            <span />
-          </div>
-          <div className={styles.studyShellMain}>
-            <div className={styles.studyShellHero} />
-            <div className={styles.studyShellRow}>
-              <span />
-              <span />
-            </div>
-            <div className={styles.studyShellMetrics}>
-              <span />
-              <span />
-              <span />
-            </div>
-          </div>
-        </div>
-      </div>
-      <div className={styles.studyShellFloat} />
-    </div>
-  );
-}
+const breadcrumbStructuredData = createBreadcrumbStructuredData([
+  { name: 'Home', path: '/' },
+  { name: 'Projects', path: '/projects' },
+]);
 
 export default function ProjectsPage() {
-  const bentoProjects = projects.filter((project) => project.featured).slice(0, 4);
-
   return (
     <div className={`page-wrap ${styles.page}`}>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: serializeStructuredData(breadcrumbStructuredData) }}
+      />
       <header className={`page-hero ${styles.hero}`}>
+        <div className={styles.heroMedia} aria-hidden="true">
+          <Image
+            src="/images/projects/flywithderek-live.png"
+            alt=""
+            fill
+            priority
+            sizes="(max-width: 768px) 100vw, 1200px"
+            className={styles.heroImage}
+          />
+        </div>
         <span className="page-kicker">Projects</span>
         <h1 className="page-title">
-          Live work that makes the hiring decision <strong>easier.</strong>
+          The work, the decisions, and <strong>what each build proves.</strong>
         </h1>
         <p className="page-lede">
-          These projects show range without drifting away from the same standard: real delivery,
-          stronger structure, clearer interfaces, and a finish that feels usable instead of almost
-          there.
+          Start with a shipped client website, then move through technical depth, product data,
+          positioning, and clearly labelled concept work. No invented metrics and no duplicate
+          gallery.
         </p>
       </header>
 
       <section className="section-shell section-shell--light">
-        <SectionReveal>
-          <div className="section-inner">
-            <div className="section-head">
-              <div>
-                <span className="section-kicker">Featured Grid</span>
-                <h2 className={`section-title ${styles.lightTitle}`}>
-                  Four primary case studies, <strong>with real client work included.</strong>
-                </h2>
-              </div>
-              <p className={`${styles.lightCopy} section-lede`}>
-                The bento layout keeps the most useful proof visible first: a real client website,
-                public builds, product taste, and the ability to ship coherent work.
-              </p>
+        <div className="section-inner">
+          <div className="section-head">
+            <div>
+              <span className="section-kicker">Case study narrative</span>
+              <h2 className={`section-title ${styles.lightTitle}`}>
+                Real client work first. <strong>Every chapter earns its place.</strong>
+              </h2>
             </div>
-
-            <div className={styles.gridWrap}>
-              <BentoGrid projects={bentoProjects} />
-            </div>
+            <p className={`${styles.lightCopy} section-lede`}>
+              Each chapter names the problem, my role, the build, and one decision that shaped the
+              result. Media stays fixed on desktop and returns to a natural reading order on touch
+              devices.
+            </p>
           </div>
-        </SectionReveal>
-      </section>
 
-      <section className="section-shell section-shell--dark">
-        <SectionReveal>
-          <div className="section-inner">
-            <div className="section-head">
-              <div>
-                <span className="section-kicker">Case Notes</span>
-                <h2 className="section-title">
-                  What each build is <strong>actually proving.</strong>
-                </h2>
-              </div>
-              <p className="section-lede">
-                A strong portfolio should explain why the work matters, not just display it. Each
-                summary below frames the real value behind the visuals.
-              </p>
-            </div>
-
-            <div className={styles.studyList}>
-              {projects.map((project, index) => (
-                <article key={project.id} className={styles.studyCard}>
-                  <div className={styles.studyIntro}>
-                    <span className={styles.studyMeta}>{project.category}</span>
-                    <h2 className={styles.studyTitle}>{project.title}</h2>
-                    <p className={styles.studySummary}>{project.shortDescription}</p>
-
-                    <div className={styles.studyTags}>
-                      {project.tags.map((tag) => (
-                        <span key={tag} className={styles.tag}>
-                          {tag}
-                        </span>
-                      ))}
-                    </div>
-
-                    <div className={styles.studyActions}>
-                      {project.liveUrl ? (
-                        <a
-                          href={project.liveUrl}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className={styles.caseLink}
-                        >
-                          Live site <ArrowUpRight size={14} />
-                        </a>
-                      ) : (
-                        <span className={styles.caseUnavailable}>Live demo unavailable</span>
-                      )}
-                      <a
-                        href={project.githubUrl}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className={styles.caseLinkMuted}
-                      >
-                        GitHub <ArrowUpRight size={12} />
-                      </a>
-                    </div>
-                  </div>
-
-                  <div className={styles.studyMedia}>
-                    {project.image ? (
-                      <Image
-                        src={project.image}
-                        alt={`${project.title} website preview`}
-                        fill
-                        sizes="(max-width: 900px) 100vw, 50vw"
-                        className={styles.studyImage}
-                      />
-                    ) : (
-                      <ProjectStudyShell variant={(index % 4) + 1} />
-                    )}
-                    <div className={styles.studyMediaOverlay} aria-hidden="true" />
-                  </div>
-                </article>
-              ))}
-            </div>
-          </div>
-        </SectionReveal>
+          <ProjectNarrative projects={projects} />
+        </div>
       </section>
 
       <section className="section-shell section-shell--dark">

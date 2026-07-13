@@ -1,5 +1,9 @@
+'use client';
+
 import { Check, Clock } from 'lucide-react';
 import MagneticButton from '../MagneticButton/MagneticButton';
+import HoverSwapText from '@/components/motion/HoverSwapText';
+import { trackEvent } from '@/lib/analytics';
 import styles from './PricingCard.module.scss';
 
 export default function PricingCard({ plan }) {
@@ -36,8 +40,9 @@ export default function PricingCard({ plan }) {
         <MagneticButton
           href={`/contact?service=${plan.id}`}
           variant={plan.highlight ? 'primary' : 'paper'}
+          onClick={() => trackEvent('pricing_package_click', { package: plan.id })}
         >
-          Start a project
+          <HoverSwapText alternate="Send the brief">Start a project</HoverSwapText>
         </MagneticButton>
       </div>
     </article>

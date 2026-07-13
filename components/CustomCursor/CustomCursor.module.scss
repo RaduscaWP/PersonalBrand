@@ -10,6 +10,7 @@
   pointer-events: none;
   z-index: 9999;
   will-change: transform;
+  transition: opacity var(--motion-fast) ease;
 }
 
 .ring {
@@ -25,17 +26,52 @@
   z-index: 9998;
   opacity: 0.78;
   will-change: transform;
-  transition: width 0.2s ease, height 0.2s ease, background 0.2s ease, opacity 0.2s ease,
-    margin 0.2s ease, border-color 0.2s ease;
+  display: grid;
+  place-items: center;
+  transition:
+    scale var(--motion-fast) var(--ease-out),
+    background var(--motion-fast) ease,
+    opacity var(--motion-fast) ease,
+    border-color var(--motion-fast) ease;
 
   &.hovered {
-    width: 52px;
-    height: 52px;
-    margin: -9px 0 0 -9px;
+    scale: 1.46;
     opacity: 1;
     border-color: rgba(185, 153, 255, 0.85);
     background: rgba(124, 58, 237, 0.13);
   }
+
+  &.contextual {
+    scale: 2.05;
+    border-color: rgba(185, 153, 255, 0.72);
+    background: rgba(8, 8, 8, 0.76);
+  }
+
+  &.form {
+    opacity: 0;
+  }
+}
+
+.dot.form {
+  opacity: 0;
+}
+
+.label {
+  max-width: 5ch;
+  overflow: hidden;
+  color: #fff;
+  font-family: var(--font-jetbrains-mono), ui-monospace, monospace;
+  font-size: 0.38rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-align: center;
+  text-transform: uppercase;
+  opacity: 0;
+  transition: opacity var(--motion-fast) ease;
+}
+
+.contextual .label {
+  opacity: 1;
 }
 
 @media (pointer: coarse), (prefers-reduced-motion: reduce) {

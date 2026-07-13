@@ -16,7 +16,12 @@ const LOOPS = 4;
 
 export default function AnnouncementBar() {
   return (
-    <div className={styles.bar} aria-label="Freelance availability ticker">
+    <div
+      className={styles.bar}
+      role="region"
+      tabIndex={0}
+      aria-label="Freelance availability ticker. Focus to pause movement."
+    >
       <div className={styles.track}>
         {Array.from({ length: LOOPS }).map((_, index) => (
           <div

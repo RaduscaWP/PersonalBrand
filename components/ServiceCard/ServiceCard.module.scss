@@ -1,62 +1,111 @@
 .card {
   position: relative;
+  display: block;
+  width: 100%;
+  height: 100%;
+  min-width: 0;
+  min-height: 430px;
+  padding: 0;
+  border: 0;
+  border-radius: 24px;
+  background: transparent;
+  color: inherit;
+  font: inherit;
+  text-align: left;
+  appearance: none;
+  perspective: 1500px;
+  perspective-origin: 50% 50%;
+  isolation: isolate;
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
+}
+
+.flipper {
+  position: relative;
+  display: grid;
+  width: 100%;
+  height: 100%;
+  min-height: inherit;
+  border-radius: inherit;
+  transform: rotateY(0deg);
+  transform-origin: 50% 50%;
+  transform-style: preserve-3d;
+  -webkit-transform-style: preserve-3d;
+  transition: transform 600ms cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.active .flipper {
+  transform: rotateY(180deg);
+}
+
+.face {
+  position: relative;
+  grid-area: 1 / 1;
   display: flex;
   flex-direction: column;
-  min-height: 430px;
+  min-width: 0;
   padding: 1.2rem;
-  border-radius: 24px;
+  overflow: hidden;
   border: 1px solid rgba(255, 255, 255, 0.11);
-  background-color: #0f1218;
+  border-radius: inherit;
+  background: #0f1218;
   box-shadow:
     inset 0 0 0 1px rgba(255, 255, 255, 0.02),
-    0 18px 42px rgba(8, 8, 8, 0),
-    0 0 22px rgba(124, 58, 237, 0);
-  text-align: left;
+    0 18px 42px rgba(8, 8, 8, 0);
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  transform-style: preserve-3d;
+  -webkit-transform-style: preserve-3d;
   transition:
-    background-color 560ms cubic-bezier(0.22, 1, 0.36, 1),
-    border-color 560ms cubic-bezier(0.22, 1, 0.36, 1),
-    box-shadow 560ms cubic-bezier(0.22, 1, 0.36, 1),
-    transform 560ms cubic-bezier(0.22, 1, 0.36, 1);
+    border-color var(--motion-standard) ease,
+    box-shadow var(--motion-reveal) var(--ease-out);
 }
 
-.card::before,
-.card::after {
-  content: '';
-  position: absolute;
-  inset: 0;
-  border-radius: inherit;
-  pointer-events: none;
-  z-index: 0;
-  transition: opacity 560ms cubic-bezier(0.22, 1, 0.36, 1);
-}
-
-.card::before {
-  background-color: #0f1218;
-  opacity: 1;
-}
-
-.card::after {
-  background: linear-gradient(180deg, rgba(168, 85, 247, 0.96), rgba(109, 40, 217, 0.95));
-  opacity: 0;
-}
-
-.card > * {
+.face > * {
   position: relative;
   z-index: 1;
+}
+
+.front {
+  transform: rotateY(0deg) translateZ(0.75px);
+}
+
+.back {
+  transform: rotateY(180deg) translateZ(0.75px);
+  border-color: rgba(255, 255, 255, 0.18);
+  background: linear-gradient(
+    160deg,
+    var(--accent-light) 0%,
+    var(--accent) 46%,
+    var(--accent-hover) 100%
+  );
+  box-shadow:
+    inset 0 0 0 1px rgba(255, 255, 255, 0.08),
+    0 22px 48px rgba(8, 8, 8, 0.28),
+    0 0 24px rgba(124, 58, 237, 0.16);
 }
 
 .interactive {
   cursor: pointer;
 }
 
-.interactive:hover,
-.interactive:focus-visible,
-.active {
-  border-color: rgba(124, 58, 237, 0.55);
+.interactive .flipper {
+  will-change: transform;
+}
+
+.interactive:hover .face,
+.interactive:focus-visible .face,
+.active .face {
+  border-color: rgba(124, 58, 237, 0.52);
   box-shadow:
-    inset 0 0 0 1px rgba(255, 255, 255, 0),
-    0 18px 42px rgba(8, 8, 8, 0.2),
-    0 0 22px rgba(124, 58, 237, 0.14);
+    inset 0 0 0 1px rgba(255, 255, 255, 0.035),
+    0 20px 46px rgba(8, 8, 8, 0.22),
+    0 0 24px rgba(124, 58, 237, 0.12);
+}
+
+.interactive:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 4px;
 }
 
 .badge {
@@ -65,20 +114,16 @@
   border-radius: 12px;
   background: rgba(124, 58, 237, 0.92);
   color: #ffffff;
-  font-family: 'JetBrains Mono', ui-monospace, monospace;
+  font-family: var(--font-jetbrains-mono), ui-monospace, monospace;
   font-size: 0.8rem;
   font-weight: 700;
   letter-spacing: 0.06em;
   text-transform: uppercase;
-  transition:
-    background-color 560ms cubic-bezier(0.22, 1, 0.36, 1),
-    color 560ms cubic-bezier(0.22, 1, 0.36, 1);
 }
 
 .iconWrap {
   margin-top: 1.6rem;
   color: var(--accent-light);
-  transition: color 560ms cubic-bezier(0.22, 1, 0.36, 1);
 }
 
 .copy {
@@ -91,7 +136,6 @@
   font-size: clamp(2rem, 2.5vw, 2.55rem);
   line-height: 0.95;
   letter-spacing: -0.04em;
-  transition: color 560ms cubic-bezier(0.22, 1, 0.36, 1);
 }
 
 .desc {
@@ -100,32 +144,28 @@
   color: rgba(255, 255, 255, 0.72);
   font-size: 0.98rem;
   line-height: 1.65;
-  transition: color 560ms cubic-bezier(0.22, 1, 0.36, 1);
 }
 
 .returnHint {
   display: inline-block;
   margin-top: 1rem;
-  color: rgba(255, 255, 255, 0.84);
+  color: rgba(255, 255, 255, 0.88);
   font-size: 0.88rem;
-  transition:
-    color 560ms cubic-bezier(0.22, 1, 0.36, 1),
-    opacity 560ms cubic-bezier(0.22, 1, 0.36, 1);
 }
 
-.active::after {
-  opacity: 1;
+.back .badge {
+  background: rgba(255, 255, 255, 0.14);
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.08);
 }
 
-.active .badge {
-  background-color: rgba(255, 255, 255, 0.12);
-}
-
-.active .iconWrap,
-.active .title,
-.active .desc,
-.active .returnHint {
+.back .iconWrap,
+.back .title,
+.back .desc {
   color: #ffffff;
+}
+
+.back .desc {
+  color: rgba(255, 255, 255, 0.86);
 }
 
 @media (max-width: 768px) {
@@ -140,7 +180,10 @@
 
 @media (max-width: 480px) {
   .card {
-    min-height: auto;
+    min-height: 340px;
+  }
+
+  .face {
     padding: 1rem;
   }
 
@@ -169,14 +212,36 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .card,
-  .card::before,
-  .card::after,
-  .badge,
-  .iconWrap,
-  .title,
-  .desc,
-  .returnHint {
+  .flipper,
+  .interactive .flipper {
+    transform: none !important;
     transition: none;
+    will-change: auto;
+  }
+
+  .back {
+    display: none;
+  }
+
+  .active .front {
+    border-color: rgba(255, 255, 255, 0.18);
+    background: linear-gradient(
+      160deg,
+      var(--accent-light) 0%,
+      var(--accent) 46%,
+      var(--accent-hover) 100%
+    );
+    box-shadow:
+      inset 0 0 0 1px rgba(255, 255, 255, 0.08),
+      0 22px 48px rgba(8, 8, 8, 0.28),
+      0 0 24px rgba(124, 58, 237, 0.16);
+  }
+
+  .active .front .badge {
+    background: rgba(255, 255, 255, 0.14);
+  }
+
+  .active .front .iconWrap {
+    color: #ffffff;
   }
 }

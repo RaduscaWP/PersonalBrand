@@ -1,33 +1,61 @@
 'use client';
 
-import { useEffect, useRef } from 'react';
-import { gsap } from 'gsap';
-import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import { useRef } from 'react';
+import { gsap, ScrollTrigger, useGSAP } from '@/lib/motion/register';
+import { motion } from '@/lib/motion/tokens';
+import { useMotion } from '@/components/motion/MotionProvider';
 
-export default function SectionReveal({ children, y = 50, delay = 0, className = '' }) {
+export default function SectionReveal({
+  children,
+  y = motion.distance.reveal,
+  delay = 0,
+  duration = motion.duration.reveal,
+  stagger = 0,
+  selector,
+  as: Component = 'div',
+  className = '',
+}) {
   const ref = useRef(null);
+  const { reduceMotion } = useMotion();
 
-  useEffect(() => {
-    if (!ref.current) return undefined;
-    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return undefined;
+  useGSAP(
+    () => {
+      const root = ref.current;
+      if (!root) return undefined;
 
-    gsap.registerPlugin(ScrollTrigger);
-    const ctx = gsap.context(() => {
-      gsap.from(ref.current, {
-        scrollTrigger: { trigger: ref.current, start: 'top 82%', once: true },
+      const targets = selector ? root.querySelectorAll(selector) : root;
+      if (reduceMotion) {
+        gsap.set(targets, { clearProps: 'all' });
+        return undefined;
+      }
+
+      const animation = gsap.from(targets, {
         y,
-        opacity: 0,
-        duration: 0.75,
+        autoAlpha: 0,
+        duration,
         delay,
-        ease: 'power3.out',
+        stagger,
+        ease: motion.ease.out,
+        scrollTrigger: {
+          trigger: root,
+          start: 'top 84%',
+          once: true,
+        },
+        onComplete: () => gsap.set(targets, { clearProps: 'transform,opacity,visibility' }),
       });
-    }, ref);
-    return () => ctx.revert();
-  }, [y, delay]);
+
+      return () => animation.scrollTrigger?.kill();
+    },
+    {
+      scope: ref,
+      dependencies: [delay, duration, reduceMotion, selector, stagger, y],
+      revertOnUpdate: true,
+    },
+  );
 
   return (
-    <div ref={ref} className={className}>
+    <Component ref={ref} className={className}>
       {children}
-    </div>
+    </Component>
   );
 }

@@ -4,6 +4,12 @@ import { ArrowLeft, ArrowUpRight } from 'lucide-react';
 import SectionReveal from '@/components/SectionReveal/SectionReveal';
 import MagneticButton from '@/components/MagneticButton/MagneticButton';
 import { blogPosts } from '@/data/blog';
+import { createMetadata } from '@/lib/metadata';
+import {
+  createArticleStructuredData,
+  createBreadcrumbStructuredData,
+  serializeStructuredData,
+} from '@/lib/structuredData';
 import styles from './post.module.scss';
 
 export function generateStaticParams() {
@@ -13,14 +19,27 @@ export function generateStaticParams() {
 export async function generateMetadata({ params }) {
   const { slug } = await params;
   const post = blogPosts.find((p) => p.slug === slug);
-  if (!post) return {};
+  if (!post) {
+    return createMetadata({
+      title: 'Article not found',
+      description: 'This article is not available.',
+      path: `/blog/${slug}`,
+      robots: { index: false, follow: false },
+    });
+  }
 
-  return {
+  return createMetadata({
     title: post.title,
     description: post.excerpt,
-    openGraph: { title: post.title, description: post.excerpt, type: 'article' },
+    path: `/blog/${post.slug}`,
+    image: post.image || '/images/hero-default.jpg',
+    imageWidth: post.image ? 1200 : 1920,
+    imageHeight: post.image ? 800 : 1080,
+    imageAlt: post.image ? `${post.title} article preview` : 'Radu-Stefan development notes',
+    type: 'article',
+    publishedTime: post.draft ? undefined : post.date,
     robots: post.draft ? { index: false, follow: true } : undefined,
-  };
+  });
 }
 
 function formatDate(iso) {
@@ -48,6 +67,14 @@ export default async function BlogPost({ params }) {
   if (!post) notFound();
 
   const draftOutline = post.draft ? getDraftOutline(post.content) : null;
+  const structuredData = [
+    createBreadcrumbStructuredData([
+      { name: 'Home', path: '/' },
+      { name: 'Notes / Lab', path: '/blog' },
+      { name: post.title, path: `/blog/${post.slug}` },
+    ]),
+    createArticleStructuredData(post),
+  ].filter(Boolean);
   const paragraphs = draftOutline
     ? [
         'This article is outlined, but not fully written yet.',
@@ -57,6 +84,13 @@ export default async function BlogPost({ params }) {
 
   return (
     <article className={`page-wrap ${styles.page}`}>
+      {structuredData.map((entry) => (
+        <script
+          key={entry['@type']}
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: serializeStructuredData(entry) }}
+        />
+      ))}
       <Link href="/blog" className={styles.back}>
         <ArrowLeft size={14} /> All posts
       </Link>

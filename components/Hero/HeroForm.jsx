@@ -1,190 +1,187 @@
 'use client';
 
-import { useEffect, useState } from 'react';
-import { Send } from 'lucide-react';
-import CustomSelect from '@/components/CustomSelect/CustomSelect';
+import { useEffect, useMemo, useRef, useState } from 'react';
+import { ArrowRight, Check } from 'lucide-react';
+import MagneticButton from '@/components/MagneticButton/MagneticButton';
+import { Flip, gsap } from '@/lib/motion/register';
+import { motion } from '@/lib/motion/tokens';
+import { useMotion } from '@/components/motion/MotionProvider';
+import { trackEvent } from '@/lib/analytics';
 import styles from './Hero.module.scss';
 
-function getFriendlyError(status, payload) {
-  if (status === 400) return payload?.error || 'Check the form details and try again.';
-  if (status === 429) return 'Too many requests. Please wait a bit before trying again.';
-  if (status === 503) return payload?.error || 'Email delivery is being configured. Email me directly if this is urgent.';
-  return 'Something went wrong. Email me directly if this keeps failing.';
+const goals = [
+  'Launch something new',
+  'Improve an existing build',
+  'Remove manual work',
+  'Connect existing tools',
+];
+
+function makeDeliveryOptions(selected) {
+  const budgets = selected?.budgets || [];
+  const timelines = selected?.timelines || [];
+  return [
+    {
+      id: 'focused',
+      label: 'Focused start',
+      budget: budgets[0] || 'Not sure yet',
+      timeline: timelines[0] || 'Flexible',
+    },
+    {
+      id: 'balanced',
+      label: 'Balanced scope',
+      budget: budgets[1] || budgets[0] || 'Not sure yet',
+      timeline: timelines[1] || timelines[0] || 'Flexible',
+    },
+    {
+      id: 'flexible',
+      label: 'Scope together',
+      budget: 'Not sure yet',
+      timeline: 'Flexible',
+    },
+  ];
 }
 
 export default function HeroForm({ selected }) {
-  const [form, setForm] = useState({ budget: '', timeline: '', email: '', description: '', companyUrl: '' });
-  const [status, setStatus] = useState('idle');
-  const [errorMessage, setErrorMessage] = useState('');
-  const [reference, setReference] = useState('');
-  const [activeSelect, setActiveSelect] = useState(null);
-
-  const budgets = selected?.budgets ?? ['$300-500', '$500-1000', '$1000-2000', '$2000+'];
-  const timelines = selected?.timelines ?? ['1 week', '2 weeks', '3 weeks', 'Flexible'];
-  const placeholder =
-    selected?.formPlaceholder ??
-    'Describe the project, the audience, the references you like, and what the build needs to achieve.';
+  const rootRef = useRef(null);
+  const previousLayout = useRef(null);
+  const completionTracked = useRef(false);
+  const [goal, setGoal] = useState('');
+  const [deliveryId, setDeliveryId] = useState('');
+  const { reduceMotion } = useMotion();
+  const deliveryOptions = useMemo(() => makeDeliveryOptions(selected), [selected]);
+  const delivery = deliveryOptions.find((item) => item.id === deliveryId);
+  const complete = Boolean(goal && delivery);
 
   useEffect(() => {
-    setStatus('idle');
-    setErrorMessage('');
-    setReference('');
-    setActiveSelect(null);
-    setForm((current) => ({
-      ...current,
-      budget: '',
-      timeline: '',
-      description: current.description,
-    }));
+    setGoal('');
+    setDeliveryId('');
+    completionTracked.current = false;
   }, [selected?.id]);
 
-  const updateField = (key, value) => {
-    setStatus('idle');
-    setErrorMessage('');
-    setReference('');
-    setForm((current) => ({ ...current, [key]: value }));
+  useEffect(() => {
+    if (!previousLayout.current || !rootRef.current || reduceMotion) return;
+    const animation = Flip.from(previousLayout.current, {
+      targets: rootRef.current.querySelectorAll('[data-brief-layout]'),
+      duration: motion.duration.control,
+      ease: motion.ease.out,
+      nested: true,
+      prune: true,
+    });
+    previousLayout.current = null;
+    return () => animation?.kill();
+  }, [deliveryId, goal, reduceMotion]);
+
+  const captureLayout = () => {
+    if (!rootRef.current || reduceMotion) return;
+    previousLayout.current = Flip.getState(rootRef.current.querySelectorAll('[data-brief-layout]'));
   };
 
-  const handleSubmit = async (event) => {
-    event.preventDefault();
-    if (!form.email) return;
-    setStatus('sending');
+  const selectGoal = (nextGoal) => {
+    captureLayout();
+    setGoal(nextGoal);
+  };
 
-    try {
-      const response = await fetch('/api/contact', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          projectType: selected?.label ?? 'General Inquiry',
-          domain: selected?.domainLabel || '',
-          source: 'hero',
-          ...form,
-        }),
-      });
+  const selectDelivery = (nextDelivery) => {
+    captureLayout();
+    setDeliveryId(nextDelivery);
+  };
 
-      const payload = await response.json().catch(() => null);
+  const href = useMemo(() => {
+    if (!complete) return '/contact';
+    const query = new URLSearchParams({
+      domain: selected.domainId,
+      service: selected.id,
+      goal,
+      budget: delivery.budget,
+      timeline: delivery.timeline,
+    });
+    return `/contact?${query.toString()}`;
+  }, [complete, delivery, goal, selected]);
 
-      if (!response.ok) {
-        setErrorMessage(getFriendlyError(response.status, payload));
-        setStatus('error');
-        return;
-      }
-
-      setReference(payload?.reference || '');
-      setStatus('sent');
-    } catch {
-      setErrorMessage('Network error. Please try again or email me directly.');
-      setStatus('error');
+  useEffect(() => {
+    if (!complete) return undefined;
+    if (!completionTracked.current) {
+      completionTracked.current = true;
+      trackEvent('interactive_brief_completed', { service: selected.id });
     }
-  };
-
-  if (status === 'sent') {
-    return (
-      <div className={styles.formSuccess} role="status" aria-live="polite">
-        Request received. I will reply within 24 hours.
-        {reference ? <> Reference: <strong>{reference}</strong>.</> : null}
-      </div>
+    if (reduceMotion || !rootRef.current) return undefined;
+    const summary = rootRef.current.querySelector('[data-brief-summary]');
+    gsap.fromTo(
+      summary,
+      { y: 8, autoAlpha: 0 },
+      { y: 0, autoAlpha: 1, duration: motion.duration.control, ease: motion.ease.out },
     );
-  }
+    return () => gsap.killTweensOf(summary);
+  }, [complete, reduceMotion, selected.id]);
 
   return (
-    <form onSubmit={handleSubmit} className={styles.form} aria-busy={status === 'sending'}>
-      <div className={styles.formCluster}>
-        <div className={styles.formControls}>
-          <div className={`${styles.formField} ${styles.fieldBudget}`}>
-            <span className={styles.fieldLabel}>Budget</span>
-            <CustomSelect
-              id="hero-budget"
-              value={form.budget}
-              onChange={(value) => updateField('budget', value)}
-              className={styles.inlineSelect}
-              label="Budget"
-              theme="darkInline"
-              menuPlacement="fieldOverlay"
-              open={activeSelect === 'budget'}
-              onOpenChange={(open) => setActiveSelect(open ? 'budget' : null)}
-              placeholder="Select budget"
-              options={budgets}
-              disabled={status === 'sending'}
-            />
-          </div>
+    <div ref={rootRef} className={styles.briefFlow}>
+      <ol className={styles.briefProgress} aria-label="Brief progress">
+        {['Scope', 'Outcome', 'Delivery'].map((label, index) => {
+          const done = index === 0 || (index === 1 && goal) || (index === 2 && complete);
+          const active = (index === 1 && !goal) || (index === 2 && goal && !complete);
+          return (
+            <li key={label} className={`${done ? styles.briefStepDone : ''} ${active ? styles.briefStepActive : ''}`}>
+              <span>{done ? <Check size={12} /> : index + 1}</span>
+              {label}
+            </li>
+          );
+        })}
+      </ol>
 
-          <div className={`${styles.formField} ${styles.fieldTimeline}`}>
-            <span className={styles.fieldLabel}>Timeline</span>
-            <CustomSelect
-              id="hero-timeline"
-              value={form.timeline}
-              onChange={(value) => updateField('timeline', value)}
-              className={styles.inlineSelect}
-              label="Timeline"
-              theme="darkInline"
-              menuPlacement="fieldOverlay"
-              open={activeSelect === 'timeline'}
-              onOpenChange={(open) => setActiveSelect(open ? 'timeline' : null)}
-              placeholder="Select timeline"
-              options={timelines}
-              disabled={status === 'sending'}
-            />
-          </div>
+      <fieldset className={styles.briefFieldset} data-brief-layout>
+        <legend>What should this project achieve?</legend>
+        <div className={styles.briefChoices} role="group" aria-label="Project goal">
+          {goals.map((item) => (
+            <button
+              key={item}
+              type="button"
+              className={goal === item ? styles.briefChoiceActive : ''}
+              aria-pressed={goal === item}
+              onClick={() => selectGoal(item)}
+            >
+              {item}
+            </button>
+          ))}
         </div>
+      </fieldset>
 
-        <div className={styles.formContactRow}>
-          <label className={`${styles.formField} ${styles.fieldEmail}`} htmlFor="hero-email">
-            <span className={styles.fieldLabel}>Email</span>
-            <input
-              id="hero-email"
-              type="email"
-              required
-              value={form.email}
-              onChange={(event) => updateField('email', event.target.value)}
-              maxLength={254}
-              placeholder="you@company.com"
-              className={styles.input}
-              disabled={status === 'sending'}
-            />
-          </label>
-
-          <button
-            type="submit"
-            className={styles.submitBtn}
-            disabled={status === 'sending'}
-            aria-label="Send project request"
-          >
-            {status === 'sending' ? '...' : <Send size={18} />}
-          </button>
-        </div>
-      </div>
-
-      <label className="sr-only" htmlFor="hero-project-details">
-        Project details
-      </label>
-      <textarea
-        id="hero-project-details"
-        rows={4}
-        value={form.description}
-        onChange={(event) => updateField('description', event.target.value)}
-        maxLength={2400}
-        placeholder={placeholder}
-        className={styles.textarea}
-        disabled={status === 'sending'}
-        />
-
-      <label className={styles.honeypot} aria-hidden="true">
-        Company URL
-        <input
-          type="text"
-          tabIndex={-1}
-          autoComplete="off"
-          maxLength={200}
-          value={form.companyUrl}
-          onChange={(event) => updateField('companyUrl', event.target.value)}
-          disabled={status === 'sending'}
-        />
-      </label>
-
-      {status === 'error' ? (
-        <p className={styles.formError} role="alert">{errorMessage || 'Something went wrong. Email me directly if this keeps failing.'}</p>
+      {goal ? (
+        <fieldset className={styles.briefFieldset} data-brief-layout>
+          <legend>Choose the planning lane</legend>
+          <div className={styles.deliveryChoices} role="group" aria-label="Budget and timeline lane">
+            {deliveryOptions.map((item) => (
+              <button
+                key={item.id}
+                type="button"
+                className={deliveryId === item.id ? styles.deliveryChoiceActive : ''}
+                aria-pressed={deliveryId === item.id}
+                onClick={() => selectDelivery(item.id)}
+              >
+                <strong>{item.label}</strong>
+                <span>{item.budget} / {item.timeline}</span>
+              </button>
+            ))}
+          </div>
+        </fieldset>
       ) : null}
-    </form>
+
+      {complete ? (
+        <div className={styles.briefSummary} data-brief-layout data-brief-summary aria-live="polite">
+          <span className={styles.briefSummaryLabel}>Mini brief ready</span>
+          <p>
+            <strong>{selected.label}</strong> to {goal.toLowerCase()}, planned around{' '}
+            <strong>{delivery.budget}</strong> and <strong>{delivery.timeline}</strong>.
+          </p>
+          <MagneticButton href={href} variant="primary" data-cursor="SEND">
+            Continue with this brief <ArrowRight size={15} />
+          </MagneticButton>
+        </div>
+      ) : (
+        <p className={styles.briefHint} data-brief-layout>
+          Two quick choices create a safe, prefilled contact brief. You can edit everything there.
+        </p>
+      )}
+    </div>
   );
 }

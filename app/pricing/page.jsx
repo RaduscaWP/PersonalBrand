@@ -1,16 +1,20 @@
 import Link from 'next/link';
 import { ArrowUpRight, Info } from 'lucide-react';
 import SectionReveal from '@/components/SectionReveal/SectionReveal';
-import PricingCard from '@/components/PricingCard/PricingCard';
+import PricingExplorer from '@/components/InnerPages/PricingExplorer';
 import MagneticButton from '@/components/MagneticButton/MagneticButton';
 import { pricing } from '@/data/pricing';
+import { createMetadata } from '@/lib/metadata';
 import styles from './pricing.module.scss';
 
-export const metadata = {
+export const metadata = createMetadata({
   title: 'Pricing',
   description:
-    'Transparent pricing by Radu-Stefan. Landing pages, Figma-to-code, UI/UX, full websites, web apps, SEO.',
-};
+    'Review transparent starting ranges for landing pages, websites, web applications, Figma-to-code, UI design, and SEO work.',
+  path: '/pricing',
+  image: '/images/hero-landing.jpg',
+  imageAlt: 'Website project pricing by Radu-Stefan',
+});
 
 const pricingFacts = [
   { label: 'Currency', value: 'USD or EUR' },
@@ -85,11 +89,7 @@ export default function PricingPage() {
               </p>
             </div>
 
-            <div className={styles.grid}>
-              {pricing.map((plan) => (
-                <PricingCard key={plan.id} plan={plan} />
-              ))}
-            </div>
+            <PricingExplorer plans={pricing} />
           </div>
         </SectionReveal>
       </section>

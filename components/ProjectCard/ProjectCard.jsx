@@ -1,5 +1,9 @@
+'use client';
+
 import Image from 'next/image';
 import { ArrowUpRight, Github } from 'lucide-react';
+import ImageReveal from '@/components/motion/ImageReveal';
+import { trackEvent } from '@/lib/analytics';
 import styles from './ProjectCard.module.scss';
 
 function ProjectMediaShell() {
@@ -45,20 +49,22 @@ export default function ProjectCard({ project, sizeClass = '' }) {
       className={`${styles.card} ${sizeClass}`}
       style={{ '--project-accent': project.accent || 'var(--accent)' }}
     >
-      <div className={styles.media} aria-hidden="true">
-        {project.image ? (
-          <Image
-            src={project.image}
-            alt=""
-            fill
-            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 40vw"
-            loading={project.id === 1 ? 'eager' : 'lazy'}
-            className={styles.projectImage}
-          />
-        ) : (
-          <ProjectMediaShell />
-        )}
-      </div>
+      <ImageReveal className={styles.mediaReveal}>
+        <div className={styles.media} aria-hidden="true" data-cursor="VIEW CASE">
+          {project.image ? (
+            <Image
+              src={project.image}
+              alt=""
+              fill
+              sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 40vw"
+              loading="lazy"
+              className={styles.projectImage}
+            />
+          ) : (
+            <ProjectMediaShell />
+          )}
+        </div>
+      </ImageReveal>
 
       <div className={styles.gradient} aria-hidden="true" />
 
@@ -71,6 +77,7 @@ export default function ProjectCard({ project, sizeClass = '' }) {
             rel="noopener noreferrer"
             className={styles.arrow}
             aria-label={`${project.title} live site`}
+            onClick={() => trackEvent('project_live_click', { project: project.slug })}
           >
             <ArrowUpRight size={18} />
           </a>
@@ -96,6 +103,7 @@ export default function ProjectCard({ project, sizeClass = '' }) {
             rel="noopener noreferrer"
             className={styles.ghost}
             aria-label={`${project.title} GitHub repository`}
+            onClick={() => trackEvent('project_github_click', { project: project.slug })}
           >
             <Github size={14} />
             GitHub
@@ -106,6 +114,7 @@ export default function ProjectCard({ project, sizeClass = '' }) {
               target="_blank"
               rel="noopener noreferrer"
               className={styles.inlineLink}
+              onClick={() => trackEvent('project_live_click', { project: project.slug })}
             >
               Live site <ArrowUpRight size={14} />
             </a>

@@ -1,24 +1,22 @@
 import Link from 'next/link';
-import { ArrowUpRight } from 'lucide-react';
+import { ArrowUpRight, FlaskConical } from 'lucide-react';
 import SectionReveal from '@/components/SectionReveal/SectionReveal';
-import ServiceCard from '@/components/ServiceCard/ServiceCard';
+import ServiceChapters from '@/components/InnerPages/ServiceChapters';
 import MagneticButton from '@/components/MagneticButton/MagneticButton';
 import { services } from '@/data/services';
+import { createMetadata } from '@/lib/metadata';
 import styles from './services.module.scss';
 
-export const metadata = {
+export const metadata = createMetadata({
   title: 'Services',
   description:
-    "Services available from Radu-Stefan: websites, React apps, automation scripts, API integrations, email workflows, UI/UX, and SEO.",
-};
+    'Websites, web applications, Figma-to-code, automation, API integrations, and UI implementation delivered by Radu-Stefan.',
+  path: '/services',
+  image: '/images/hero-website.jpg',
+  imageAlt: 'Website and software development services by Radu-Stefan',
+});
 
 export default function ServicesPage() {
-  const signature = services
-    .filter((service) => service.availability === 'now' && service.previewOrder)
-    .sort((left, right) => left.previewOrder - right.previewOrder);
-  const supporting = services.filter(
-    (service) => service.availability === 'now' && !service.previewOrder,
-  );
   const roadmap = services.filter((service) => service.availability !== 'now');
 
   return (
@@ -34,62 +32,23 @@ export default function ServicesPage() {
         </p>
       </header>
 
-      <section className="section-shell section-shell--light">
-        <SectionReveal>
-          <div className="section-inner">
-            <div className="section-head">
-              <div>
-                <span className="section-kicker">Available Now</span>
-                <h2 className={`section-title ${styles.lightTitle}`}>
-                  The website-facing offers <strong>ready to sell today.</strong>
-                </h2>
-              </div>
-              <p className={`${styles.lightCopy} section-lede`}>
-                These stay at the top because they are easiest for clients to recognize quickly:
-                pages, websites, Figma implementation, and interface design.
-              </p>
+      <section className={`section-shell section-shell--dark ${styles.chapterSection}`}>
+        <div className="section-inner">
+          <div className="section-head">
+            <div>
+              <span className="section-kicker">Available Now</span>
+              <h2 className="section-title">
+                Three ways to turn a business problem <strong>into working software.</strong>
+              </h2>
             </div>
-
-            <div className={styles.signatureGrid}>
-              {signature.map((service) => (
-                <ServiceCard
-                  key={service.id}
-                  service={service}
-                  active={service.featured}
-                />
-              ))}
-            </div>
+            <p className="section-lede">
+              Follow the chapter closest to the outcome you need. Each one shows the exact offers,
+              a real proof point, and the boundary I would clarify before quoting.
+            </p>
           </div>
-        </SectionReveal>
-      </section>
 
-      <section className="section-shell section-shell--dark">
-        <SectionReveal>
-          <div className="section-inner">
-            <div className="section-head">
-              <div>
-                <span className="section-kicker">Software & Automation</span>
-                <h2 className="section-title">
-                  Scripts, integrations, and tools <strong>below the web layer.</strong>
-                </h2>
-              </div>
-              <p className="section-lede">
-                This is where the portfolio expands from web design into software development:
-                business automation, API connections, email flows, and internal systems.
-              </p>
-            </div>
-
-            <div className={styles.capabilityGrid}>
-              {supporting.map((service) => (
-                <article key={service.id} className={styles.capabilityCard}>
-                  <span className={styles.capabilityLabel}>{service.label}</span>
-                  <h3>{service.title}</h3>
-                  <p>{service.description}</p>
-                </article>
-              ))}
-            </div>
-          </div>
-        </SectionReveal>
+          <ServiceChapters />
+        </div>
       </section>
 
       <section className="section-shell section-shell--light">
@@ -99,18 +58,28 @@ export default function ServicesPage() {
               <div>
                 <span className="section-kicker">Roadmap</span>
                 <h2 className={`section-title ${styles.lightTitle}`}>
-                  Publicly honest about <strong>what is not for sale yet.</strong>
+                  Learning in public, <strong>not selling ahead of proof.</strong>
                 </h2>
               </div>
               <p className={`${styles.lightCopy} section-lede`}>
-                The roadmap signals ambition without pretending the skill is already commercially
-                mature. That honesty improves trust rather than reducing it.
+                These capabilities are still being developed. They are shown as direction only and
+                are not currently offered as standalone commercial services.
               </p>
             </div>
 
-            <div className={styles.roadmapGrid}>
+            <div className={styles.roadmapNotice}>
+              <FlaskConical size={18} aria-hidden="true" />
+              <span>Learning roadmap · Not currently bookable</span>
+            </div>
+
+            <div
+              className={styles.roadmapTimeline}
+              role="list"
+              aria-label="Learning roadmap, not currently bookable"
+            >
               {roadmap.map((service) => (
-                <article key={service.id} className={styles.roadmapCard}>
+                <article key={service.id} className={styles.roadmapCard} role="listitem">
+                  <span className={styles.roadmapDot} aria-hidden="true" />
                   <span className={styles.roadmapMeta}>{service.label}</span>
                   <h3>{service.title}</h3>
                   <p>{service.description}</p>

@@ -12,9 +12,9 @@
   letter-spacing: -0.01em;
   text-decoration: none;
   border: 1px solid transparent;
-  cursor: none;
-  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.3s, background 0.2s,
-    border-color 0.2s, color 0.2s;
+  cursor: pointer;
+  transition: box-shadow var(--motion-standard), background var(--motion-fast),
+    border-color var(--motion-fast), color var(--motion-fast);
 
   &:active {
     box-shadow: none;

@@ -2,13 +2,17 @@ import { Suspense } from 'react';
 import { Clock, Github, Instagram, Mail, MapPin } from 'lucide-react';
 import SectionReveal from '@/components/SectionReveal/SectionReveal';
 import ContactForm from '@/components/ContactForm/ContactForm';
+import { createMetadata } from '@/lib/metadata';
 import styles from './contact.module.scss';
 
-export const metadata = {
+export const metadata = createMetadata({
   title: 'Contact',
   description:
-    'Get in touch with Radu-Stefan for freelance work, collaborations, or questions. Response within 24 hours.',
-};
+    'Send Radu-Stefan a project brief for website, web application, automation, API integration, or interface work. Typical response within 24 hours.',
+  path: '/contact',
+  image: '/images/hero-default.jpg',
+  imageAlt: 'Start a software project with Radu-Stefan',
+});
 
 export default function ContactPage() {
   return (
@@ -28,7 +32,7 @@ export default function ContactPage() {
         <SectionReveal>
           <div className="section-inner">
             <div className={styles.grid}>
-              <aside className={styles.sidebar}>
+              <div className={styles.sidebar}>
                 <div className={styles.sidebarBlock}>
                   <span className={styles.sideLabel}>Email</span>
                   <a href="mailto:grozavradustefan@gmail.com" className={styles.sideValue}>
@@ -74,7 +78,7 @@ export default function ContactPage() {
                   <span className={styles.dot} />
                   <span>Available for new projects</span>
                 </div>
-              </aside>
+              </div>
 
               <Suspense fallback={<div className={styles.formFallback}>Loading form...</div>}>
                 <ContactForm />

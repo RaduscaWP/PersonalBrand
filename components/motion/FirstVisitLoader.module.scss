@@ -1,0 +1,82 @@
+.loader {
+  position: fixed;
+  inset: 0;
+  z-index: 9997;
+  display: grid;
+  place-items: center;
+  overflow: hidden;
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+}
+
+:global(html[data-intro='pending']) .loader {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+  animation: loaderFailsafe 0.01s linear 4s forwards;
+}
+
+.panel {
+  position: absolute;
+  inset: 0 50% 0 0;
+  background: #080808;
+}
+
+.panelRight {
+  inset: 0 0 0 50%;
+}
+
+.content {
+  position: relative;
+  z-index: 1;
+  width: min(420px, calc(100vw - 3rem));
+  display: grid;
+  grid-template-columns: 1fr auto;
+  align-items: end;
+  gap: 1rem;
+  color: var(--text-primary);
+}
+
+.wordmark,
+.counter {
+  font-family: var(--font-jetbrains-mono), ui-monospace, monospace;
+  font-size: clamp(0.72rem, 1.4vw, 0.9rem);
+  font-weight: 600;
+  letter-spacing: 0.16em;
+}
+
+.counter {
+  font-variant-numeric: tabular-nums;
+  color: var(--accent-light);
+}
+
+.progress {
+  grid-column: 1 / -1;
+  height: 1px;
+  overflow: hidden;
+  background: rgba(255, 255, 255, 0.14);
+}
+
+.progress span {
+  display: block;
+  width: 100%;
+  height: 100%;
+  background: var(--accent);
+  transform: scaleX(0);
+  transform-origin: left;
+}
+
+@keyframes loaderFailsafe {
+  to {
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .loader {
+    display: none;
+  }
+}

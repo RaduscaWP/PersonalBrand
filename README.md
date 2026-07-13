@@ -6,7 +6,7 @@ The website is designed as a serious freelance-ready portfolio, focused on clari
 
 ## Live Demo
 
-[Open Website](https://personal-brand-phi-tan.vercel.app/)
+[Open Website](https://www.radusca.dev/)
 
 ## Project Purpose
 
@@ -21,13 +21,15 @@ The website is not just a simple personal page. It is built as a complete profes
 - Modern dark personal brand design
 - Fully responsive layout for desktop, tablet, and mobile
 - Multi-page structure using Next.js App Router
-- Smooth UI animations
+- Capability-aware GSAP motion with reduced-motion and WebGL fallbacks
+- First-visit loader that runs once per browser session
+- Interactive Hero brief that carries service context into Contact
 - Custom reusable components
 - Hybrid project case studies
 - Freelance services section
 - Pricing page with starter ranges
 - Public pricing add-ons
-- Blog page structure
+- Notes / Lab page for clearly labelled draft writing
 - Contact page with project brief form
 - Public proof through projects, certifications, and trust signals
 - SEO-ready structure
@@ -42,23 +44,19 @@ The portfolio includes the following pages:
 - Projects
 - Services
 - Pricing
-- Blog
+- Notes / Lab
 - Contact
 
 ## Home Page Sections
 
-The homepage is structured as a professional landing page:
+The homepage follows a six-act client story:
 
-- Hero section
-- Stats section
-- About preview
-- Services preview
-- How I work section
-- Featured projects
-- Tech stack marquee
-- Testimonials / trust section
-- Final call-to-action
-- Footer
+- Promise — outcome-led Hero and project CTA
+- Adaptation — service chapters and interactive brief
+- Proof — factual stats and live project work
+- Method — a four-checkpoint delivery narrative
+- Trust — About context and selected tools
+- Action — a focused project CTA and Footer
 
 ## Tech Stack
 
@@ -69,9 +67,11 @@ This project uses a modern frontend stack:
 - JavaScript
 - SCSS Modules
 - Global SCSS
-- Framer Motion
+- GSAP, ScrollTrigger, SplitText, and Flip
+- Three.js for the capable-desktop Hero only
 - Lucide React
-- EmailJS
+- Resend
+- Vercel Analytics and Speed Insights
 - Vercel
 
 ## Core Technologies
@@ -96,10 +96,17 @@ This project uses a modern frontend stack:
 
 ### Animation
 
-- Framer Motion
-- Intersection Observer API
-- Subtle reveal animations
-- Smooth interface transitions
+- GSAP with the React `useGSAP()` integration
+- ScrollTrigger for scoped section narratives
+- SplitText and Flip for accessible text/layout transitions
+- Capability checks for pointer type, reduced motion, Save-Data, and WebGL
+- Native, static fallbacks that keep all content visible without JavaScript motion
+
+### Contact delivery
+
+- Server-side Resend handler
+- Accessible inline validation and error summary
+- Rate limiting, honeypot handling, origin validation, and duplicate-submit protection
 
 ### Deployment
 

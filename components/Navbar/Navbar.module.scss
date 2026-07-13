@@ -56,9 +56,21 @@
 }
 
 .links {
+  position: relative;
   display: flex;
   align-items: center;
   gap: 0.25rem;
+}
+
+.activeIndicator {
+  position: absolute;
+  left: 0;
+  bottom: 0.45rem;
+  width: 1rem;
+  height: 1px;
+  background: var(--accent);
+  opacity: 0;
+  pointer-events: none;
 }
 
 .link {
@@ -66,7 +78,7 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  min-height: 2.5rem;
+  min-height: 2.75rem;
   padding: 0.4rem 0.85rem;
   color: var(--text-secondary);
   font-size: var(--fs-small);
@@ -90,8 +102,7 @@
     color: var(--text-primary);
   }
 
-  &:hover::after,
-  &.active::after {
+  &:hover::after {
     transform: scaleX(1);
   }
 }
@@ -165,6 +176,10 @@
     transition: opacity 0.24s ease, transform 0.24s ease, visibility 0s linear 0.24s;
   }
 
+  .activeIndicator {
+    display: none;
+  }
+
   .open {
     visibility: visible;
     opacity: 1;
@@ -185,6 +200,11 @@
       right: auto;
       width: 2rem;
       bottom: 0.25rem;
+    }
+
+
+    &.active::after {
+      transform: scaleX(1);
     }
   }
 

@@ -1,64 +1,116 @@
 'use client';
 
 import { useEffect, useRef } from 'react';
+import { gsap, useGSAP } from '@/lib/motion/register';
+import { useMotion } from '@/components/motion/MotionProvider';
 import styles from './CustomCursor.module.scss';
 
 export default function CustomCursor() {
   const dotRef = useRef(null);
   const ringRef = useRef(null);
+  const labelRef = useRef(null);
+  const moveDotX = useRef(null);
+  const moveDotY = useRef(null);
+  const moveRingX = useRef(null);
+  const moveRingY = useRef(null);
+  const { pointer, reduceMotion } = useMotion();
+  const enabled = pointer.enhanced && !reduceMotion;
+
+  useGSAP(
+    () => {
+      if (!enabled || !dotRef.current || !ringRef.current) return undefined;
+
+      moveDotX.current = gsap.quickTo(dotRef.current, 'x', {
+        duration: 0.08,
+        ease: 'power3.out',
+      });
+      moveDotY.current = gsap.quickTo(dotRef.current, 'y', {
+        duration: 0.08,
+        ease: 'power3.out',
+      });
+      moveRingX.current = gsap.quickTo(ringRef.current, 'x', {
+        duration: 0.24,
+        ease: 'power3.out',
+      });
+      moveRingY.current = gsap.quickTo(ringRef.current, 'y', {
+        duration: 0.24,
+        ease: 'power3.out',
+      });
+      gsap.set([dotRef.current, ringRef.current], { autoAlpha: 0 });
+
+      return () => gsap.killTweensOf([dotRef.current, ringRef.current]);
+    },
+    { dependencies: [enabled], revertOnUpdate: true },
+  );
 
   useEffect(() => {
-    if (
-      window.matchMedia('(pointer: coarse)').matches ||
-      window.matchMedia('(prefers-reduced-motion: reduce)').matches
-    ) {
+    if (!enabled) {
+      document.documentElement.dataset.customCursor = 'false';
       return undefined;
     }
 
-    let mouseX = 0;
-    let mouseY = 0;
-    let ringX = 0;
-    let ringY = 0;
-    let raf;
+    document.documentElement.dataset.customCursor = 'true';
 
-    const lerp = (a, b, t) => a + (b - a) * t;
-    const onMove = (e) => {
-      mouseX = e.clientX;
-      mouseY = e.clientY;
-    };
-    const addHover = () => ringRef.current?.classList.add(styles.hovered);
-    const removeHover = () => ringRef.current?.classList.remove(styles.hovered);
-
-    const tick = () => {
-      ringX = lerp(ringX, mouseX, 0.12);
-      ringY = lerp(ringY, mouseY, 0.12);
-      if (dotRef.current) dotRef.current.style.transform = `translate(${mouseX - 4}px, ${mouseY - 4}px)`;
-      if (ringRef.current) ringRef.current.style.transform = `translate(${ringX - 16}px, ${ringY - 16}px)`;
-      raf = requestAnimationFrame(tick);
+    const setVisible = (visible) => {
+      gsap.to([dotRef.current, ringRef.current], {
+        autoAlpha: visible ? 1 : 0,
+        duration: 0.16,
+        overwrite: true,
+      });
     };
 
-    document.addEventListener('mousemove', onMove);
-    const targets = document.querySelectorAll('a, button, input, textarea, select');
-    targets.forEach((el) => {
-      el.addEventListener('mouseenter', addHover);
-      el.addEventListener('mouseleave', removeHover);
-    });
-    tick();
+    const onMove = (event) => {
+      if (document.hidden) return;
+      moveDotX.current?.(event.clientX - 3.5);
+      moveDotY.current?.(event.clientY - 3.5);
+      moveRingX.current?.(event.clientX - 17);
+      moveRingY.current?.(event.clientY - 17);
+      setVisible(true);
+    };
+
+    const onPointerOver = (event) => {
+      const interactive = event.target.closest?.('a, button, [role="button"], [data-cursor]');
+      const formControl = event.target.closest?.('input, textarea, select, [role="combobox"]');
+      const contextual = event.target.closest?.('[data-cursor]');
+      const label = contextual?.dataset.cursor?.trim();
+
+      ringRef.current?.classList.toggle(styles.hovered, Boolean(interactive));
+      ringRef.current?.classList.toggle(styles.form, Boolean(formControl));
+      ringRef.current?.classList.toggle(styles.contextual, Boolean(label));
+      dotRef.current?.classList.toggle(styles.form, Boolean(formControl));
+      if (labelRef.current) labelRef.current.textContent = label || '';
+    };
+
+    const onWindowOut = (event) => {
+      if (!event.relatedTarget) setVisible(false);
+    };
+
+    const onVisibility = () => {
+      if (document.hidden) setVisible(false);
+    };
+
+    document.addEventListener('pointermove', onMove, { passive: true });
+    document.addEventListener('pointerover', onPointerOver, { passive: true });
+    window.addEventListener('pointerout', onWindowOut);
+    document.addEventListener('visibilitychange', onVisibility);
 
     return () => {
-      document.removeEventListener('mousemove', onMove);
-      targets.forEach((el) => {
-        el.removeEventListener('mouseenter', addHover);
-        el.removeEventListener('mouseleave', removeHover);
-      });
-      cancelAnimationFrame(raf);
+      document.documentElement.dataset.customCursor = 'false';
+      document.removeEventListener('pointermove', onMove);
+      document.removeEventListener('pointerover', onPointerOver);
+      window.removeEventListener('pointerout', onWindowOut);
+      document.removeEventListener('visibilitychange', onVisibility);
     };
-  }, []);
+  }, [enabled]);
+
+  if (!enabled) return null;
 
   return (
-    <>
+    <div aria-hidden="true">
       <div ref={dotRef} className={styles.dot} />
-      <div ref={ringRef} className={styles.ring} />
-    </>
+      <div ref={ringRef} className={styles.ring}>
+        <span ref={labelRef} className={styles.label} />
+      </div>
+    </div>
   );
 }

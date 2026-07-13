@@ -5,6 +5,9 @@ import { usePathname } from 'next/navigation';
 import { useEffect, useRef, useState } from 'react';
 import { Menu, X } from 'lucide-react';
 import MagneticButton from '../MagneticButton/MagneticButton';
+import { useMotion } from '@/components/motion/MotionProvider';
+import { Flip, gsap, useGSAP } from '@/lib/motion/register';
+import { motion } from '@/lib/motion/tokens';
 import styles from './Navbar.module.scss';
 
 const links = [
@@ -13,7 +16,6 @@ const links = [
   { href: '/projects', label: 'Projects' },
   { href: '/about', label: 'About' },
   { href: '/pricing', label: 'Pricing' },
-  { href: '/blog', label: 'Blog' },
 ];
 
 export default function Navbar() {
@@ -23,8 +25,48 @@ export default function Navbar() {
   const [open, setOpen] = useState(false);
   const navRef = useRef(null);
   const menuRef = useRef(null);
+  const indicatorRef = useRef(null);
   const burgerRef = useRef(null);
   const firstLinkRef = useRef(null);
+  const { reduceMotion } = useMotion();
+
+  useGSAP(
+    () => {
+      const indicator = indicatorRef.current;
+      const menu = menuRef.current;
+      const activeLink = menu?.querySelector('[aria-current="page"]');
+      if (!indicator || !menu || !activeLink) return undefined;
+
+      const placeIndicator = (animate = true) => {
+        if (window.matchMedia('(max-width: 900px)').matches) return;
+        const menuBounds = menu.getBoundingClientRect();
+        const activeBounds = activeLink.getBoundingClientRect();
+        const hadPosition = indicator.dataset.ready === 'true';
+        const state = hadPosition && animate && !reduceMotion ? Flip.getState(indicator) : null;
+
+        gsap.set(indicator, {
+          x: activeBounds.left - menuBounds.left + 14,
+          width: Math.max(16, activeBounds.width - 28),
+          autoAlpha: 1,
+        });
+        indicator.dataset.ready = 'true';
+
+        if (state) {
+          Flip.from(state, {
+            duration: motion.duration.control,
+            ease: motion.ease.strongOut,
+            absolute: false,
+          });
+        }
+      };
+
+      placeIndicator();
+      const observer = new ResizeObserver(() => placeIndicator(false));
+      observer.observe(menu);
+      return () => observer.disconnect();
+    },
+    { scope: navRef, dependencies: [pathname, reduceMotion], revertOnUpdate: true },
+  );
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 56);
@@ -112,6 +154,7 @@ export default function Navbar() {
             if (event.target === event.currentTarget) setOpen(false);
           }}
         >
+          <li ref={indicatorRef} className={styles.activeIndicator} aria-hidden="true" />
           {links.map(({ href, label }, index) => (
             <li key={href}>
               <Link

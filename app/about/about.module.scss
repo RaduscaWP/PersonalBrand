@@ -28,6 +28,11 @@
   transform: rotate(-3deg);
 }
 
+.portraitReveal {
+  width: min(100%, 380px);
+  border-radius: 28% 72% 68% 32% / 32% 32% 68% 68%;
+}
+
 .portraitImg {
   width: 100% !important;
   height: 100% !important;
@@ -49,7 +54,7 @@
   align-items: center;
   gap: 0.5rem;
   color: var(--text-secondary);
-  font-family: 'JetBrains Mono', ui-monospace, monospace;
+  font-family: var(--font-jetbrains-mono), ui-monospace, monospace;
   font-size: var(--fs-xs);
 }
 
@@ -91,6 +96,22 @@
   color: var(--text-soft-dark);
 }
 
+.timelineMotion {
+  position: relative;
+}
+
+.timelineProgress {
+  position: absolute;
+  z-index: 1;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  width: 1px;
+  background: linear-gradient(180deg, var(--accent), var(--accent-light));
+  transform: scaleY(0);
+  transform-origin: top;
+}
+
 .timeline {
   display: grid;
   gap: var(--space-6);
@@ -106,7 +127,7 @@
 
 .timelineYear {
   color: var(--accent-light);
-  font-family: 'JetBrains Mono', ui-monospace, monospace;
+  font-family: var(--font-jetbrains-mono), ui-monospace, monospace;
   font-size: var(--fs-xs);
   font-weight: 700;
   letter-spacing: 0.2em;
@@ -131,6 +152,17 @@
 .timelineBody h3 {
   margin-bottom: var(--space-2);
   font-size: 1.2rem;
+}
+
+.timelineStage {
+  display: inline-block;
+  margin-bottom: var(--space-2);
+  color: var(--accent-light);
+  font-family: var(--font-jetbrains-mono), ui-monospace, monospace;
+  font-size: 0.66rem;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
 }
 
 .timelineBody p {
@@ -179,7 +211,7 @@
   display: inline-block;
   margin-bottom: var(--space-3);
   color: var(--accent);
-  font-family: 'JetBrains Mono', ui-monospace, monospace;
+  font-family: var(--font-jetbrains-mono), ui-monospace, monospace;
   font-size: var(--fs-xs);
   font-weight: 700;
   letter-spacing: 0.14em;
@@ -210,7 +242,7 @@
   border: 1px solid var(--paper-border);
   background: var(--paper-elevated);
   color: var(--text-soft-dark);
-  font-family: 'JetBrains Mono', ui-monospace, monospace;
+  font-family: var(--font-jetbrains-mono), ui-monospace, monospace;
   font-size: var(--fs-xs);
 }
 
@@ -244,5 +276,11 @@
 
   .timelineBody::before {
     left: calc(-1.4rem - 5px);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .timelineProgress {
+    transform: scaleY(1);
   }
 }
