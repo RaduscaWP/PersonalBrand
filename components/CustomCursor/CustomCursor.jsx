@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { gsap, useGSAP } from '@/lib/motion/register';
 import { useMotion } from '@/components/motion/MotionProvider';
 import styles from './CustomCursor.module.scss';
@@ -9,33 +9,23 @@ export default function CustomCursor() {
   const dotRef = useRef(null);
   const ringRef = useRef(null);
   const labelRef = useRef(null);
-  const moveDotX = useRef(null);
-  const moveDotY = useRef(null);
-  const moveRingX = useRef(null);
-  const moveRingY = useRef(null);
-  const { pointer, reduceMotion } = useMotion();
-  const enabled = pointer.enhanced && !reduceMotion;
+  const { reduceMotion } = useMotion();
+  const [hasFinePointer, setHasFinePointer] = useState(false);
+  const enabled = hasFinePointer && !reduceMotion;
+
+  useEffect(() => {
+    const media = window.matchMedia('(hover: hover) and (pointer: fine)');
+    const update = () => setHasFinePointer(media.matches);
+
+    update();
+    media.addEventListener?.('change', update);
+    return () => media.removeEventListener?.('change', update);
+  }, []);
 
   useGSAP(
     () => {
       if (!enabled || !dotRef.current || !ringRef.current) return undefined;
 
-      moveDotX.current = gsap.quickTo(dotRef.current, 'x', {
-        duration: 0.08,
-        ease: 'power3.out',
-      });
-      moveDotY.current = gsap.quickTo(dotRef.current, 'y', {
-        duration: 0.08,
-        ease: 'power3.out',
-      });
-      moveRingX.current = gsap.quickTo(ringRef.current, 'x', {
-        duration: 0.24,
-        ease: 'power3.out',
-      });
-      moveRingY.current = gsap.quickTo(ringRef.current, 'y', {
-        duration: 0.24,
-        ease: 'power3.out',
-      });
       gsap.set([dotRef.current, ringRef.current], { autoAlpha: 0 });
 
       return () => gsap.killTweensOf([dotRef.current, ringRef.current]);
@@ -49,22 +39,36 @@ export default function CustomCursor() {
       return undefined;
     }
 
-    document.documentElement.dataset.customCursor = 'true';
+    // Keep the system cursor available until we have coordinates for the custom
+    // one. Otherwise a page can hide both cursors immediately after hydration.
+    document.documentElement.dataset.customCursor = 'false';
+    let cursorActivated = false;
+
+    const activateCursor = () => {
+      if (cursorActivated) return;
+      cursorActivated = true;
+      document.documentElement.dataset.customCursor = 'true';
+    };
 
     const setVisible = (visible) => {
       gsap.to([dotRef.current, ringRef.current], {
         autoAlpha: visible ? 1 : 0,
         duration: 0.16,
-        overwrite: true,
+        overwrite: 'auto',
       });
     };
 
     const onMove = (event) => {
       if (document.hidden) return;
-      moveDotX.current?.(event.clientX - 3.5);
-      moveDotY.current?.(event.clientY - 3.5);
-      moveRingX.current?.(event.clientX - 17);
-      moveRingY.current?.(event.clientY - 17);
+      gsap.set(dotRef.current, { x: event.clientX - 3.5, y: event.clientY - 3.5 });
+      gsap.to(ringRef.current, {
+        x: event.clientX - 17,
+        y: event.clientY - 17,
+        duration: 0.24,
+        ease: 'power3.out',
+        overwrite: 'auto',
+      });
+      activateCursor();
       setVisible(true);
     };
 
